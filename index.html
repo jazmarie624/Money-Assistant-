@@ -1,1524 +1,1048 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#2f241c" />
-  <title>Jasz Field Route</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#34251e" />
+  <title>Jasz Field Office</title>
 
   <style>
-    :root {
-      --cream: #fbf7ef;
-      --paper: #fffdf8;
-      --ink: #2f241c;
-      --muted: #72685e;
-      --line: #e7dccb;
-      --gold: #b8841f;
-      --gold-soft: #f6e5bb;
-      --brown: #543a2a;
-      --green: #2e7d4d;
-      --green-soft: #dcf2e4;
-      --orange: #b85d18;
-      --orange-soft: #ffead8;
-      --red: #ae3c35;
-      --red-soft: #f9dedb;
-      --blue: #205f90;
-      --blue-soft: #dceefb;
-      --shadow: 0 12px 30px rgba(66, 45, 23, 0.1);
-      --radius: 18px;
+    :root{
+      --bg:#f7f0e5;
+      --paper:#fffdf9;
+      --ink:#34251e;
+      --muted:#74665d;
+      --line:#e4d4c1;
+      --gold:#b88728;
+      --gold-soft:#f7e6bb;
+      --brown:#563a2a;
+      --purple:#69437d;
+      --purple-soft:#eadff0;
+      --green:#2f794c;
+      --green-soft:#dcefe3;
+      --orange:#b85b17;
+      --orange-soft:#ffe8d3;
+      --red:#a43c35;
+      --red-soft:#f9dddd;
+      --blue:#246291;
+      --blue-soft:#deeffb;
+      --shadow:0 13px 32px rgba(82,53,27,.10);
+      --r:18px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      background: var(--cream);
-    }
-
-    body {
-      margin: 0;
-      min-width: 320px;
+    *{box-sizing:border-box}
+    html{background:var(--bg)}
+    body{
+      margin:0;
+      min-width:320px;
+      color:var(--ink);
       background:
-        radial-gradient(circle at top right, rgba(230, 195, 119, 0.2), transparent 34rem),
-        var(--cream);
-      color: var(--ink);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    button,
-    input,
-    select,
-    textarea {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-      touch-action: manipulation;
-    }
-
-    button:focus-visible,
-    input:focus-visible,
-    select:focus-visible,
-    textarea:focus-visible {
-      outline: 3px solid rgba(184, 132, 31, 0.45);
-      outline-offset: 2px;
-    }
-
-    .app-shell {
-      max-width: 1180px;
-      margin: 0 auto;
-      padding: 20px 20px calc(110px + env(safe-area-inset-bottom));
-    }
-
-    .app-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      padding: 10px 0 22px;
-    }
-
-    .brand-kicker {
-      color: var(--gold);
-      font-size: 0.73rem;
-      font-weight: 800;
-      letter-spacing: 0.13em;
-      text-transform: uppercase;
-    }
-
-    h1,
-    h2,
-    h3,
-    p {
-      margin-top: 0;
-    }
-
-    h1 {
-      margin: 4px 0 0;
-      font-size: clamp(1.55rem, 4vw, 2.2rem);
-      line-height: 1.1;
-    }
-
-    h2 {
-      margin-bottom: 8px;
-      font-size: 1.35rem;
-    }
-
-    h3 {
-      margin-bottom: 6px;
-      font-size: 1.03rem;
-    }
-
-    .subtle,
-    .muted {
-      color: var(--muted);
-    }
-
-    .subtle {
-      margin-bottom: 0;
-      line-height: 1.45;
-    }
-
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .pill,
-    .status-pill {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 999px;
-      font-size: 0.76rem;
-      font-weight: 800;
-      letter-spacing: 0.03em;
-      padding: 7px 10px;
-      white-space: nowrap;
-    }
-
-    .pill {
-      background: var(--gold-soft);
-      color: #6d4705;
-    }
-
-    .status-pill.pending {
-      background: #eee8df;
-      color: #655d55;
-    }
-
-    .status-pill.attempted {
-      background: var(--orange-soft);
-      color: #833902;
-    }
-
-    .status-pill.served {
-      background: var(--green-soft);
-      color: #1f653b;
-    }
-
-    .status-pill.non-served {
-      background: var(--red-soft);
-      color: #8b2823;
-    }
-
-    .status-pill.skipped {
-      background: var(--blue-soft);
-      color: #17557e;
-    }
-
-    .tabs {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-bottom: 20px;
-      padding: 7px;
-      background: rgba(255, 253, 248, 0.7);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      box-shadow: var(--shadow);
-    }
-
-    .tab {
-      min-height: 48px;
-      border: 0;
-      border-radius: 11px;
-      background: transparent;
-      color: var(--muted);
-      font-weight: 800;
-    }
-
-    .tab.active {
-      color: white;
-      background: var(--brown);
-    }
-
-    .view {
-      display: none;
-    }
-
-    .view.active {
-      display: block;
-    }
-
-    .card {
-      background: rgba(255, 253, 248, 0.94);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 20px;
-    }
-
-    .card + .card {
-      margin-top: 16px;
-    }
-
-    .two-column {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-
-    .route-choices {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin-top: 18px;
-    }
-
-    .route-choice {
-      min-height: 145px;
-      padding: 18px;
-      border: 2px solid var(--line);
-      border-radius: 16px;
-      background: var(--paper);
-      color: var(--ink);
-      text-align: left;
-    }
-
-    .route-choice:hover,
-    .route-choice.selected {
-      border-color: var(--gold);
-      background: #fff8e6;
-    }
-
-    .route-choice strong {
-      display: block;
-      font-size: 1.08rem;
-      margin-bottom: 7px;
-    }
-
-    .route-choice span {
-      display: block;
-      color: var(--muted);
-      font-size: 0.88rem;
-      line-height: 1.35;
-    }
-
-    .selection-toolbar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 0 4px;
-    }
-
-    .button-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .btn {
-      min-height: 46px;
-      border: 0;
-      border-radius: 12px;
-      padding: 11px 15px;
-      font-weight: 800;
-      color: white;
-      background: var(--brown);
-    }
-
-    .btn:hover {
-      filter: brightness(1.06);
-    }
-
-    .btn.secondary {
-      color: var(--brown);
-      background: #f5eee2;
-      border: 1px solid var(--line);
-    }
-
-    .btn.gold {
-      background: var(--gold);
-    }
-
-    .btn.green {
-      background: var(--green);
-    }
-
-    .btn.orange {
-      background: var(--orange);
-    }
-
-    .btn.red {
-      background: var(--red);
-    }
-
-    .btn.blue {
-      background: var(--blue);
-    }
-
-    .btn.wide {
-      width: 100%;
-    }
-
-    .job-list {
-      display: grid;
-      gap: 10px;
-      margin-top: 12px;
-    }
-
-    .job-row {
-      display: grid;
-      grid-template-columns: auto 1fr auto;
-      gap: 12px;
-      align-items: center;
-      padding: 14px;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: var(--paper);
-    }
-
-    .job-row.selected {
-      border-color: var(--gold);
-      background: #fff9eb;
-    }
-
-    .job-row input[type="checkbox"] {
-      width: 23px;
-      height: 23px;
-      accent-color: var(--gold);
-    }
-
-    .job-name {
-      margin: 0 0 2px;
-      font-weight: 850;
-    }
-
-    .job-meta,
-    .job-address {
-      color: var(--muted);
-      font-size: 0.9rem;
-      line-height: 1.35;
-    }
-
-    .job-address {
-      margin-top: 3px;
-    }
-
-    .empty {
-      padding: 28px 18px;
-      text-align: center;
-      color: var(--muted);
-      border: 1px dashed #cfbfaa;
-      border-radius: 14px;
-      background: rgba(255, 253, 248, 0.55);
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 13px;
-    }
-
-    .form-grid .full {
-      grid-column: 1 / -1;
-    }
-
-    label {
-      display: grid;
-      gap: 6px;
-      color: var(--brown);
-      font-size: 0.86rem;
-      font-weight: 800;
-    }
-
-    input,
-    select,
-    textarea {
-      width: 100%;
-      min-height: 46px;
-      padding: 11px 12px;
-      color: var(--ink);
-      background: #fffdfa;
-      border: 1px solid #d7c9b7;
-      border-radius: 11px;
-    }
-
-    textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
-
-    .hint {
-      margin: 10px 0 0;
-      color: var(--muted);
-      font-size: 0.87rem;
-      line-height: 1.4;
-    }
-
-    .summary-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-
-    .summary-card {
-      padding: 15px;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: var(--paper);
-    }
-
-    .summary-card span {
-      display: block;
-      color: var(--muted);
-      font-size: 0.78rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    .summary-card strong {
-      display: block;
-      margin-top: 6px;
-      font-size: 1.7rem;
-    }
-
-    dialog {
-      width: min(580px, calc(100vw - 28px));
-      max-height: 90vh;
-      border: 0;
-      border-radius: 20px;
-      padding: 0;
-      color: var(--ink);
-      background: var(--paper);
-      box-shadow: 0 22px 70px rgba(31, 20, 10, 0.38);
-    }
-
-    dialog::backdrop {
-      background: rgba(32, 24, 16, 0.5);
-    }
-
-    .dialog-body {
-      padding: 22px;
-      overflow-y: auto;
-      max-height: 90vh;
-    }
-
-    .dialog-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-      margin-top: 18px;
-    }
-
-    .route-mode {
-      position: fixed;
-      z-index: 30;
-      inset: 0;
-      overflow-y: auto;
-      color: var(--ink);
-      background:
-        radial-gradient(circle at top right, rgba(230, 195, 119, 0.22), transparent 28rem),
-        var(--cream);
-    }
-
-    .route-mode[hidden] {
-      display: none;
-    }
-
-    .route-mode-inner {
-      max-width: 620px;
-      min-height: 100%;
-      margin: 0 auto;
-      padding:
-        max(18px, env(safe-area-inset-top))
-        18px
-        calc(22px + env(safe-area-inset-bottom));
-    }
-
-    .route-topline {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: center;
-    }
-
-    .route-label {
-      color: var(--gold);
-      font-size: 0.73rem;
-      font-weight: 900;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .route-progress-text {
-      margin: 6px 0 0;
-      color: var(--muted);
-      font-size: 0.94rem;
-      font-weight: 700;
-    }
-
-    .progress-track {
-      height: 10px;
-      margin: 17px 0 18px;
-      overflow: hidden;
-      border-radius: 99px;
-      background: #e7dccb;
-    }
-
-    .progress-fill {
-      height: 100%;
-      border-radius: inherit;
-      background: linear-gradient(90deg, #b8841f, #e5bd66);
-      transition: width 0.25s ease;
-    }
-
-    .stop-card {
-      margin-top: 10px;
-      padding: 24px;
-      border: 2px solid #ddc995;
-      border-radius: 22px;
-      background: var(--paper);
-      box-shadow: var(--shadow);
-    }
-
-    .stop-number {
-      margin-bottom: 12px;
-      color: var(--gold);
-      font-size: 0.78rem;
-      font-weight: 900;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .stop-company {
-      margin-bottom: 3px;
-      color: var(--muted);
-      font-size: 0.9rem;
-      font-weight: 800;
-    }
-
-    .stop-person {
-      margin-bottom: 17px;
-      font-size: clamp(1.35rem, 6vw, 1.85rem);
-      line-height: 1.13;
-    }
-
-    .stop-address {
-      margin: 0 0 20px;
-      font-size: clamp(1.17rem, 5.1vw, 1.55rem);
-      font-weight: 850;
-      line-height: 1.25;
-    }
-
-    .navigate-btn {
-      min-height: 66px;
-      border-radius: 16px;
-      font-size: 1.13rem;
-    }
-
-    .route-section-title {
-      margin: 22px 0 10px;
-      font-size: 0.96rem;
-      font-weight: 900;
-    }
-
-    .outcome-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 11px;
-    }
-
-    .outcome-btn {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      min-height: 64px;
-      padding: 14px 17px;
-      border: 0;
-      border-radius: 16px;
-      color: white;
-      font-size: 1.04rem;
-      font-weight: 900;
-      text-align: left;
-    }
-
-    .outcome-btn span {
-      display: block;
-      font-size: 0.78rem;
-      font-weight: 700;
-      opacity: 0.86;
-    }
-
-    .outcome-attempted {
-      background: var(--orange);
-    }
-
-    .outcome-served {
-      background: var(--green);
-    }
-
-    .outcome-nonserved {
-      background: var(--red);
-    }
-
-    .route-footer-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 11px;
-      margin-top: 18px;
-    }
-
-    .next-stop {
-      margin-top: 16px;
-      padding: 15px;
-      border: 1px solid #d7e6ef;
-      border-radius: 15px;
-      background: #f0f8fc;
-    }
-
-    .next-stop small {
-      display: block;
-      margin-bottom: 4px;
-      color: var(--blue);
-      font-weight: 900;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .next-stop strong {
-      display: block;
-      margin-bottom: 2px;
-    }
-
-    .toast {
-      position: fixed;
-      z-index: 60;
-      right: 16px;
-      bottom: calc(18px + env(safe-area-inset-bottom));
-      max-width: min(390px, calc(100vw - 32px));
-      padding: 13px 15px;
-      border-radius: 13px;
-      color: white;
-      background: #2f241c;
-      box-shadow: var(--shadow);
-      font-weight: 800;
-      opacity: 0;
-      transform: translateY(15px);
-      pointer-events: none;
-      transition: opacity 0.2s ease, transform 0.2s ease;
-    }
-
-    .toast.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    @media (max-width: 760px) {
-      .app-shell {
-        padding: 15px 14px calc(100px + env(safe-area-inset-bottom));
-      }
-
-      .app-header {
-        padding-bottom: 16px;
-      }
-
-      .two-column,
-      .route-choices,
-      .summary-grid,
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .form-grid .full {
-        grid-column: auto;
-      }
-
-      .route-choice {
-        min-height: auto;
-      }
-
-      .card {
-        padding: 16px;
-      }
-
-      .job-row {
-        grid-template-columns: auto 1fr;
-      }
-
-      .job-row .status-pill {
-        grid-column: 2;
-        justify-self: start;
-      }
-
-      .summary-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+        radial-gradient(circle at top right,rgba(231,190,99,.22),transparent 32rem),
+        var(--bg);
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+      -webkit-font-smoothing:antialiased;
+    }
+    button,input,textarea,select{font:inherit}
+    button{cursor:pointer;touch-action:manipulation}
+    button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{
+      outline:3px solid rgba(184,135,40,.48);
+      outline-offset:2px;
+    }
+
+    .shell{max-width:1360px;margin:auto;padding:20px 20px calc(112px + env(safe-area-inset-bottom))}
+    .topbar{
+      display:flex;align-items:center;justify-content:space-between;gap:16px;
+      padding:3px 0 20px;
+    }
+    .eyebrow{
+      color:var(--gold);font-size:.72rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase;
+    }
+    h1,h2,h3,p{margin-top:0}
+    h1{margin:4px 0 0;font-size:clamp(1.6rem,4vw,2.3rem);line-height:1.08}
+    h2{margin-bottom:7px;font-size:1.3rem}
+    h3{margin-bottom:6px;font-size:1rem}
+    .subtle,.muted{color:var(--muted)}
+    .subtle{line-height:1.45;margin-bottom:0}
+    .top-pills{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+    .pill,.badge{
+      display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;
+      border-radius:999px;padding:7px 10px;font-size:.76rem;font-weight:900;letter-spacing:.02em;
+    }
+    .pill{background:var(--gold-soft);color:#714a08}
+    .badge.pending{background:#ede6dc;color:#625950}
+    .badge.attempted{background:var(--orange-soft);color:#823704}
+    .badge.served{background:var(--green-soft);color:#1d6338}
+    .badge.non-served{background:var(--red-soft);color:#872822}
+    .badge.skipped{background:var(--blue-soft);color:#14547c}
+    .badge.draft{background:#ede6dc;color:#625950}
+    .badge.sent{background:var(--blue-soft);color:#14547c}
+    .badge.paid{background:var(--green-soft);color:#1d6338}
+    .badge.overdue{background:var(--red-soft);color:#872822}
+
+    .nav{
+      display:grid;grid-template-columns:repeat(7,1fr);gap:7px;
+      padding:7px;margin-bottom:20px;border:1px solid var(--line);border-radius:16px;
+      background:rgba(255,253,249,.75);box-shadow:var(--shadow);
+    }
+    .nav button{
+      min-height:46px;padding:9px 8px;border:0;border-radius:11px;background:transparent;
+      color:var(--muted);font-weight:900;font-size:.85rem;
+    }
+    .nav button.active{background:var(--brown);color:white}
+    .view{display:none}
+    .view.active{display:block}
+    .card{
+      padding:20px;background:rgba(255,253,249,.96);border:1px solid var(--line);
+      border-radius:var(--r);box-shadow:var(--shadow);
+    }
+    .card + .card{margin-top:16px}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .metric{
+      padding:16px;border:1px solid var(--line);border-radius:15px;background:var(--paper);
+    }
+    .metric span{display:block;color:var(--muted);font-weight:900;font-size:.74rem;letter-spacing:.07em;text-transform:uppercase}
+    .metric strong{display:block;margin-top:6px;font-size:1.65rem}
+    .metric small{display:block;margin-top:4px;color:var(--muted);line-height:1.32}
+
+    .btn{
+      min-height:45px;padding:10px 14px;border:0;border-radius:12px;background:var(--brown);
+      color:white;font-weight:900;
+    }
+    .btn.secondary{background:#f5ede2;color:var(--brown);border:1px solid var(--line)}
+    .btn.gold{background:var(--gold)}
+    .btn.green{background:var(--green)}
+    .btn.orange{background:var(--orange)}
+    .btn.red{background:var(--red)}
+    .btn.blue{background:var(--blue)}
+    .btn.purple{background:var(--purple)}
+    .btn.wide{width:100%}
+    .button-row{display:flex;gap:10px;flex-wrap:wrap}
+    .toolbar{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap}
+    .toolbar h2{margin-bottom:5px}
+
+    label{display:grid;gap:6px;color:var(--brown);font-size:.85rem;font-weight:900}
+    input,textarea,select{
+      width:100%;min-height:45px;padding:10px 11px;border:1px solid #d8c8b5;border-radius:11px;
+      color:var(--ink);background:#fffdfa;
+    }
+    textarea{min-height:90px;resize:vertical}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+    .form-grid .full{grid-column:1/-1}
+    .hint{color:var(--muted);font-size:.86rem;line-height:1.4;margin:10px 0 0}
+
+    .list{display:grid;gap:10px;margin-top:14px}
+    .row{
+      display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:14px;
+      border:1px solid var(--line);border-radius:14px;background:var(--paper);
+    }
+    .row.selected{background:#fff8e9;border-color:var(--gold)}
+    .row input[type=checkbox]{width:22px;height:22px;min-height:22px;accent-color:var(--gold)}
+    .row-title{display:block;font-weight:900;line-height:1.25}
+    .row-meta,.row-address{display:block;color:var(--muted);font-size:.89rem;line-height:1.36}
+    .row-address{margin-top:3px}
+    .empty{
+      padding:27px 16px;border:1px dashed #d5c2a9;border-radius:14px;text-align:center;
+      color:var(--muted);background:rgba(255,253,249,.6);line-height:1.45;
+    }
+
+    .choice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-top:17px}
+    .choice{
+      min-height:125px;padding:17px;border:2px solid var(--line);border-radius:16px;background:var(--paper);
+      color:var(--ink);text-align:left;
+    }
+    .choice.selected,.choice:hover{border-color:var(--gold);background:#fff8e8}
+    .choice strong{display:block;margin-bottom:7px;font-size:1.06rem}
+    .choice span{display:block;color:var(--muted);font-size:.87rem;line-height:1.35}
+
+    .invoice-total{font-size:1.2rem;font-weight:900;color:var(--brown)}
+    .money-positive{color:var(--green)!important}
+    .money-negative{color:var(--red)!important}
+
+    dialog{
+      width:min(590px,calc(100vw - 28px));max-height:90vh;padding:0;border:0;border-radius:20px;
+      color:var(--ink);background:var(--paper);box-shadow:0 22px 70px rgba(45,25,10,.4);
+    }
+    dialog::backdrop{background:rgba(33,22,14,.52)}
+    .dialog-inner{padding:22px;max-height:90vh;overflow:auto}
+    .dialog-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:17px}
+
+    .route-mode{
+      position:fixed;z-index:50;inset:0;overflow:auto;color:var(--ink);
+      background:radial-gradient(circle at top right,rgba(231,190,99,.24),transparent 28rem),var(--bg);
+    }
+    .route-mode[hidden]{display:none}
+    .route-inner{
+      max-width:640px;min-height:100%;margin:auto;padding:max(18px,env(safe-area-inset-top)) 18px calc(25px + env(safe-area-inset-bottom));
+    }
+    .route-head{display:flex;justify-content:space-between;align-items:start;gap:12px}
+    .route-label{color:var(--gold);font-size:.74rem;font-weight:900;letter-spacing:.13em;text-transform:uppercase}
+    .route-head h2{margin:4px 0 0;font-size:1.4rem}
+    .route-progress-text{margin:5px 0 0;color:var(--muted);font-weight:800}
+    .progress{height:10px;margin:17px 0 18px;overflow:hidden;border-radius:999px;background:#e7dccb}
+    .progress > div{height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--gold),#e5c16d);transition:width .25s}
+    .stop-card{
+      padding:24px;border:2px solid #dfc990;border-radius:22px;background:var(--paper);box-shadow:var(--shadow);
+    }
+    .stop-kicker{color:var(--gold);font-size:.77rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+    .stop-company{margin-top:13px;color:var(--muted);font-weight:800;font-size:.9rem}
+    .stop-name{margin:3px 0 18px;font-size:clamp(1.4rem,6vw,1.9rem);line-height:1.1}
+    .stop-address{margin:0 0 20px;font-size:clamp(1.15rem,5vw,1.55rem);font-weight:900;line-height:1.27}
+    .navigate{min-height:66px;border-radius:16px;font-size:1.12rem}
+    .route-title{margin:22px 0 10px;font-size:.95rem;font-weight:900}
+    .outcomes{display:grid;gap:11px}
+    .outcome{
+      display:flex;align-items:center;justify-content:space-between;min-height:64px;padding:14px 17px;
+      border:0;border-radius:16px;color:#fff;text-align:left;font-size:1.03rem;font-weight:900;
+    }
+    .outcome small{display:block;margin-top:2px;font-weight:700;opacity:.88}
+    .attempt{background:var(--orange)} .serve{background:var(--green)} .nonserve{background:var(--red)}
+    .route-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:17px}
+    .next-card{margin-top:15px;padding:14px;border:1px solid #d2e4ed;border-radius:15px;background:#f0f8fc}
+    .next-card small{display:block;margin-bottom:4px;color:var(--blue);font-size:.74rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+    .next-card strong{display:block;margin-bottom:2px}
+
+    .toast{
+      position:fixed;z-index:100;right:16px;bottom:calc(18px + env(safe-area-inset-bottom));
+      max-width:min(390px,calc(100vw - 32px));padding:13px 15px;border-radius:13px;color:#fff;
+      background:var(--brown);font-weight:900;box-shadow:var(--shadow);opacity:0;transform:translateY(15px);
+      pointer-events:none;transition:.2s;
+    }
+    .toast.show{opacity:1;transform:translateY(0)}
+
+    @media(max-width:1000px){
+      .nav{grid-template-columns:repeat(4,1fr)}
+    }
+    @media(max-width:760px){
+      .shell{padding:15px 14px calc(102px + env(safe-area-inset-bottom))}
+      .topbar{padding-bottom:15px}
+      .nav{grid-template-columns:repeat(3,1fr)}
+      .grid2,.grid3,.choice-grid,.form-grid{grid-template-columns:1fr}
+      .form-grid .full{grid-column:auto}
+      .grid4{grid-template-columns:repeat(2,1fr)}
+      .card{padding:16px}
+      .row{grid-template-columns:auto 1fr}
+      .row > .badge,.row > .button-row,.row > .btn{grid-column:2;justify-self:start}
     }
   </style>
 </head>
 
 <body>
-  <main class="app-shell">
-    <header class="app-header">
+  <main class="shell">
+    <header class="topbar">
       <div>
-        <div class="brand-kicker">Jasz Field System</div>
-        <h1>Route Command Center</h1>
+        <div class="eyebrow">Jasz Field Office</div>
+        <h1>Business Command Center</h1>
       </div>
-      <div class="header-actions">
-        <span class="pill" id="headerJobCount">0 jobs</span>
+      <div class="top-pills">
+        <span class="pill" id="jobPill">0 jobs</span>
+        <span class="pill" id="invoicePill">$0 invoiced</span>
       </div>
     </header>
 
-    <nav class="tabs" aria-label="Main navigation">
-      <button class="tab active" type="button" data-tab="route">Route</button>
-      <button class="tab" type="button" data-tab="jobs">Jobs</button>
-      <button class="tab" type="button" data-tab="review">Review</button>
+    <nav class="nav" aria-label="App sections">
+      <button class="active" data-view="dashboard" type="button">Dashboard</button>
+      <button data-view="intake" type="button">Smart Intake</button>
+      <button data-view="jobs" type="button">Jobs</button>
+      <button data-view="route" type="button">Route</button>
+      <button data-view="invoices" type="button">Invoices</button>
+      <button data-view="money" type="button">Money</button>
+      <button data-view="review" type="button">Review</button>
     </nav>
 
-    <section class="view active" id="routeView">
+    <section class="view active" id="dashboardView">
       <div class="card">
-        <h2>Build Today’s Route</h2>
-        <p class="subtle">
-          Choose the work area first. This keeps Osceola and Orange routes separate unless you intentionally choose all jobs.
-        </p>
-
-        <div class="route-choices" id="routeChoices">
-          <button class="route-choice selected" type="button" data-route-filter="osceola">
-            <strong>Osceola County</strong>
-            <span id="osceolaCount">0 available jobs</span>
-          </button>
-
-          <button class="route-choice" type="button" data-route-filter="orange">
-            <strong>Orange County</strong>
-            <span id="orangeCount">0 available jobs</span>
-          </button>
-
-          <button class="route-choice" type="button" data-route-filter="all">
-            <strong>All Jobs</strong>
-            <span id="allCount">0 available jobs</span>
-          </button>
-        </div>
+        <h2>Welcome back, Jasz</h2>
+        <p class="subtle">Use your iPad for planning, intake, invoices, and money. Use your iPhone to start a route and switch into the large field-work screen.</p>
       </div>
 
-      <div class="card">
-        <div class="selection-toolbar">
-          <div>
-            <h2 id="selectionHeading">Osceola County Jobs</h2>
-            <p class="subtle" id="selectionSubheading">Select the jobs you want to complete today.</p>
+      <div class="grid4" style="margin-top:16px">
+        <div class="metric"><span>Pending jobs</span><strong id="dashPending">0</strong><small>Ready to plan</small></div>
+        <div class="metric"><span>Served</span><strong id="dashServed">0</strong><small>Completed jobs</small></div>
+        <div class="metric"><span>Invoice due</span><strong id="dashDue">$0</strong><small>Unpaid invoices</small></div>
+        <div class="metric"><span>Safe to spend</span><strong id="dashSafe">$0</strong><small>Income minus expenses</small></div>
+      </div>
+
+      <div class="grid2" style="margin-top:16px">
+        <div class="card">
+          <div class="toolbar">
+            <div><h2>Today’s Route</h2><p class="subtle">Start a county route when you are ready to work.</p></div>
+            <button class="btn gold" type="button" data-go="route">Open Route</button>
           </div>
-          <span class="pill" id="selectedCount">0 selected</span>
+          <div id="dashboardRouteList" class="list"></div>
         </div>
 
-        <div class="button-row">
-          <button class="btn secondary" type="button" id="selectAllBtn">Select All Visible</button>
-          <button class="btn secondary" type="button" id="clearSelectionBtn">Clear Selection</button>
-          <button class="btn gold" type="button" id="startRouteBtn">Start Route</button>
+        <div class="card">
+          <div class="toolbar">
+            <div><h2>Invoice Snapshot</h2><p class="subtle">Track what is drafted, sent, and paid.</p></div>
+            <button class="btn purple" type="button" data-go="invoices">Open Invoices</button>
+          </div>
+          <div id="dashboardInvoiceList" class="list"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" id="intakeView">
+      <div class="grid2">
+        <div class="card">
+          <h2>Smart Intake</h2>
+          <p class="subtle">Paste a job message or enter it manually. This simple intake tool looks for common job details and gives you an editable draft.</p>
+          <label style="margin-top:15px">
+            Paste job details
+            <textarea id="intakeText" placeholder="Paste the text message, email details, or copied assignment here."></textarea>
+          </label>
+          <div class="button-row" style="margin-top:14px">
+            <button class="btn purple" id="parseIntakeBtn" type="button">Create Draft</button>
+            <button class="btn secondary" id="clearIntakeBtn" type="button">Clear</button>
+          </div>
+          <p class="hint">Always review the draft before saving. Addresses and job numbers should be verified against your source paperwork.</p>
         </div>
 
-        <div class="job-list" id="routeJobList"></div>
+        <div class="card">
+          <h2>Editable Intake Draft</h2>
+          <form id="intakeForm">
+            <div class="form-grid">
+              <label>Person / Entity<input id="intakeName" required placeholder="Name to serve"></label>
+              <label>Company / Source<input id="intakeCompany" placeholder="Example: ProVest"></label>
+              <label>Job Number<input id="intakeNumber" placeholder="Assignment number"></label>
+              <label>County<select id="intakeCounty"><option value="Osceola">Osceola County</option><option value="Orange">Orange County</option><option value="Other">Other / Review</option></select></label>
+              <label class="full">Address<textarea id="intakeAddress" required placeholder="Street, city, state ZIP"></textarea></label>
+              <label class="full">Instructions / notes<textarea id="intakeNotes" placeholder="Gate code, document type, attempt window, due date, etc."></textarea></label>
+            </div>
+            <div class="button-row" style="margin-top:14px">
+              <button class="btn gold" type="submit">Save Job From Intake</button>
+            </div>
+          </form>
+        </div>
       </div>
     </section>
 
     <section class="view" id="jobsView">
-      <div class="two-column">
+      <div class="grid2">
         <div class="card">
-          <h2>Add a Job</h2>
+          <h2>Add Job Manually</h2>
           <form id="jobForm">
             <div class="form-grid">
-              <label>
-                Person / Entity
-                <input id="jobName" required placeholder="Example: Franklin Sanchez" />
-              </label>
-
-              <label>
-                Company / Source
-                <input id="jobCompany" placeholder="Example: ProVest" />
-              </label>
-
-              <label>
-                Job Number
-                <input id="jobNumber" placeholder="Example: 311005" />
-              </label>
-
-              <label>
-                County
-                <select id="jobCounty">
-                  <option value="Osceola">Osceola County</option>
-                  <option value="Orange">Orange County</option>
-                  <option value="Other">Other / Review</option>
-                </select>
-              </label>
-
-              <label class="full">
-                Full Address
-                <textarea id="jobAddress" required placeholder="Street, city, state ZIP"></textarea>
-              </label>
-
-              <label class="full">
-                Notes
-                <textarea id="jobNotes" placeholder="Gate code, best contact details, special instructions, etc."></textarea>
-              </label>
+              <label>Person / Entity<input id="jobName" required placeholder="Example: Franklin Sanchez"></label>
+              <label>Company / Source<input id="jobCompany" placeholder="Example: ProVest"></label>
+              <label>Job Number<input id="jobNumber" placeholder="Example: 311005"></label>
+              <label>County<select id="jobCounty"><option value="Osceola">Osceola County</option><option value="Orange">Orange County</option><option value="Other">Other / Review</option></select></label>
+              <label class="full">Full Address<textarea id="jobAddress" required placeholder="Street, city, state ZIP"></textarea></label>
+              <label class="full">Job Notes<textarea id="jobNotes" placeholder="Best time, gate code, due date, or special instructions."></textarea></label>
+              <label>Service Fee<input id="jobFee" type="number" min="0" step="0.01" placeholder="0.00"></label>
             </div>
-
-            <div class="button-row" style="margin-top: 15px;">
+            <div class="button-row" style="margin-top:14px">
               <button class="btn gold" type="submit">Save Job</button>
-              <button class="btn secondary" type="button" id="loadSamplesBtn">Load Sample Jobs</button>
+              <button class="btn secondary" id="sampleJobsBtn" type="button">Load Sample Jobs</button>
             </div>
           </form>
-
-          <p class="hint">
-            The county field is a planning group. Use it to keep your route organized even when an address crosses city lines.
-          </p>
         </div>
 
         <div class="card">
-          <h2>Your Jobs</h2>
-          <p class="subtle">Edit or remove jobs here before building a route.</p>
-          <div class="job-list" id="allJobsList"></div>
+          <div class="toolbar">
+            <div><h2>All Jobs</h2><p class="subtle">Edit statuses by working the route. Delete only if the job should be removed completely.</p></div>
+            <span class="pill" id="allJobsCount">0 jobs</span>
+          </div>
+          <div class="list" id="allJobsList"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" id="routeView">
+      <div class="card">
+        <h2>Build Today’s Route</h2>
+        <p class="subtle">Choose a county to avoid mixing areas. The full planning screen stays available on iPad; Start Route opens the large phone-friendly field screen.</p>
+        <div class="choice-grid" id="routeChoices">
+          <button class="choice selected" data-filter="osceola" type="button"><strong>Osceola County</strong><span id="osceolaCount">0 available jobs</span></button>
+          <button class="choice" data-filter="orange" type="button"><strong>Orange County</strong><span id="orangeCount">0 available jobs</span></button>
+          <button class="choice" data-filter="all" type="button"><strong>All Available Jobs</strong><span id="allRouteCount">0 available jobs</span></button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="toolbar">
+          <div><h2 id="routeHeading">Osceola County Jobs</h2><p class="subtle" id="routeSubheading">Select stops for this work session.</p></div>
+          <span class="pill" id="selectedPill">0 selected</span>
+        </div>
+        <div class="button-row" style="margin-top:14px">
+          <button class="btn secondary" id="selectVisibleBtn" type="button">Select All Visible</button>
+          <button class="btn secondary" id="clearVisibleBtn" type="button">Clear Selection</button>
+          <button class="btn gold" id="startRouteBtn" type="button">Start Route</button>
+        </div>
+        <div class="list" id="routeJobsList"></div>
+      </div>
+    </section>
+
+    <section class="view" id="invoicesView">
+      <div class="grid2">
+        <div class="card">
+          <h2>Create Invoice</h2>
+          <p class="subtle">Create a simple invoice manually or from jobs you completed.</p>
+          <form id="invoiceForm" style="margin-top:15px">
+            <div class="form-grid">
+              <label>Client / Company<input id="invoiceClient" required placeholder="Example: ProVest"></label>
+              <label>Invoice Number<input id="invoiceNumber" required placeholder="Example: INV-1001"></label>
+              <label>Due Date<input id="invoiceDueDate" type="date"></label>
+              <label>Amount<input id="invoiceAmount" required type="number" min="0" step="0.01" placeholder="0.00"></label>
+              <label class="full">Description<textarea id="invoiceDescription" placeholder="Example: Service of process jobs completed for the week."></textarea></label>
+            </div>
+            <div class="button-row" style="margin-top:14px">
+              <button class="btn purple" type="submit">Save Invoice</button>
+              <button class="btn secondary" id="invoiceFromJobsBtn" type="button">Create Draft From Served Jobs</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="card">
+          <div class="toolbar">
+            <div><h2>Invoices</h2><p class="subtle">Mark invoices sent or paid as your billing progresses.</p></div>
+            <span class="pill" id="invoiceTotalPill">$0 total</span>
+          </div>
+          <div class="list" id="invoiceList"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" id="moneyView">
+      <div class="grid4">
+        <div class="metric"><span>Income</span><strong id="moneyIncome">$0</strong><small>All recorded income</small></div>
+        <div class="metric"><span>Expenses</span><strong id="moneyExpenses">$0</strong><small>All recorded expenses</small></div>
+        <div class="metric"><span>Safe to spend</span><strong id="moneySafe">$0</strong><small>Income minus expenses</small></div>
+        <div class="metric"><span>Invoice paid</span><strong id="moneyPaidInvoices">$0</strong><small>Paid invoice total</small></div>
+      </div>
+
+      <div class="grid2" style="margin-top:16px">
+        <div class="card">
+          <h2>Add Money Entry</h2>
+          <form id="moneyForm">
+            <div class="form-grid">
+              <label>Type<select id="moneyType"><option value="income">Income</option><option value="expense">Expense</option></select></label>
+              <label>Amount<input id="moneyAmount" required type="number" min="0" step="0.01" placeholder="0.00"></label>
+              <label>Category<input id="moneyCategory" required placeholder="Example: Gas, Filing fee, Payment"></label>
+              <label>Date<input id="moneyDate" type="date"></label>
+              <label class="full">Notes<textarea id="moneyNotes" placeholder="Optional details"></textarea></label>
+            </div>
+            <div class="button-row" style="margin-top:14px">
+              <button class="btn green" type="submit">Save Money Entry</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="card">
+          <h2>Money History</h2>
+          <p class="subtle">Use this for income, gas, tolls, filing expenses, supplies, and business spending.</p>
+          <div class="list" id="moneyList"></div>
         </div>
       </div>
     </section>
 
     <section class="view" id="reviewView">
-      <div class="summary-grid">
-        <div class="summary-card">
-          <span>Total jobs</span>
-          <strong id="reviewTotal">0</strong>
-        </div>
-        <div class="summary-card">
-          <span>Pending</span>
-          <strong id="reviewPending">0</strong>
-        </div>
-        <div class="summary-card">
-          <span>Served</span>
-          <strong id="reviewServed">0</strong>
-        </div>
-        <div class="summary-card">
-          <span>Follow-up</span>
-          <strong id="reviewFollowUp">0</strong>
-        </div>
+      <div class="grid4">
+        <div class="metric"><span>Total jobs</span><strong id="reviewJobs">0</strong><small>All saved assignments</small></div>
+        <div class="metric"><span>Pending</span><strong id="reviewPending">0</strong><small>Needs work</small></div>
+        <div class="metric"><span>Served</span><strong id="reviewServed">0</strong><small>Completed successfully</small></div>
+        <div class="metric"><span>Follow-up</span><strong id="reviewFollow">0</strong><small>Attempted, non-served, or skipped</small></div>
       </div>
 
-      <div class="card">
-        <div class="selection-toolbar">
-          <div>
-            <h2>Job Review</h2>
-            <p class="subtle">Use this larger screen for end-of-day review and corrections.</p>
-          </div>
+      <div class="card" style="margin-top:16px">
+        <div class="toolbar">
+          <div><h2>End-of-Day Review</h2><p class="subtle">Review statuses and notes here on the larger iPad screen.</p></div>
           <div class="button-row">
-            <button class="btn secondary" type="button" id="exportBtn">Export Backup</button>
-            <button class="btn red" type="button" id="clearAllDataBtn">Clear All Data</button>
+            <button class="btn secondary" id="exportBtn" type="button">Export Backup</button>
+            <button class="btn red" id="clearDataBtn" type="button">Clear All Data</button>
           </div>
         </div>
-
-        <div class="job-list" id="reviewJobList"></div>
+        <div class="list" id="reviewList"></div>
       </div>
     </section>
   </main>
 
-  <dialog id="outcomeDialog" aria-labelledby="outcomeTitle">
-    <form method="dialog" class="dialog-body" id="outcomeForm">
-      <h2 id="outcomeTitle">Save Job Outcome</h2>
-      <p class="subtle" id="outcomeJobInfo"></p>
-
+  <dialog id="outcomeDialog">
+    <form method="dialog" class="dialog-inner" id="outcomeForm">
+      <h2 id="outcomeTitle">Save Outcome</h2>
+      <p id="outcomeInfo" class="subtle"></p>
       <label>
-        Notes for this attempt
-        <textarea id="outcomeNotes" placeholder="Example: No answer at door. Vehicle in driveway. Try again after 6 PM."></textarea>
+        Route notes
+        <textarea id="outcomeNotes" placeholder="What happened at this stop?"></textarea>
       </label>
-
       <div class="dialog-actions">
-        <button class="btn secondary" value="cancel" type="submit">Cancel</button>
-        <button class="btn gold" value="save" type="submit">Save &amp; Continue</button>
+        <button class="btn secondary" type="submit" value="cancel">Cancel</button>
+        <button class="btn gold" type="submit" value="save">Save &amp; Continue</button>
       </div>
     </form>
   </dialog>
 
-  <section class="route-mode" id="routeMode" hidden aria-label="Active route mode">
-    <div class="route-mode-inner">
-      <div class="route-topline">
+  <section class="route-mode" id="routeMode" hidden aria-label="Active field route">
+    <div class="route-inner">
+      <div class="route-head">
         <div>
-          <div class="route-label" id="activeRouteLabel">Osceola Route</div>
-          <h2 id="routeProgressHeadline" style="margin: 4px 0 0;">Stop 1 of 1</h2>
-          <p class="route-progress-text" id="routeProgressText">0 complete · 1 remaining</p>
+          <div class="route-label" id="activeRouteLabel">Osceola County Route</div>
+          <h2 id="activeStopCount">Stop 1 of 1</h2>
+          <p id="activeProgressText" class="route-progress-text">0 complete · 1 remaining</p>
         </div>
-        <button class="btn secondary" type="button" id="exitRouteBtn">Exit Route</button>
+        <button class="btn secondary" id="endRouteBtn" type="button">End Route</button>
       </div>
 
-      <div class="progress-track" aria-label="Route progress">
-        <div class="progress-fill" id="progressFill"></div>
-      </div>
-
-      <article class="stop-card" id="currentStopCard"></article>
-
-      <div id="routeActionArea"></div>
+      <div class="progress"><div id="activeProgressFill"></div></div>
+      <article class="stop-card" id="activeStopCard"></article>
+      <div id="activeActions"></div>
     </div>
   </section>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script>
-    const STORAGE_KEY = "jasz-field-route-v1";
+    const KEY = "jasz-field-office-combined-v1";
 
     const state = {
       jobs: [],
+      invoices: [],
+      money: [],
       selectedIds: [],
       routeFilter: "osceola",
-      activeRoute: {
-        active: false,
-        jobIds: [],
-        currentIndex: 0,
-        filter: "osceola"
-      }
-    };
-
-    const countyKey = {
-      osceola: "Osceola",
-      orange: "Orange",
-      all: "All"
-    };
-
-    const statusLabels = {
-      pending: "Pending",
-      attempted: "Attempted",
-      served: "Served",
-      "non-served": "Non-Served",
-      skipped: "Follow-Up"
+      activeRoute: { active:false, ids:[], index:0, filter:"osceola" }
     };
 
     const $ = (id) => document.getElementById(id);
 
-    function makeId() {
-      return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+    const labels = {
+      pending:"Pending",
+      attempted:"Attempted",
+      served:"Served",
+      "non-served":"Non-Served",
+      skipped:"Follow-Up",
+      draft:"Draft",
+      sent:"Sent",
+      paid:"Paid",
+      overdue:"Overdue"
+    };
+
+    function id(){ return `${Date.now()}-${Math.random().toString(16).slice(2)}`; }
+
+    function esc(value){
+      return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
     }
 
-    function safeText(value) {
-      return String(value || "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+    function money(value){
+      return new Intl.NumberFormat("en-US",{style:"currency",currency:"USD"}).format(Number(value || 0));
     }
 
-    function saveState() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    function today(){
+      return new Date().toISOString().slice(0,10);
     }
 
-    function loadState() {
-      try {
-        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-        if (!saved) return;
+    function save(){
+      localStorage.setItem(KEY, JSON.stringify(state));
+    }
 
+    function load(){
+      try{
+        const saved = JSON.parse(localStorage.getItem(KEY));
+        if(!saved) return;
         state.jobs = Array.isArray(saved.jobs) ? saved.jobs : [];
+        state.invoices = Array.isArray(saved.invoices) ? saved.invoices : [];
+        state.money = Array.isArray(saved.money) ? saved.money : [];
         state.selectedIds = Array.isArray(saved.selectedIds) ? saved.selectedIds : [];
         state.routeFilter = saved.routeFilter || "osceola";
         state.activeRoute = saved.activeRoute || state.activeRoute;
-      } catch (error) {
-        console.warn("Could not load saved route data.", error);
+      }catch(e){
+        console.warn("Saved data could not be loaded.",e);
       }
     }
 
-    function getAvailableJobs() {
-      return state.jobs.filter((job) => job.status === "pending" || job.status === "skipped");
+    function toast(message){
+      const el = $("toast");
+      el.textContent = message;
+      el.classList.add("show");
+      clearTimeout(toast.timer);
+      toast.timer = setTimeout(()=>el.classList.remove("show"),2600);
     }
 
-    function jobsForFilter(filter) {
-      const jobs = getAvailableJobs();
-
-      if (filter === "all") return jobs;
-      return jobs.filter((job) => job.county.toLowerCase() === countyKey[filter].toLowerCase());
+    function availableJobs(){
+      return state.jobs.filter(j => j.status === "pending" || j.status === "skipped");
     }
 
-    function selectedVisibleJobs() {
-      const visibleIds = new Set(jobsForFilter(state.routeFilter).map((job) => job.id));
-      return state.selectedIds.filter((id) => visibleIds.has(id));
+    function jobsForFilter(filter){
+      const list = availableJobs();
+      if(filter === "all") return list;
+      const county = filter === "osceola" ? "Osceola" : "Orange";
+      return list.filter(j => j.county === county);
     }
 
-    function countByCounty(county) {
-      return getAvailableJobs().filter((job) => job.county.toLowerCase() === county.toLowerCase()).length;
+    function countCounty(county){
+      return availableJobs().filter(j=>j.county === county).length;
     }
 
-    function showToast(message) {
-      const toast = $("toast");
-      toast.textContent = message;
-      toast.classList.add("show");
-      clearTimeout(showToast.timer);
-      showToast.timer = setTimeout(() => toast.classList.remove("show"), 2600);
-    }
+    function getJob(jobId){ return state.jobs.find(j=>j.id === jobId); }
 
-    function setTab(tabName) {
-      document.querySelectorAll(".tab").forEach((button) => {
-        button.classList.toggle("active", button.dataset.tab === tabName);
-      });
-
-      document.querySelectorAll(".view").forEach((view) => {
-        view.classList.toggle("active", view.id === `${tabName}View`);
-      });
-
+    function setView(name){
+      document.querySelectorAll(".nav button").forEach(btn=>btn.classList.toggle("active",btn.dataset.view === name));
+      document.querySelectorAll(".view").forEach(view=>view.classList.toggle("active",view.id === `${name}View`));
       renderAll();
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.scrollTo({top:0,behavior:"smooth"});
     }
 
-    function renderHeader() {
-      $("headerJobCount").textContent = `${state.jobs.length} ${state.jobs.length === 1 ? "job" : "jobs"}`;
+    function renderHeader(){
+      $("jobPill").textContent = `${state.jobs.length} ${state.jobs.length === 1 ? "job" : "jobs"}`;
+      const invoiceSum = state.invoices.reduce((sum,inv)=>sum+Number(inv.amount||0),0);
+      $("invoicePill").textContent = `${money(invoiceSum)} invoiced`;
     }
 
-    function renderRouteChoices() {
-      $("osceolaCount").textContent = `${countByCounty("Osceola")} available ${countByCounty("Osceola") === 1 ? "job" : "jobs"}`;
-      $("orangeCount").textContent = `${countByCounty("Orange")} available ${countByCounty("Orange") === 1 ? "job" : "jobs"}`;
-      $("allCount").textContent = `${getAvailableJobs().length} available ${getAvailableJobs().length === 1 ? "job" : "jobs"}`;
+    function renderDashboard(){
+      const pending = state.jobs.filter(j=>j.status === "pending" || j.status === "skipped").length;
+      const served = state.jobs.filter(j=>j.status === "served").length;
+      const due = state.invoices.filter(i=>i.status !== "paid").reduce((s,i)=>s+Number(i.amount||0),0);
+      const income = state.money.filter(m=>m.type==="income").reduce((s,m)=>s+Number(m.amount||0),0);
+      const expense = state.money.filter(m=>m.type==="expense").reduce((s,m)=>s+Number(m.amount||0),0);
+      const safe = income-expense;
 
-      document.querySelectorAll(".route-choice").forEach((choice) => {
-        choice.classList.toggle("selected", choice.dataset.routeFilter === state.routeFilter);
-      });
+      $("dashPending").textContent = pending;
+      $("dashServed").textContent = served;
+      $("dashDue").textContent = money(due);
+      $("dashSafe").textContent = money(safe);
+      $("dashSafe").className = safe < 0 ? "money-negative" : "money-positive";
 
-      const label = state.routeFilter === "all"
-        ? "All Available Jobs"
-        : `${countyKey[state.routeFilter]} County Jobs`;
+      const routeList = $("dashboardRouteList");
+      const upcoming = availableJobs().slice(0,4);
+      routeList.innerHTML = upcoming.length ? upcoming.map(j=>`
+        <div class="row">
+          <span>📍</span>
+          <span><span class="row-title">${esc(j.name)}</span><span class="row-meta">${esc(j.county)} County · ${esc(j.company || "No company")}</span><span class="row-address">${esc(j.address)}</span></span>
+          <span class="badge ${esc(j.status)}">${esc(labels[j.status])}</span>
+        </div>`).join("") : `<div class="empty">No pending jobs. Add assignments in Smart Intake or Jobs.</div>`;
 
-      $("selectionHeading").textContent = label;
-      $("selectionSubheading").textContent =
-        state.routeFilter === "all"
-          ? "Choose every stop you truly want to combine today."
-          : `Select the ${countyKey[state.routeFilter]} jobs you want to complete today.`;
-
-      $("selectedCount").textContent = `${selectedVisibleJobs().length} selected`;
+      const invoiceList = $("dashboardInvoiceList");
+      const invoices = state.invoices.slice(0,4);
+      invoiceList.innerHTML = invoices.length ? invoices.map(i=>`
+        <div class="row">
+          <span>🧾</span>
+          <span><span class="row-title">${esc(i.client)}</span><span class="row-meta">${esc(i.number)} · Due ${esc(i.dueDate || "not set")}</span><span class="row-address">${money(i.amount)}</span></span>
+          <span class="badge ${esc(i.status)}">${esc(labels[i.status])}</span>
+        </div>`).join("") : `<div class="empty">No invoices saved yet.</div>`;
     }
 
-    function renderRouteJobList() {
-      const list = $("routeJobList");
-      const jobs = jobsForFilter(state.routeFilter);
-
-      if (!jobs.length) {
-        list.innerHTML = `
-          <div class="empty">
-            No route-eligible jobs are in this group yet.<br />
-            Add jobs in the <strong>Jobs</strong> tab, then return here.
-          </div>
-        `;
-        return;
-      }
-
-      list.innerHTML = jobs.map((job) => {
-        const checked = state.selectedIds.includes(job.id);
-        return `
-          <label class="job-row ${checked ? "selected" : ""}">
-            <input class="route-checkbox" type="checkbox" data-job-id="${safeText(job.id)}" ${checked ? "checked" : ""} />
-            <span>
-              <span class="job-name">${safeText(job.name)}</span>
-              <span class="job-meta">${safeText(job.company || "No company")} · Job #${safeText(job.jobNumber || "—")}</span>
-              <span class="job-address">${safeText(job.address)}</span>
-            </span>
-            <span class="status-pill ${safeText(job.status)}">${safeText(statusLabels[job.status] || job.status)}</span>
-          </label>
-        `;
-      }).join("");
-    }
-
-    function renderAllJobsList() {
+    function renderJobs(){
+      $("allJobsCount").textContent = `${state.jobs.length} ${state.jobs.length === 1 ? "job" : "jobs"}`;
       const list = $("allJobsList");
-
-      if (!state.jobs.length) {
-        list.innerHTML = `<div class="empty">No jobs saved yet. Add one on the left or load sample jobs.</div>`;
-        return;
-      }
-
-      list.innerHTML = state.jobs.map((job) => `
-        <div class="job-row">
-          <span style="font-size: 1.2rem;">📍</span>
+      list.innerHTML = state.jobs.length ? state.jobs.map(j=>`
+        <div class="row">
+          <span>📍</span>
           <span>
-            <span class="job-name">${safeText(job.name)}</span>
-            <span class="job-meta">${safeText(job.company || "No company")} · Job #${safeText(job.jobNumber || "—")} · ${safeText(job.county)} County</span>
-            <span class="job-address">${safeText(job.address)}</span>
+            <span class="row-title">${esc(j.name)}</span>
+            <span class="row-meta">${esc(j.company || "No company")} · Job #${esc(j.number || "—")} · ${esc(j.county)} County · Fee ${money(j.fee)}</span>
+            <span class="row-address">${esc(j.address)}</span>
+            ${j.notes ? `<span class="row-address"><em>Notes: ${esc(j.notes)}</em></span>` : ""}
           </span>
-          <button class="btn secondary delete-job-btn" type="button" data-job-id="${safeText(job.id)}">Delete</button>
-        </div>
-      `).join("");
+          <div class="button-row">
+            <span class="badge ${esc(j.status)}">${esc(labels[j.status])}</span>
+            <button class="btn secondary delete-job" type="button" data-id="${esc(j.id)}">Delete</button>
+          </div>
+        </div>`).join("") : `<div class="empty">No jobs saved yet. Add a job manually or through Smart Intake.</div>`;
     }
 
-    function renderReview() {
-      const jobs = state.jobs;
-      const pending = jobs.filter((job) => job.status === "pending").length;
-      const served = jobs.filter((job) => job.status === "served").length;
-      const followUp = jobs.filter((job) => ["attempted", "non-served", "skipped"].includes(job.status)).length;
+    function renderRoute(){
+      $("osceolaCount").textContent = `${countCounty("Osceola")} available ${countCounty("Osceola") === 1 ? "job" : "jobs"}`;
+      $("orangeCount").textContent = `${countCounty("Orange")} available ${countCounty("Orange") === 1 ? "job" : "jobs"}`;
+      $("allRouteCount").textContent = `${availableJobs().length} available ${availableJobs().length === 1 ? "job" : "jobs"}`;
 
-      $("reviewTotal").textContent = jobs.length;
-      $("reviewPending").textContent = pending;
-      $("reviewServed").textContent = served;
-      $("reviewFollowUp").textContent = followUp;
+      document.querySelectorAll(".choice").forEach(b=>b.classList.toggle("selected",b.dataset.filter === state.routeFilter));
 
-      const list = $("reviewJobList");
+      const heading = state.routeFilter === "all" ? "All Available Jobs" : `${state.routeFilter === "osceola" ? "Osceola" : "Orange"} County Jobs`;
+      $("routeHeading").textContent = heading;
+      $("routeSubheading").textContent = state.routeFilter === "all"
+        ? "Choose every stop you intentionally want to combine today."
+        : "Select stops for this work session.";
 
-      if (!jobs.length) {
-        list.innerHTML = `<div class="empty">Your completed and pending field work will appear here.</div>`;
-        return;
-      }
+      const visible = jobsForFilter(state.routeFilter);
+      const selectedVisible = state.selectedIds.filter(id=>visible.some(j=>j.id===id));
+      $("selectedPill").textContent = `${selectedVisible.length} selected`;
 
-      list.innerHTML = jobs.map((job) => `
-        <div class="job-row">
-          <span style="font-size: 1.2rem;">${job.status === "served" ? "✓" : "•"}</span>
-          <span>
-            <span class="job-name">${safeText(job.name)}</span>
-            <span class="job-meta">${safeText(job.company || "No company")} · Job #${safeText(job.jobNumber || "—")} · ${safeText(job.county)} County</span>
-            <span class="job-address">${safeText(job.address)}</span>
-            ${job.outcomeNotes ? `<span class="job-address"><em>Notes: ${safeText(job.outcomeNotes)}</em></span>` : ""}
-          </span>
-          <span class="status-pill ${safeText(job.status)}">${safeText(statusLabels[job.status] || job.status)}</span>
-        </div>
-      `).join("");
+      const list = $("routeJobsList");
+      list.innerHTML = visible.length ? visible.map(j=>{
+        const checked = state.selectedIds.includes(j.id);
+        return `<label class="row ${checked ? "selected" : ""}">
+          <input type="checkbox" class="route-check" data-id="${esc(j.id)}" ${checked ? "checked" : ""}>
+          <span><span class="row-title">${esc(j.name)}</span><span class="row-meta">${esc(j.company || "No company")} · Job #${esc(j.number || "—")}</span><span class="row-address">${esc(j.address)}</span></span>
+          <span class="badge ${esc(j.status)}">${esc(labels[j.status])}</span>
+        </label>`;
+      }).join("") : `<div class="empty">No route-eligible jobs are in this group yet.</div>`;
     }
 
-    function renderRouteMode() {
-      const active = state.activeRoute;
+    function renderInvoices(){
+      const sum = state.invoices.reduce((s,i)=>s+Number(i.amount||0),0);
+      $("invoiceTotalPill").textContent = `${money(sum)} total`;
+      const list = $("invoiceList");
+      list.innerHTML = state.invoices.length ? state.invoices.map(i=>`
+        <div class="row">
+          <span>🧾</span>
+          <span>
+            <span class="row-title">${esc(i.client)} · ${esc(i.number)}</span>
+            <span class="row-meta">Due ${esc(i.dueDate || "not set")} · ${money(i.amount)}</span>
+            ${i.description ? `<span class="row-address">${esc(i.description)}</span>` : ""}
+          </span>
+          <div class="button-row">
+            <span class="badge ${esc(i.status)}">${esc(labels[i.status])}</span>
+            ${i.status==="draft" ? `<button class="btn blue invoice-status" type="button" data-id="${esc(i.id)}" data-status="sent">Mark Sent</button>` : ""}
+            ${i.status!=="paid" ? `<button class="btn green invoice-status" type="button" data-id="${esc(i.id)}" data-status="paid">Mark Paid</button>` : ""}
+            <button class="btn secondary delete-invoice" type="button" data-id="${esc(i.id)}">Delete</button>
+          </div>
+        </div>`).join("") : `<div class="empty">No invoices yet. Create one on the left or build a draft from served jobs.</div>`;
+    }
 
-      if (!active.active) {
-        $("routeMode").hidden = true;
-        return;
-      }
+    function renderMoney(){
+      const income = state.money.filter(m=>m.type==="income").reduce((s,m)=>s+Number(m.amount||0),0);
+      const expense = state.money.filter(m=>m.type==="expense").reduce((s,m)=>s+Number(m.amount||0),0);
+      const safe = income-expense;
+      const paid = state.invoices.filter(i=>i.status==="paid").reduce((s,i)=>s+Number(i.amount||0),0);
 
-      const routeJobs = active.jobIds
-        .map((id) => state.jobs.find((job) => job.id === id))
-        .filter(Boolean);
+      $("moneyIncome").textContent = money(income);
+      $("moneyExpenses").textContent = money(expense);
+      $("moneySafe").textContent = money(safe);
+      $("moneySafe").className = safe < 0 ? "money-negative" : "money-positive";
+      $("moneyPaidInvoices").textContent = money(paid);
 
-      if (!routeJobs.length || active.currentIndex >= routeJobs.length) {
-        completeRoute();
-        return;
-      }
+      const list = $("moneyList");
+      list.innerHTML = state.money.length ? state.money.map(m=>`
+        <div class="row">
+          <span>${m.type==="income" ? "↗" : "↘"}</span>
+          <span><span class="row-title">${esc(m.category)} · ${money(m.amount)}</span><span class="row-meta">${esc(m.date || "No date")} · ${m.type==="income" ? "Income" : "Expense"}</span>${m.notes ? `<span class="row-address">${esc(m.notes)}</span>` : ""}</span>
+          <button class="btn secondary delete-money" type="button" data-id="${esc(m.id)}">Delete</button>
+        </div>`).join("") : `<div class="empty">No money entries yet. Add income and business expenses here.</div>`;
+    }
 
-      $("routeMode").hidden = false;
+    function renderReview(){
+      const pending = state.jobs.filter(j=>j.status==="pending").length;
+      const served = state.jobs.filter(j=>j.status==="served").length;
+      const follow = state.jobs.filter(j=>["attempted","non-served","skipped"].includes(j.status)).length;
+      $("reviewJobs").textContent=state.jobs.length;
+      $("reviewPending").textContent=pending;
+      $("reviewServed").textContent=served;
+      $("reviewFollow").textContent=follow;
 
-      const currentJob = routeJobs[active.currentIndex];
-      const completed = routeJobs.filter((job) => job.status !== "pending" && job.status !== "skipped").length;
-      const routeLength = routeJobs.length;
-      const stopNumber = active.currentIndex + 1;
-      const remaining = routeLength - active.currentIndex;
+      $("reviewList").innerHTML = state.jobs.length ? state.jobs.map(j=>`
+        <div class="row">
+          <span>${j.status==="served" ? "✓" : "•"}</span>
+          <span><span class="row-title">${esc(j.name)}</span><span class="row-meta">${esc(j.company || "No company")} · Job #${esc(j.number || "—")} · ${esc(j.county)} County</span><span class="row-address">${esc(j.address)}</span>${j.outcomeNotes ? `<span class="row-address"><em>Field notes: ${esc(j.outcomeNotes)}</em></span>` : ""}</span>
+          <span class="badge ${esc(j.status)}">${esc(labels[j.status])}</span>
+        </div>`).join("") : `<div class="empty">Your completed and pending jobs will appear here.</div>`;
+    }
 
-      $("activeRouteLabel").textContent =
-        active.filter === "all" ? "All Jobs Route" : `${countyKey[active.filter]} County Route`;
-      $("routeProgressHeadline").textContent = `Stop ${stopNumber} of ${routeLength}`;
-      $("routeProgressText").textContent = `${completed} complete · ${remaining} remaining`;
-      $("progressFill").style.width = `${Math.max(0, ((stopNumber - 1) / routeLength) * 100)}%`;
+    function renderRouteMode(){
+      const route = state.activeRoute;
+      if(!route.active){ $("routeMode").hidden=true; return; }
 
-      $("currentStopCard").innerHTML = `
-        <div class="stop-number">Current stop</div>
-        <div class="stop-company">${safeText(currentJob.company || "Field Job")} · Job #${safeText(currentJob.jobNumber || "—")}</div>
-        <h1 class="stop-person">${safeText(currentJob.name)}</h1>
-        <p class="stop-address">${safeText(currentJob.address)}</p>
-        <button class="btn blue wide navigate-btn" type="button" id="navigateBtn">Open in Apple Maps</button>
-        ${currentJob.notes ? `<p class="hint"><strong>Job notes:</strong> ${safeText(currentJob.notes)}</p>` : ""}
+      const jobs = route.ids.map(getJob).filter(Boolean);
+      if(!jobs.length || route.index >= jobs.length){ completeRoute(); return; }
+
+      $("routeMode").hidden=false;
+      const job=jobs[route.index];
+      const completed=jobs.filter(j=>!["pending","skipped"].includes(j.status)).length;
+      const remaining=jobs.length-route.index;
+      const county=route.filter==="all" ? "All Jobs" : route.filter==="osceola" ? "Osceola County" : "Orange County";
+
+      $("activeRouteLabel").textContent=`${county} Route`;
+      $("activeStopCount").textContent=`Stop ${route.index+1} of ${jobs.length}`;
+      $("activeProgressText").textContent=`${completed} complete · ${remaining} remaining`;
+      $("activeProgressFill").style.width=`${((route.index)/jobs.length)*100}%`;
+
+      $("activeStopCard").innerHTML=`
+        <div class="stop-kicker">Current Stop</div>
+        <div class="stop-company">${esc(job.company || "Field Job")} · Job #${esc(job.number || "—")}</div>
+        <h1 class="stop-name">${esc(job.name)}</h1>
+        <p class="stop-address">${esc(job.address)}</p>
+        <button class="btn blue wide navigate" id="navigateBtn" type="button">Open in Apple Maps</button>
+        ${job.notes ? `<p class="hint"><strong>Job notes:</strong> ${esc(job.notes)}</p>` : ""}
       `;
 
-      const nextJob = routeJobs[active.currentIndex + 1];
-      $("routeActionArea").innerHTML = `
-        <div class="route-section-title">What happened?</div>
-        <div class="outcome-grid">
-          <button class="outcome-btn outcome-attempted" type="button" data-outcome="attempted">
-            <span>Attempted<br /><small>No completed service</small></span>
-            <span>›</span>
-          </button>
-          <button class="outcome-btn outcome-served" type="button" data-outcome="served">
-            <span>Served<br /><small>Completed successfully</small></span>
-            <span>›</span>
-          </button>
-          <button class="outcome-btn outcome-nonserved" type="button" data-outcome="non-served">
-            <span>Non-Served<br /><small>Record the reason in notes</small></span>
-            <span>›</span>
-          </button>
+      const next=jobs[route.index+1];
+      $("activeActions").innerHTML=`
+        <div class="route-title">What happened?</div>
+        <div class="outcomes">
+          <button class="outcome attempt route-outcome" type="button" data-status="attempted"><span>Attempted<small>No completed service</small></span><span>›</span></button>
+          <button class="outcome serve route-outcome" type="button" data-status="served"><span>Served<small>Completed successfully</small></span><span>›</span></button>
+          <button class="outcome nonserve route-outcome" type="button" data-status="non-served"><span>Non-Served<small>Record the reason in notes</small></span><span>›</span></button>
         </div>
-
-        <div class="route-footer-actions">
-          <button class="btn blue" type="button" id="skipBtn">Skip / Follow-Up</button>
-          <button class="btn secondary" type="button" id="routeJobDetailsBtn">Job Details</button>
+        <div class="route-actions">
+          <button class="btn blue" id="skipBtn" type="button">Skip / Follow-Up</button>
+          <button class="btn secondary" id="detailsBtn" type="button">Job Details</button>
         </div>
-
-        ${nextJob ? `
-          <div class="next-stop">
-            <small>Next stop</small>
-            <strong>${safeText(nextJob.name)}</strong>
-            <span>${safeText(nextJob.address)}</span>
-          </div>
-        ` : `
-          <div class="next-stop">
-            <small>Final stop</small>
-            <strong>This is the last selected job in this route.</strong>
-          </div>
-        `}
+        ${next ? `<div class="next-card"><small>Next Stop</small><strong>${esc(next.name)}</strong><span>${esc(next.address)}</span></div>` : `<div class="next-card"><small>Final Stop</small><strong>This is your last selected stop.</strong></div>`}
       `;
 
-      $("navigateBtn").addEventListener("click", () => openAppleMaps(currentJob.address));
-      document.querySelectorAll("[data-outcome]").forEach((button) => {
-        button.addEventListener("click", () => openOutcomeDialog(currentJob.id, button.dataset.outcome));
-      });
-
-      $("skipBtn").addEventListener("click", () => {
-        saveOutcome(currentJob.id, "skipped", "Skipped during route. Follow-up needed.");
-      });
-
-      $("routeJobDetailsBtn").addEventListener("click", () => {
-        const notes = currentJob.notes || "No extra job notes saved.";
-        alert(
-          `${currentJob.name}\n\n` +
-          `Company: ${currentJob.company || "—"}\n` +
-          `Job #: ${currentJob.jobNumber || "—"}\n` +
-          `County: ${currentJob.county}\n\n` +
-          `Notes:\n${notes}`
-        );
-      });
+      $("navigateBtn").onclick=()=>openMaps(job.address);
+      document.querySelectorAll(".route-outcome").forEach(btn=>btn.onclick=()=>openOutcome(job.id,btn.dataset.status));
+      $("skipBtn").onclick=()=>saveOutcome(job.id,"skipped","Skipped during route. Follow-up needed.");
+      $("detailsBtn").onclick=()=>alert(`${job.name}\n\nCompany: ${job.company || "—"}\nJob #: ${job.number || "—"}\nCounty: ${job.county}\n\nAddress:\n${job.address}\n\nNotes:\n${job.notes || "No notes saved."}`);
     }
 
-    function renderAll() {
-      renderHeader();
-      renderRouteChoices();
-      renderRouteJobList();
-      renderAllJobsList();
-      renderReview();
-      renderRouteMode();
+    function renderAll(){
+      renderHeader(); renderDashboard(); renderJobs(); renderRoute(); renderInvoices(); renderMoney(); renderReview(); renderRouteMode();
     }
 
-    function openAppleMaps(address) {
-      const encodedAddress = encodeURIComponent(address);
-      window.open(`https://maps.apple.com/?daddr=${encodedAddress}&dirflg=d`, "_blank", "noopener");
+    function openMaps(address){
+      window.open(`https://maps.apple.com/?daddr=${encodeURIComponent(address)}&dirflg=d`,"_blank","noopener");
     }
 
-    let pendingOutcome = null;
+    function parseIntake(){
+      const text=$("intakeText").value.trim();
+      if(!text){ toast("Paste job details first."); return; }
 
-    function openOutcomeDialog(jobId, outcome) {
-      const job = state.jobs.find((item) => item.id === jobId);
-      if (!job) return;
+      const lines=text.split(/\n|,/).map(x=>x.trim()).filter(Boolean);
+      const email=/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i;
+      const jobMatch=text.match(/(?:job|file|case|assignment)\s*(?:#|number|no\.?)?\s*[:\-]?\s*([A-Z0-9\-]+)/i);
+      const addressMatch=text.match(/\d{1,6}\s+[A-Za-z0-9 .#\-]+(?:Street|St|Avenue|Ave|Road|Rd|Drive|Dr|Court|Ct|Lane|Ln|Boulevard|Blvd|Way|Place|Pl|Trail|Terrace|Ter|Circle|Cir)[^,\n]*(?:,\s*[^,\n]+){0,3}/i);
 
-      pendingOutcome = { jobId, outcome };
-      $("outcomeTitle").textContent = `Mark as ${statusLabels[outcome]}`;
-      $("outcomeJobInfo").textContent = `${job.name} · ${job.address}`;
-      $("outcomeNotes").value = "";
+      $("intakeNumber").value=jobMatch ? jobMatch[1] : "";
+      $("intakeAddress").value=addressMatch ? addressMatch[0].trim() : "";
+      $("intakeName").value=lines.find(line=>line.length>3 && !email.test(line) && !/\d{1,6}\s/.test(line) && !/job|case|file|assignment/i.test(line)) || "";
+      $("intakeCompany").value=/provest/i.test(text) ? "ProVest" : /abc legal/i.test(text) ? "ABC Legal" : "";
+      $("intakeCounty").value=/orlando|orange county/i.test(text) ? "Orange" : /kissimmee|saint cloud|st\.?\s*cloud|osceola/i.test(text) ? "Osceola" : "Other";
+      $("intakeNotes").value=text;
+      toast("Draft created. Please review and correct it before saving.");
+    }
+
+    function addJob(data){
+      state.jobs.unshift({
+        id:id(),
+        name:data.name,
+        company:data.company || "",
+        number:data.number || "",
+        county:data.county,
+        address:data.address,
+        notes:data.notes || "",
+        fee:Number(data.fee || 0),
+        status:"pending",
+        outcomeNotes:"",
+        createdAt:new Date().toISOString()
+      });
+      save(); renderAll();
+    }
+
+    function startRoute(){
+      const visible=jobsForFilter(state.routeFilter);
+      const ids=state.selectedIds.filter(x=>visible.some(j=>j.id===x));
+      if(!ids.length){ toast("Select route jobs first, or tap Select All Visible."); return; }
+      state.activeRoute={active:true,ids,index:0,filter:state.routeFilter};
+      save(); renderAll(); window.scrollTo({top:0,behavior:"smooth"});
+    }
+
+    let pendingOutcome=null;
+
+    function openOutcome(jobId,status){
+      const job=getJob(jobId);
+      if(!job) return;
+      pendingOutcome={jobId,status};
+      $("outcomeTitle").textContent=`Mark as ${labels[status]}`;
+      $("outcomeInfo").textContent=`${job.name} · ${job.address}`;
+      $("outcomeNotes").value="";
       $("outcomeDialog").showModal();
     }
 
-    function saveOutcome(jobId, outcome, notes) {
-      const job = state.jobs.find((item) => item.id === jobId);
-      if (!job) return;
+    function saveOutcome(jobId,status,notes){
+      const job=getJob(jobId);
+      if(!job) return;
+      job.status=status;
+      job.outcomeNotes=notes || "";
+      job.updatedAt=new Date().toISOString();
 
-      job.status = outcome;
-      job.outcomeNotes = notes || "";
-      job.updatedAt = new Date().toISOString();
-
-      const active = state.activeRoute;
-      if (active.active) {
-        const currentRouteJobId = active.jobIds[active.currentIndex];
-        if (currentRouteJobId === jobId) {
-          active.currentIndex += 1;
-        }
+      if(state.activeRoute.active && state.activeRoute.ids[state.activeRoute.index]===jobId){
+        state.activeRoute.index++;
       }
 
-      saveState();
-      renderAll();
-
-      if (state.activeRoute.active) {
-        showToast(`${statusLabels[outcome]} saved. Moving to the next stop.`);
-      } else {
-        showToast(`${statusLabels[outcome]} saved.`);
-      }
+      save(); renderAll();
+      toast(`${labels[status]} saved. Moving to the next stop.`);
     }
 
-    function startRoute() {
-      const selected = selectedVisibleJobs();
-
-      if (!selected.length) {
-        showToast("Select route jobs first, or use Select All Visible.");
-        return;
-      }
-
-      state.activeRoute = {
-        active: true,
-        jobIds: selected,
-        currentIndex: 0,
-        filter: state.routeFilter
-      };
-
-      saveState();
-      renderAll();
-      window.scrollTo({ top: 0, behavior: "smooth" });
+    function endRoute(){
+      state.activeRoute.active=false;
+      save(); renderAll();
+      toast("Route paused. All saved outcomes are still there.");
     }
 
-    function exitRoute() {
-      state.activeRoute.active = false;
-      saveState();
-      renderAll();
-      showToast("Route paused. Your job updates are saved.");
+    function completeRoute(){
+      state.activeRoute.active=false;
+      state.selectedIds=[];
+      save(); renderAll();
+      toast("Route complete. Review your outcomes when ready.");
     }
 
-    function completeRoute() {
-      state.activeRoute.active = false;
-      state.selectedIds = [];
-      saveState();
-      renderAll();
-      showToast("Route complete. Review your job outcomes when you are ready.");
-    }
-
-    function addJob(event) {
-      event.preventDefault();
-
-      const job = {
-        id: makeId(),
-        name: $("jobName").value.trim(),
-        company: $("jobCompany").value.trim(),
-        jobNumber: $("jobNumber").value.trim(),
-        county: $("jobCounty").value,
-        address: $("jobAddress").value.trim(),
-        notes: $("jobNotes").value.trim(),
-        status: "pending",
-        outcomeNotes: "",
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
-      };
-
-      state.jobs.unshift(job);
-      saveState();
-      event.target.reset();
-      renderAll();
-      showToast("Job saved and ready for routing.");
-    }
-
-    function loadSamples() {
-      const samples = [
-        {
-          id: makeId(),
-          name: "Franklin Sanchez",
-          company: "ProVest",
-          jobNumber: "311005",
-          county: "Osceola",
-          address: "2201 Key West Ct, Apt 337, Kissimmee, FL 34741",
-          notes: "Verify apartment number before attempting.",
-          status: "pending",
-          outcomeNotes: ""
-        },
-        {
-          id: makeId(),
-          name: "Danielle Morgan",
-          company: "ABC Legal",
-          jobNumber: "311006",
-          county: "Osceola",
-          address: "2947 Pioneer Street, Saint Cloud, FL 34772",
-          notes: "",
-          status: "pending",
-          outcomeNotes: ""
-        },
-        {
-          id: makeId(),
-          name: "Christopher Reed",
-          company: "ProVest",
-          jobNumber: "311007",
-          county: "Orange",
-          address: "1800 Sand Lake Road, Orlando, FL 32809",
-          notes: "Business address. Check office hours.",
-          status: "pending",
-          outcomeNotes: ""
-        },
-        {
-          id: makeId(),
-          name: "Maria Rodriguez",
-          company: "Direct Legal",
-          jobNumber: "311008",
-          county: "Orange",
-          address: "7250 S Orange Blossom Trail, Orlando, FL 32809",
-          notes: "",
-          status: "pending",
-          outcomeNotes: ""
-        }
+    function sampleJobs(){
+      if(state.jobs.length && !confirm("Add sample jobs to your existing jobs?")) return;
+      const data=[
+        {name:"Franklin Sanchez",company:"ProVest",number:"311005",county:"Osceola",address:"2201 Key West Ct, Apt 337, Kissimmee, FL 34741",notes:"Verify apartment number before attempting.",fee:55},
+        {name:"Danielle Morgan",company:"ABC Legal",number:"311006",county:"Osceola",address:"2947 Pioneer Street, Saint Cloud, FL 34772",notes:"",fee:55},
+        {name:"Christopher Reed",company:"ProVest",number:"311007",county:"Orange",address:"1800 Sand Lake Road, Orlando, FL 32809",notes:"Business address. Check office hours.",fee:65},
+        {name:"Maria Rodriguez",company:"Direct Legal",number:"311008",county:"Orange",address:"7250 S Orange Blossom Trail, Orlando, FL 32809",notes:"",fee:60}
       ];
-
-      const hasJobs = state.jobs.length > 0;
-      if (hasJobs && !confirm("Add the sample jobs to the jobs already saved?")) return;
-
-      state.jobs.unshift(...samples);
-      saveState();
-      renderAll();
-      showToast("Sample jobs added. Open Route to build a county route.");
+      data.forEach(addJob);
+      toast("Sample jobs added.");
     }
 
-    function deleteJob(jobId) {
-      const job = state.jobs.find((item) => item.id === jobId);
-      if (!job) return;
+    function invoiceFromJobs(){
+      const served=state.jobs.filter(j=>j.status==="served");
+      if(!served.length){ toast("There are no served jobs available for an invoice draft."); return; }
+      const total=served.reduce((sum,j)=>sum+Number(j.fee||0),0);
+      const companies=[...new Set(served.map(j=>j.company).filter(Boolean))];
+      $("invoiceClient").value=companies.length===1 ? companies[0] : "";
+      $("invoiceNumber").value=`INV-${String(state.invoices.length+1001)}`;
+      $("invoiceAmount").value=total.toFixed(2);
+      $("invoiceDescription").value=`Completed service jobs: ${served.map(j=>j.number || j.name).join(", ")}`;
+      $("invoiceDueDate").value=today();
+      toast("Invoice draft fields were filled from served jobs. Review, then save.");
+    }
 
-      if (!confirm(`Delete ${job.name}?`)) return;
+    function exportBackup(){
+      const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"});
+      const url=URL.createObjectURL(blob);
+      const link=document.createElement("a");
+      link.href=url; link.download=`jasz-field-office-backup-${today()}.json`;
+      document.body.appendChild(link); link.click(); link.remove(); URL.revokeObjectURL(url);
+      toast("Backup downloaded.");
+    }
 
-      state.jobs = state.jobs.filter((item) => item.id !== jobId);
-      state.selectedIds = state.selectedIds.filter((id) => id !== jobId);
-      state.activeRoute.jobIds = state.activeRoute.jobIds.filter((id) => id !== jobId);
+    document.querySelectorAll(".nav button").forEach(btn=>btn.onclick=()=>setView(btn.dataset.view));
+    document.querySelectorAll("[data-go]").forEach(btn=>btn.onclick=()=>setView(btn.dataset.go));
 
-      if (state.activeRoute.currentIndex >= state.activeRoute.jobIds.length) {
-        state.activeRoute.active = false;
+    $("parseIntakeBtn").onclick=parseIntake;
+    $("clearIntakeBtn").onclick=()=>{ $("intakeText").value=""; $("intakeForm").reset(); };
+    $("intakeForm").onsubmit=(e)=>{
+      e.preventDefault();
+      addJob({name:$("intakeName").value.trim(),company:$("intakeCompany").value.trim(),number:$("intakeNumber").value.trim(),county:$("intakeCounty").value,address:$("intakeAddress").value.trim(),notes:$("intakeNotes").value.trim(),fee:0});
+      $("intakeForm").reset(); $("intakeText").value=""; toast("Job saved from Smart Intake.");
+    };
+
+    $("jobForm").onsubmit=(e)=>{
+      e.preventDefault();
+      addJob({name:$("jobName").value.trim(),company:$("jobCompany").value.trim(),number:$("jobNumber").value.trim(),county:$("jobCounty").value,address:$("jobAddress").value.trim(),notes:$("jobNotes").value.trim(),fee:$("jobFee").value});
+      e.target.reset(); toast("Job saved.");
+    };
+    $("sampleJobsBtn").onclick=sampleJobs;
+
+    $("allJobsList").onclick=(e)=>{
+      const btn=e.target.closest(".delete-job");
+      if(!btn) return;
+      const job=getJob(btn.dataset.id);
+      if(job && confirm(`Delete ${job.name}?`)){
+        state.jobs=state.jobs.filter(j=>j.id!==job.id);
+        state.selectedIds=state.selectedIds.filter(x=>x!==job.id);
+        state.activeRoute.ids=state.activeRoute.ids.filter(x=>x!==job.id);
+        save(); renderAll(); toast("Job deleted.");
       }
+    };
 
-      saveState();
-      renderAll();
-      showToast("Job deleted.");
-    }
-
-    function exportBackup() {
-      const data = JSON.stringify(state, null, 2);
-      const blob = new Blob([data], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = `jasz-field-route-backup-${new Date().toISOString().slice(0, 10)}.json`;
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      URL.revokeObjectURL(url);
-      showToast("Backup exported.");
-    }
-
-    function clearAllData() {
-      if (!confirm("This will permanently remove all saved jobs, route selections, and outcomes from this browser. Continue?")) {
-        return;
-      }
-
-      state.jobs = [];
-      state.selectedIds = [];
-      state.routeFilter = "osceola";
-      state.activeRoute = {
-        active: false,
-        jobIds: [],
-        currentIndex: 0,
-        filter: "osceola"
-      };
-
-      saveState();
-      renderAll();
-      showToast("All local route data was cleared.");
-    }
-
-    document.querySelectorAll(".tab").forEach((button) => {
-      button.addEventListener("click", () => setTab(button.dataset.tab));
+    document.querySelectorAll(".choice").forEach(btn=>btn.onclick=()=>{
+      state.routeFilter=btn.dataset.filter; save(); renderAll();
     });
 
-    document.querySelectorAll(".route-choice").forEach((button) => {
-      button.addEventListener("click", () => {
-        state.routeFilter = button.dataset.routeFilter;
-        saveState();
-        renderAll();
+    $("routeJobsList").onchange=(e)=>{
+      if(!e.target.classList.contains("route-check")) return;
+      const jobId=e.target.dataset.id;
+      if(e.target.checked) state.selectedIds=[...new Set([...state.selectedIds,jobId])];
+      else state.selectedIds=state.selectedIds.filter(x=>x!==jobId);
+      save(); renderAll();
+    };
+
+    $("selectVisibleBtn").onclick=()=>{
+      const ids=jobsForFilter(state.routeFilter).map(j=>j.id);
+      state.selectedIds=[...new Set([...state.selectedIds,...ids])];
+      save(); renderAll(); toast("All visible jobs selected.");
+    };
+
+    $("clearVisibleBtn").onclick=()=>{
+      const ids=new Set(jobsForFilter(state.routeFilter).map(j=>j.id));
+      state.selectedIds=state.selectedIds.filter(x=>!ids.has(x));
+      save(); renderAll(); toast("Visible route selection cleared.");
+    };
+
+    $("startRouteBtn").onclick=startRoute;
+    $("endRouteBtn").onclick=endRoute;
+
+    $("outcomeForm").onsubmit=(e)=>{
+      e.preventDefault();
+      if(e.submitter.value==="cancel" || !pendingOutcome){
+        $("outcomeDialog").close(); pendingOutcome=null; return;
+      }
+      saveOutcome(pendingOutcome.jobId,pendingOutcome.status,$("outcomeNotes").value.trim());
+      $("outcomeDialog").close(); pendingOutcome=null;
+    };
+
+    $("invoiceForm").onsubmit=(e)=>{
+      e.preventDefault();
+      state.invoices.unshift({
+        id:id(),
+        client:$("invoiceClient").value.trim(),
+        number:$("invoiceNumber").value.trim(),
+        dueDate:$("invoiceDueDate").value || "",
+        amount:Number($("invoiceAmount").value || 0),
+        description:$("invoiceDescription").value.trim(),
+        status:"draft",
+        createdAt:new Date().toISOString()
       });
-    });
+      save(); e.target.reset(); renderAll(); toast("Invoice saved as draft.");
+    };
 
-    $("selectAllBtn").addEventListener("click", () => {
-      const visibleIds = jobsForFilter(state.routeFilter).map((job) => job.id);
-      state.selectedIds = [...new Set([...state.selectedIds, ...visibleIds])];
-      saveState();
-      renderAll();
-      showToast("All visible route jobs selected.");
-    });
+    $("invoiceFromJobsBtn").onclick=invoiceFromJobs;
 
-    $("clearSelectionBtn").addEventListener("click", () => {
-      const visibleIds = new Set(jobsForFilter(state.routeFilter).map((job) => job.id));
-      state.selectedIds = state.selectedIds.filter((id) => !visibleIds.has(id));
-      saveState();
-      renderAll();
-      showToast("Visible route selection cleared.");
-    });
+    $("invoiceList").onclick=(e)=>{
+      const statusBtn=e.target.closest(".invoice-status");
+      const deleteBtn=e.target.closest(".delete-invoice");
 
-    $("startRouteBtn").addEventListener("click", startRoute);
-    $("exitRouteBtn").addEventListener("click", exitRoute);
-    $("jobForm").addEventListener("submit", addJob);
-    $("loadSamplesBtn").addEventListener("click", loadSamples);
-    $("exportBtn").addEventListener("click", exportBackup);
-    $("clearAllDataBtn").addEventListener("click", clearAllData);
-
-    $("routeJobList").addEventListener("change", (event) => {
-      if (!event.target.classList.contains("route-checkbox")) return;
-
-      const jobId = event.target.dataset.jobId;
-
-      if (event.target.checked) {
-        state.selectedIds = [...new Set([...state.selectedIds, jobId])];
-      } else {
-        state.selectedIds = state.selectedIds.filter((id) => id !== jobId);
+      if(statusBtn){
+        const invoice=state.invoices.find(i=>i.id===statusBtn.dataset.id);
+        if(!invoice) return;
+        invoice.status=statusBtn.dataset.status;
+        save(); renderAll(); toast(`Invoice marked ${labels[invoice.status]}.`);
       }
 
-      saveState();
-      renderAll();
-    });
-
-    $("allJobsList").addEventListener("click", (event) => {
-      const button = event.target.closest(".delete-job-btn");
-      if (button) deleteJob(button.dataset.jobId);
-    });
-
-    $("outcomeForm").addEventListener("submit", (event) => {
-      event.preventDefault();
-      const submitter = event.submitter;
-
-      if (!pendingOutcome || submitter.value === "cancel") {
-        $("outcomeDialog").close();
-        pendingOutcome = null;
-        return;
+      if(deleteBtn){
+        const invoice=state.invoices.find(i=>i.id===deleteBtn.dataset.id);
+        if(invoice && confirm(`Delete invoice ${invoice.number}?`)){
+          state.invoices=state.invoices.filter(i=>i.id!==invoice.id);
+          save(); renderAll(); toast("Invoice deleted.");
+        }
       }
+    };
 
-      saveOutcome(pendingOutcome.jobId, pendingOutcome.outcome, $("outcomeNotes").value.trim());
-      $("outcomeDialog").close();
-      pendingOutcome = null;
-    });
+    $("moneyDate").value=today();
 
-    loadState();
+    $("moneyForm").onsubmit=(e)=>{
+      e.preventDefault();
+      state.money.unshift({
+        id:id(),
+        type:$("moneyType").value,
+        amount:Number($("moneyAmount").value || 0),
+        category:$("moneyCategory").value.trim(),
+        date:$("moneyDate").value || today(),
+        notes:$("moneyNotes").value.trim(),
+        createdAt:new Date().toISOString()
+      });
+      save(); e.target.reset(); $("moneyDate").value=today(); renderAll(); toast("Money entry saved.");
+    };
+
+    $("moneyList").onclick=(e)=>{
+      const btn=e.target.closest(".delete-money");
+      if(!btn) return;
+      if(confirm("Delete this money entry?")){
+        state.money=state.money.filter(m=>m.id!==btn.dataset.id);
+        save(); renderAll(); toast("Money entry deleted.");
+      }
+    };
+
+    $("exportBtn").onclick=exportBackup;
+    $("clearDataBtn").onclick=()=>{
+      if(!confirm("This permanently clears all jobs, invoices, money entries, and route data from this browser. Continue?")) return;
+      state.jobs=[]; state.invoices=[]; state.money=[]; state.selectedIds=[]; state.routeFilter="osceola";
+      state.activeRoute={active:false,ids:[],index:0,filter:"osceola"};
+      save(); renderAll(); toast("All local app data was cleared.");
+    };
+
+    load();
     renderAll();
   </script>
 </body>
