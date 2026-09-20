@@ -1,33 +1,33 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <meta name="theme-color" content="#34251e" />
-  <title>Jasz Field Office</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#39271f">
+  <title>Jasz Field & Office System</title>
 
   <style>
     :root{
-      --bg:#f7f0e5;
-      --paper:#fffdf9;
-      --ink:#34251e;
-      --muted:#74665d;
+      --bg:#f8f1e6;
+      --paper:#fffdf8;
+      --ink:#39271f;
+      --muted:#75665c;
       --line:#e4d4c1;
-      --gold:#b88728;
-      --gold-soft:#f7e6bb;
-      --brown:#563a2a;
-      --purple:#69437d;
-      --purple-soft:#eadff0;
-      --green:#2f794c;
-      --green-soft:#dcefe3;
-      --orange:#b85b17;
-      --orange-soft:#ffe8d3;
-      --red:#a43c35;
-      --red-soft:#f9dddd;
-      --blue:#246291;
-      --blue-soft:#deeffb;
-      --shadow:0 13px 32px rgba(82,53,27,.10);
-      --r:18px;
+      --gold:#b98928;
+      --gold-soft:#f7e7bc;
+      --brown:#5b3e2d;
+      --purple:#6c487e;
+      --purple-soft:#ede2f1;
+      --green:#2f7b4e;
+      --green-soft:#ddf0e5;
+      --orange:#bb5c17;
+      --orange-soft:#ffe9d5;
+      --red:#a94139;
+      --red-soft:#f9dfdd;
+      --blue:#256694;
+      --blue-soft:#dfeffd;
+      --shadow:0 13px 34px rgba(76,47,22,.11);
+      --radius:18px;
     }
 
     *{box-sizing:border-box}
@@ -36,79 +36,31 @@
       margin:0;
       min-width:320px;
       color:var(--ink);
-      background:
-        radial-gradient(circle at top right,rgba(231,190,99,.22),transparent 32rem),
-        var(--bg);
+      background:radial-gradient(circle at top right,rgba(230,190,97,.24),transparent 32rem),var(--bg);
       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
       -webkit-font-smoothing:antialiased;
     }
+
     button,input,textarea,select{font:inherit}
     button{cursor:pointer;touch-action:manipulation}
     button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{
-      outline:3px solid rgba(184,135,40,.48);
+      outline:3px solid rgba(185,137,40,.44);
       outline-offset:2px;
     }
 
-    .shell{max-width:1360px;margin:auto;padding:20px 20px calc(112px + env(safe-area-inset-bottom))}
-    .topbar{
-      display:flex;align-items:center;justify-content:space-between;gap:16px;
-      padding:3px 0 20px;
-    }
-    .eyebrow{
-      color:var(--gold);font-size:.72rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase;
-    }
     h1,h2,h3,p{margin-top:0}
-    h1{margin:4px 0 0;font-size:clamp(1.6rem,4vw,2.3rem);line-height:1.08}
+    h1{margin:4px 0 0;font-size:clamp(1.65rem,4vw,2.35rem);line-height:1.08}
     h2{margin-bottom:7px;font-size:1.3rem}
-    h3{margin-bottom:6px;font-size:1rem}
-    .subtle,.muted{color:var(--muted)}
-    .subtle{line-height:1.45;margin-bottom:0}
-    .top-pills{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
-    .pill,.badge{
-      display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;
-      border-radius:999px;padding:7px 10px;font-size:.76rem;font-weight:900;letter-spacing:.02em;
-    }
-    .pill{background:var(--gold-soft);color:#714a08}
-    .badge.pending{background:#ede6dc;color:#625950}
-    .badge.attempted{background:var(--orange-soft);color:#823704}
-    .badge.served{background:var(--green-soft);color:#1d6338}
-    .badge.non-served{background:var(--red-soft);color:#872822}
-    .badge.skipped{background:var(--blue-soft);color:#14547c}
-    .badge.draft{background:#ede6dc;color:#625950}
-    .badge.sent{background:var(--blue-soft);color:#14547c}
-    .badge.paid{background:var(--green-soft);color:#1d6338}
-    .badge.overdue{background:var(--red-soft);color:#872822}
+    h3{margin-bottom:5px;font-size:1rem}
 
-    .nav{
-      display:grid;grid-template-columns:repeat(7,1fr);gap:7px;
-      padding:7px;margin-bottom:20px;border:1px solid var(--line);border-radius:16px;
-      background:rgba(255,253,249,.75);box-shadow:var(--shadow);
-    }
-    .nav button{
-      min-height:46px;padding:9px 8px;border:0;border-radius:11px;background:transparent;
-      color:var(--muted);font-weight:900;font-size:.85rem;
-    }
-    .nav button.active{background:var(--brown);color:white}
-    .view{display:none}
-    .view.active{display:block}
-    .card{
-      padding:20px;background:rgba(255,253,249,.96);border:1px solid var(--line);
-      border-radius:var(--r);box-shadow:var(--shadow);
-    }
-    .card + .card{margin-top:16px}
-    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-    .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-    .metric{
-      padding:16px;border:1px solid var(--line);border-radius:15px;background:var(--paper);
-    }
-    .metric span{display:block;color:var(--muted);font-weight:900;font-size:.74rem;letter-spacing:.07em;text-transform:uppercase}
-    .metric strong{display:block;margin-top:6px;font-size:1.65rem}
-    .metric small{display:block;margin-top:4px;color:var(--muted);line-height:1.32}
+    .app{max-width:1400px;margin:auto;padding:20px 20px calc(110px + env(safe-area-inset-bottom))}
+    .hidden{display:none!important}
+    .subtle{color:var(--muted);line-height:1.45;margin-bottom:0}
+    .eyebrow{color:var(--gold);font-size:.73rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
 
     .btn{
       min-height:45px;padding:10px 14px;border:0;border-radius:12px;background:var(--brown);
-      color:white;font-weight:900;
+      color:#fff;font-weight:900;
     }
     .btn.secondary{background:#f5ede2;color:var(--brown);border:1px solid var(--line)}
     .btn.gold{background:var(--gold)}
@@ -119,7 +71,27 @@
     .btn.purple{background:var(--purple)}
     .btn.wide{width:100%}
     .button-row{display:flex;gap:10px;flex-wrap:wrap}
-    .toolbar{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap}
+
+    .pill,.badge{
+      display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;
+      border-radius:999px;padding:7px 10px;font-size:.76rem;font-weight:900;letter-spacing:.02em;
+    }
+    .pill{background:var(--gold-soft);color:#754f0b}
+    .badge.pending,.badge.draft{background:#eee7dc;color:#655c54}
+    .badge.attempted{background:var(--orange-soft);color:#863905}
+    .badge.served,.badge.paid{background:var(--green-soft);color:#1d673b}
+    .badge.non-served,.badge.overdue{background:var(--red-soft);color:#8a2a25}
+    .badge.skipped,.badge.sent{background:var(--blue-soft);color:#145780}
+
+    .card{
+      padding:20px;background:rgba(255,253,248,.97);border:1px solid var(--line);
+      border-radius:var(--radius);box-shadow:var(--shadow);
+    }
+    .card + .card{margin-top:16px}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
     .toolbar h2{margin-bottom:5px}
 
     label{display:grid;gap:6px;color:var(--brown);font-size:.85rem;font-weight:900}
@@ -127,67 +99,128 @@
       width:100%;min-height:45px;padding:10px 11px;border:1px solid #d8c8b5;border-radius:11px;
       color:var(--ink);background:#fffdfa;
     }
-    textarea{min-height:90px;resize:vertical}
+    textarea{min-height:92px;resize:vertical}
     .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
     .form-grid .full{grid-column:1/-1}
-    .hint{color:var(--muted);font-size:.86rem;line-height:1.4;margin:10px 0 0}
+    .hint{margin:10px 0 0;color:var(--muted);font-size:.86rem;line-height:1.42}
+
+    .topbar{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:3px 0 20px}
+    .top-actions{display:flex;gap:9px;align-items:center;justify-content:flex-end;flex-wrap:wrap}
+
+    .workspace-chooser{
+      max-width:850px;margin:5vh auto 0;padding:26px;background:rgba(255,253,248,.97);
+      border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);text-align:center;
+    }
+    .workspace-chooser h1{margin:7px 0 10px}
+    .workspace-options{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:22px;text-align:left}
+    .workspace-option{
+      min-height:220px;padding:21px;border:2px solid var(--line);border-radius:19px;background:var(--paper);
+      color:var(--ink);text-align:left;
+    }
+    .workspace-option:hover{border-color:var(--gold);background:#fff9ea}
+    .workspace-option strong{display:block;margin:9px 0 8px;font-size:1.25rem}
+    .workspace-option span{display:block;color:var(--muted);line-height:1.45}
+    .workspace-icon{font-size:2rem}
+
+    .nav{
+      display:grid;gap:7px;padding:7px;margin-bottom:20px;border:1px solid var(--line);border-radius:16px;
+      background:rgba(255,253,248,.76);box-shadow:var(--shadow);
+    }
+    .phone-nav{grid-template-columns:repeat(4,1fr)}
+    .tablet-nav{grid-template-columns:repeat(8,1fr)}
+    .nav button{
+      min-height:46px;padding:8px 7px;border:0;border-radius:11px;background:transparent;
+      color:var(--muted);font-size:.82rem;font-weight:900;
+    }
+    .nav button.active{color:#fff;background:var(--brown)}
+    .view{display:none}
+    .view.active{display:block}
+
+    .metric{padding:16px;border:1px solid var(--line);border-radius:15px;background:var(--paper)}
+    .metric span{display:block;color:var(--muted);font-size:.73rem;font-weight:900;letter-spacing:.07em;text-transform:uppercase}
+    .metric strong{display:block;margin-top:6px;font-size:1.65rem}
+    .metric small{display:block;margin-top:4px;color:var(--muted);line-height:1.3}
+    .positive{color:var(--green)!important}
+    .negative{color:var(--red)!important}
 
     .list{display:grid;gap:10px;margin-top:14px}
     .row{
       display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:14px;
       border:1px solid var(--line);border-radius:14px;background:var(--paper);
     }
-    .row.selected{background:#fff8e9;border-color:var(--gold)}
+    .row.selected{border-color:var(--gold);background:#fff8e7}
     .row input[type=checkbox]{width:22px;height:22px;min-height:22px;accent-color:var(--gold)}
-    .row-title{display:block;font-weight:900;line-height:1.25}
-    .row-meta,.row-address{display:block;color:var(--muted);font-size:.89rem;line-height:1.36}
+    .row-title{display:block;font-weight:900;line-height:1.28}
+    .row-meta,.row-address{display:block;color:var(--muted);font-size:.89rem;line-height:1.37}
     .row-address{margin-top:3px}
     .empty{
-      padding:27px 16px;border:1px dashed #d5c2a9;border-radius:14px;text-align:center;
-      color:var(--muted);background:rgba(255,253,249,.6);line-height:1.45;
+      padding:26px 16px;border:1px dashed #d6c3aa;border-radius:14px;background:rgba(255,253,248,.6);
+      color:var(--muted);text-align:center;line-height:1.45;
     }
+
+    .client-chips{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+    .client-chip{
+      min-height:40px;padding:8px 12px;border:1px solid var(--line);border-radius:999px;
+      background:#f8f0e4;color:var(--brown);font-weight:900;
+    }
+    .client-chip.selected{border-color:var(--purple);background:var(--purple);color:#fff}
+
+    .intake-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:16px 0}
+    .intake-step{
+      padding:10px;border-radius:11px;background:#f4ecdf;color:var(--muted);
+      text-align:center;font-size:.78rem;font-weight:900;
+    }
+    .intake-step.active{background:var(--purple);color:#fff}
+    .intake-layout{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .cleanup-lines{display:grid;gap:8px;margin-top:12px;max-height:330px;overflow:auto}
+    .cleanup-line{
+      display:flex;gap:10px;align-items:flex-start;padding:10px;border:1px solid var(--line);
+      border-radius:11px;background:var(--paper);
+    }
+    .cleanup-line.ignored{background:#f0ece7;color:#9a9087;text-decoration:line-through}
+    .cleanup-line input{width:20px;height:20px;min-height:20px;flex:0 0 auto;margin-top:1px;accent-color:var(--purple)}
+    .cleanup-line span{font-size:.89rem;line-height:1.35}
 
     .choice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-top:17px}
     .choice{
-      min-height:125px;padding:17px;border:2px solid var(--line);border-radius:16px;background:var(--paper);
+      min-height:118px;padding:16px;border:2px solid var(--line);border-radius:16px;background:var(--paper);
       color:var(--ink);text-align:left;
     }
-    .choice.selected,.choice:hover{border-color:var(--gold);background:#fff8e8}
-    .choice strong{display:block;margin-bottom:7px;font-size:1.06rem}
+    .choice.selected,.choice:hover{border-color:var(--gold);background:#fff8e7}
+    .choice strong{display:block;margin-bottom:7px;font-size:1.05rem}
     .choice span{display:block;color:var(--muted);font-size:.87rem;line-height:1.35}
 
-    .invoice-total{font-size:1.2rem;font-weight:900;color:var(--brown)}
-    .money-positive{color:var(--green)!important}
-    .money-negative{color:var(--red)!important}
-
-    dialog{
-      width:min(590px,calc(100vw - 28px));max-height:90vh;padding:0;border:0;border-radius:20px;
-      color:var(--ink);background:var(--paper);box-shadow:0 22px 70px rgba(45,25,10,.4);
+    .route-order{display:grid;gap:10px;margin-top:14px}
+    .route-stop{
+      display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:13px;
+      border:1px solid var(--line);border-radius:14px;background:var(--paper);
     }
-    dialog::backdrop{background:rgba(33,22,14,.52)}
-    .dialog-inner{padding:22px;max-height:90vh;overflow:auto}
-    .dialog-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:17px}
+    .route-stop-number{
+      width:33px;height:33px;display:grid;place-items:center;border-radius:50%;
+      background:var(--gold-soft);color:#714b08;font-weight:900;
+    }
 
     .route-mode{
       position:fixed;z-index:50;inset:0;overflow:auto;color:var(--ink);
-      background:radial-gradient(circle at top right,rgba(231,190,99,.24),transparent 28rem),var(--bg);
+      background:radial-gradient(circle at top right,rgba(230,190,97,.25),transparent 28rem),var(--bg);
     }
     .route-mode[hidden]{display:none}
     .route-inner{
-      max-width:640px;min-height:100%;margin:auto;padding:max(18px,env(safe-area-inset-top)) 18px calc(25px + env(safe-area-inset-bottom));
+      max-width:640px;min-height:100%;margin:auto;
+      padding:max(18px,env(safe-area-inset-top)) 18px calc(25px + env(safe-area-inset-bottom));
     }
-    .route-head{display:flex;justify-content:space-between;align-items:start;gap:12px}
+    .route-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
     .route-label{color:var(--gold);font-size:.74rem;font-weight:900;letter-spacing:.13em;text-transform:uppercase}
-    .route-head h2{margin:4px 0 0;font-size:1.4rem}
+    .route-head h2{margin:4px 0 0;font-size:1.42rem}
     .route-progress-text{margin:5px 0 0;color:var(--muted);font-weight:800}
-    .progress{height:10px;margin:17px 0 18px;overflow:hidden;border-radius:999px;background:#e7dccb}
-    .progress > div{height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--gold),#e5c16d);transition:width .25s}
+    .progress{height:10px;overflow:hidden;margin:17px 0 18px;border-radius:999px;background:#e7dccb}
+    .progress>div{height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--gold),#e5c16d)}
     .stop-card{
-      padding:24px;border:2px solid #dfc990;border-radius:22px;background:var(--paper);box-shadow:var(--shadow);
+      padding:24px;border:2px solid #dec98f;border-radius:22px;background:var(--paper);box-shadow:var(--shadow);
     }
     .stop-kicker{color:var(--gold);font-size:.77rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
-    .stop-company{margin-top:13px;color:var(--muted);font-weight:800;font-size:.9rem}
-    .stop-name{margin:3px 0 18px;font-size:clamp(1.4rem,6vw,1.9rem);line-height:1.1}
+    .stop-company{margin-top:13px;color:var(--muted);font-size:.9rem;font-weight:800}
+    .stop-name{margin:3px 0 18px;font-size:clamp(1.42rem,6vw,1.92rem);line-height:1.1}
     .stop-address{margin:0 0 20px;font-size:clamp(1.15rem,5vw,1.55rem);font-weight:900;line-height:1.27}
     .navigate{min-height:66px;border-radius:16px;font-size:1.12rem}
     .route-title{margin:22px 0 10px;font-size:.95rem;font-weight:900}
@@ -197,852 +230,1635 @@
       border:0;border-radius:16px;color:#fff;text-align:left;font-size:1.03rem;font-weight:900;
     }
     .outcome small{display:block;margin-top:2px;font-weight:700;opacity:.88}
-    .attempt{background:var(--orange)} .serve{background:var(--green)} .nonserve{background:var(--red)}
+    .attempt{background:var(--orange)}.serve{background:var(--green)}.nonserve{background:var(--red)}
     .route-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:17px}
-    .next-card{margin-top:15px;padding:14px;border:1px solid #d2e4ed;border-radius:15px;background:#f0f8fc}
+    .next-card{margin-top:15px;padding:14px;border:1px solid #d0e3ec;border-radius:15px;background:#f0f8fc}
     .next-card small{display:block;margin-bottom:4px;color:var(--blue);font-size:.74rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
     .next-card strong{display:block;margin-bottom:2px}
 
+    dialog{
+      width:min(610px,calc(100vw - 28px));max-height:90vh;padding:0;border:0;border-radius:20px;
+      color:var(--ink);background:var(--paper);box-shadow:0 22px 70px rgba(45,26,10,.4);
+    }
+    dialog::backdrop{background:rgba(35,23,15,.52)}
+    .dialog-inner{max-height:90vh;overflow:auto;padding:22px}
+    .dialog-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:17px}
+
     .toast{
       position:fixed;z-index:100;right:16px;bottom:calc(18px + env(safe-area-inset-bottom));
-      max-width:min(390px,calc(100vw - 32px));padding:13px 15px;border-radius:13px;color:#fff;
-      background:var(--brown);font-weight:900;box-shadow:var(--shadow);opacity:0;transform:translateY(15px);
-      pointer-events:none;transition:.2s;
+      max-width:min(390px,calc(100vw - 32px));padding:13px 15px;border-radius:13px;
+      color:#fff;background:var(--brown);box-shadow:var(--shadow);font-weight:900;
+      opacity:0;transform:translateY(15px);pointer-events:none;transition:.2s;
     }
     .toast.show{opacity:1;transform:translateY(0)}
 
-    @media(max-width:1000px){
-      .nav{grid-template-columns:repeat(4,1fr)}
+    @media(max-width:1050px){
+      .tablet-nav{grid-template-columns:repeat(4,1fr)}
     }
+
     @media(max-width:760px){
-      .shell{padding:15px 14px calc(102px + env(safe-area-inset-bottom))}
+      .app{padding:15px 14px calc(103px + env(safe-area-inset-bottom))}
       .topbar{padding-bottom:15px}
-      .nav{grid-template-columns:repeat(3,1fr)}
-      .grid2,.grid3,.choice-grid,.form-grid{grid-template-columns:1fr}
+      .workspace-options,.grid2,.grid3,.choice-grid,.form-grid,.intake-layout{grid-template-columns:1fr}
       .form-grid .full{grid-column:auto}
       .grid4{grid-template-columns:repeat(2,1fr)}
+      .tablet-nav{grid-template-columns:repeat(3,1fr)}
       .card{padding:16px}
       .row{grid-template-columns:auto 1fr}
-      .row > .badge,.row > .button-row,.row > .btn{grid-column:2;justify-self:start}
+      .row>.badge,.row>.button-row,.row>.btn{grid-column:2;justify-self:start}
+      .intake-steps{grid-template-columns:repeat(2,1fr)}
     }
+
+    @media print{
+      body{background:#fff;color:#000}
+      .no-print,.topbar,.nav,.workspace-chooser,.route-mode,.toast,dialog{display:none!important}
+      .print-only{display:block!important}
+      .app{max-width:none;padding:0}
+      .card{box-shadow:none;border:0;padding:0}
+      .print-sheet{display:block!important}
+      .print-stop{page-break-inside:avoid;border:1px solid #222;padding:14px;margin:0 0 12px}
+      .print-stop h3{margin:0 0 6px}
+      .print-lines{margin-top:11px;border-top:1px solid #555;padding-top:8px;min-height:56px}
+    }
+    .print-only,.print-sheet{display:none}
   </style>
 </head>
 
 <body>
-  <main class="shell">
-    <header class="topbar">
-      <div>
-        <div class="eyebrow">Jasz Field Office</div>
-        <h1>Business Command Center</h1>
-      </div>
-      <div class="top-pills">
-        <span class="pill" id="jobPill">0 jobs</span>
-        <span class="pill" id="invoicePill">$0 invoiced</span>
-      </div>
-    </header>
+  <main class="app">
+    <section id="workspaceChooser" class="workspace-chooser">
+      <div class="eyebrow">Jasz Field & Office System</div>
+      <h1>How are you working right now?</h1>
+      <p class="subtle">Choose the workspace that matches what you need. You can switch at any time.</p>
 
-    <nav class="nav" aria-label="App sections">
-      <button class="active" data-view="dashboard" type="button">Dashboard</button>
-      <button data-view="intake" type="button">Smart Intake</button>
-      <button data-view="jobs" type="button">Jobs</button>
-      <button data-view="route" type="button">Route</button>
-      <button data-view="invoices" type="button">Invoices</button>
-      <button data-view="money" type="button">Money</button>
-      <button data-view="review" type="button">Review</button>
-    </nav>
+      <div class="workspace-options">
+        <button class="workspace-option" type="button" data-workspace="phone">
+          <div class="workspace-icon">📱</div>
+          <strong>Field Phone</strong>
+          <span><b>Smart Intake first.</b> Copy and paste assignments, clean unnecessary words, confirm client/job code/address, build your route, and work one stop at a time.</span>
+        </button>
 
-    <section class="view active" id="dashboardView">
-      <div class="card">
-        <h2>Welcome back, Jasz</h2>
-        <p class="subtle">Use your iPad for planning, intake, invoices, and money. Use your iPhone to start a route and switch into the large field-work screen.</p>
-      </div>
-
-      <div class="grid4" style="margin-top:16px">
-        <div class="metric"><span>Pending jobs</span><strong id="dashPending">0</strong><small>Ready to plan</small></div>
-        <div class="metric"><span>Served</span><strong id="dashServed">0</strong><small>Completed jobs</small></div>
-        <div class="metric"><span>Invoice due</span><strong id="dashDue">$0</strong><small>Unpaid invoices</small></div>
-        <div class="metric"><span>Safe to spend</span><strong id="dashSafe">$0</strong><small>Income minus expenses</small></div>
-      </div>
-
-      <div class="grid2" style="margin-top:16px">
-        <div class="card">
-          <div class="toolbar">
-            <div><h2>Today’s Route</h2><p class="subtle">Start a county route when you are ready to work.</p></div>
-            <button class="btn gold" type="button" data-go="route">Open Route</button>
-          </div>
-          <div id="dashboardRouteList" class="list"></div>
-        </div>
-
-        <div class="card">
-          <div class="toolbar">
-            <div><h2>Invoice Snapshot</h2><p class="subtle">Track what is drafted, sent, and paid.</p></div>
-            <button class="btn purple" type="button" data-go="invoices">Open Invoices</button>
-          </div>
-          <div id="dashboardInvoiceList" class="list"></div>
-        </div>
+        <button class="workspace-option" type="button" data-workspace="tablet">
+          <div class="workspace-icon">📋</div>
+          <strong>Office iPad</strong>
+          <span><b>Full office control.</b> Intake and route planning are still available, plus Job Vault, pricing, invoices, money, payments, print route sheets, and review.</span>
+        </button>
       </div>
     </section>
 
-    <section class="view" id="intakeView">
-      <div class="grid2">
+    <section id="mainApp" class="hidden">
+      <header class="topbar">
+        <div>
+          <div class="eyebrow" id="workspaceLabel">Field Phone</div>
+          <h1 id="appTitle">Smart Intake</h1>
+        </div>
+        <div class="top-actions">
+          <span class="pill" id="jobPill">0 jobs</span>
+          <button class="btn secondary no-print" id="switchWorkspaceBtn" type="button">Switch Workspace</button>
+        </div>
+      </header>
+
+      <nav class="nav phone-nav no-print" id="phoneNav">
+        <button class="active" type="button" data-view="intake">Intake</button>
+        <button type="button" data-view="today">Today</button>
+        <button type="button" data-view="route">Route</button>
+        <button type="button" data-view="more">More</button>
+      </nav>
+
+      <nav class="nav tablet-nav no-print hidden" id="tabletNav">
+        <button class="active" type="button" data-view="dashboard">Dashboard</button>
+        <button type="button" data-view="intake">Field Desk</button>
+        <button type="button" data-view="vault">Job Vault</button>
+        <button type="button" data-view="route">Route</button>
+        <button type="button" data-view="pricing">Pricing</button>
+        <button type="button" data-view="invoices">Invoices</button>
+        <button type="button" data-view="money">Money</button>
+        <button type="button" data-view="review">Review</button>
+      </nav>
+
+      <!-- SMART INTAKE: Primary field data-entry system -->
+      <section class="view" id="intakeView">
         <div class="card">
-          <h2>Smart Intake</h2>
-          <p class="subtle">Paste a job message or enter it manually. This simple intake tool looks for common job details and gives you an editable draft.</p>
-          <label style="margin-top:15px">
-            Paste job details
-            <textarea id="intakeText" placeholder="Paste the text message, email details, or copied assignment here."></textarea>
-          </label>
-          <div class="button-row" style="margin-top:14px">
-            <button class="btn purple" id="parseIntakeBtn" type="button">Create Draft</button>
-            <button class="btn secondary" id="clearIntakeBtn" type="button">Clear</button>
+          <div class="toolbar">
+            <div>
+              <div class="eyebrow">Most Important Tool</div>
+              <h2>Smart Intake</h2>
+              <p class="subtle">Choose a client, paste the assignment, cancel out unnecessary lines, review the editable draft, and save the job.</p>
+            </div>
+            <span class="pill" id="intakeClientPill">No client selected</span>
           </div>
-          <p class="hint">Always review the draft before saving. Addresses and job numbers should be verified against your source paperwork.</p>
+
+          <div class="intake-steps">
+            <div class="intake-step active">1. Client</div>
+            <div class="intake-step active">2. Paste</div>
+            <div class="intake-step active">3. Clean</div>
+            <div class="intake-step active">4. Save Draft</div>
+          </div>
+
+          <h3>1. Choose Client / Platform</h3>
+          <div class="client-chips" id="intakeClientChips"></div>
+          <div class="button-row" style="margin-top:10px">
+            <button class="btn secondary" type="button" id="manageClientsBtn">Manage Client Profiles</button>
+          </div>
         </div>
 
-        <div class="card">
-          <h2>Editable Intake Draft</h2>
-          <form id="intakeForm">
-            <div class="form-grid">
-              <label>Person / Entity<input id="intakeName" required placeholder="Name to serve"></label>
-              <label>Company / Source<input id="intakeCompany" placeholder="Example: ProVest"></label>
-              <label>Job Number<input id="intakeNumber" placeholder="Assignment number"></label>
-              <label>County<select id="intakeCounty"><option value="Osceola">Osceola County</option><option value="Orange">Orange County</option><option value="Other">Other / Review</option></select></label>
-              <label class="full">Address<textarea id="intakeAddress" required placeholder="Street, city, state ZIP"></textarea></label>
-              <label class="full">Instructions / notes<textarea id="intakeNotes" placeholder="Gate code, document type, attempt window, due date, etc."></textarea></label>
-            </div>
+        <div class="intake-layout" style="margin-top:16px">
+          <div class="card">
+            <h2>2. Paste Original Assignment</h2>
+            <p class="subtle">Your original message stays saved with the job. Nothing is permanently deleted.</p>
+            <label style="margin-top:14px">
+              Assignment text
+              <textarea id="originalText" placeholder="Paste the copied assignment, email, text message, or job details here."></textarea>
+            </label>
             <div class="button-row" style="margin-top:14px">
-              <button class="btn gold" type="submit">Save Job From Intake</button>
+              <button class="btn purple" type="button" id="buildDraftBtn">Clean & Build Draft</button>
+              <button class="btn secondary" type="button" id="clearIntakeBtn">Clear Intake</button>
+            </div>
+            <p class="hint">The app applies the selected client’s cleanup phrases, then lets you choose any additional lines to ignore.</p>
+          </div>
+
+          <div class="card">
+            <h2>3. Cleanup Review</h2>
+            <p class="subtle">Check a line to ignore/cancel it from the working draft. It remains visible and can be restored at any time.</p>
+            <div class="cleanup-lines" id="cleanupLines">
+              <div class="empty">Paste an assignment, then choose <strong>Clean &amp; Build Draft</strong>.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:16px">
+          <div class="toolbar">
+            <div>
+              <h2>4. Editable Job Draft</h2>
+              <p class="subtle">Correct anything before you save. Smart Intake helps you start; you stay in control of the final record.</p>
+            </div>
+            <span class="pill">Draft stays editable</span>
+          </div>
+
+          <form id="intakeForm" style="margin-top:15px">
+            <div class="form-grid">
+              <label>Client / Platform<select id="draftClient"></select></label>
+              <label>County<select id="draftCounty"><option value="Osceola">Osceola County</option><option value="Orange">Orange County</option><option value="Other">Other / Review</option></select></label>
+              <label>Person / Entity<input id="draftName" required placeholder="Name to serve"></label>
+              <label>Job / File Code<input id="draftCode" placeholder="Job, file, or assignment number"></label>
+              <label class="full">Street Address<textarea id="draftAddress" required placeholder="Street, city, state ZIP"></textarea></label>
+              <label>Service Type<input id="draftServiceType" placeholder="Example: Service of Process"></label>
+              <label>Due Date<input id="draftDueDate" type="date"></label>
+              <label>Base Fee<input id="draftFee" type="number" min="0" step="0.01" placeholder="0.00"></label>
+              <label class="full">Instructions / Field Notes<textarea id="draftNotes" placeholder="Gate code, document type, attempt window, special instructions, etc."></textarea></label>
+            </div>
+
+            <div class="button-row" style="margin-top:15px">
+              <button class="btn gold" type="submit" data-save-mode="vault">Save to Job Vault</button>
+              <button class="btn green" type="submit" data-save-mode="today">Save Job + Add to Today</button>
             </div>
           </form>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="view" id="jobsView">
-      <div class="grid2">
+      <section class="view" id="todayView">
         <div class="card">
-          <h2>Add Job Manually</h2>
-          <form id="jobForm">
-            <div class="form-grid">
-              <label>Person / Entity<input id="jobName" required placeholder="Example: Franklin Sanchez"></label>
-              <label>Company / Source<input id="jobCompany" placeholder="Example: ProVest"></label>
-              <label>Job Number<input id="jobNumber" placeholder="Example: 311005"></label>
-              <label>County<select id="jobCounty"><option value="Osceola">Osceola County</option><option value="Orange">Orange County</option><option value="Other">Other / Review</option></select></label>
-              <label class="full">Full Address<textarea id="jobAddress" required placeholder="Street, city, state ZIP"></textarea></label>
-              <label class="full">Job Notes<textarea id="jobNotes" placeholder="Best time, gate code, due date, or special instructions."></textarea></label>
-              <label>Service Fee<input id="jobFee" type="number" min="0" step="0.01" placeholder="0.00"></label>
+          <div class="toolbar">
+            <div><h2>Today’s Jobs</h2><p class="subtle">Quick field view. Choose what you want to route today.</p></div>
+            <button class="btn gold no-print" type="button" data-go="route">Build Route</button>
+          </div>
+          <div class="list" id="todayList"></div>
+        </div>
+      </section>
+
+      <section class="view" id="moreView">
+        <div class="grid2">
+          <div class="card">
+            <h2>Quick Lookup</h2>
+            <label>Search saved jobs<input id="phoneSearch" placeholder="Name, address, job code, or client"></label>
+            <div class="list" id="phoneSearchList"></div>
+          </div>
+          <div class="card">
+            <h2>Field Tools</h2>
+            <div class="button-row">
+              <button class="btn secondary" type="button" data-go="vault">Open Job Vault</button>
+              <button class="btn secondary" type="button" data-go="review">Review Outcomes</button>
+              <button class="btn secondary" type="button" id="exportPhoneBtn">Export Backup</button>
+              <button class="btn purple" type="button" id="goTabletBtn">Switch to Office iPad</button>
             </div>
-            <div class="button-row" style="margin-top:14px">
-              <button class="btn gold" type="submit">Save Job</button>
-              <button class="btn secondary" id="sampleJobsBtn" type="button">Load Sample Jobs</button>
-            </div>
-          </form>
+            <p class="hint">The full invoice, pricing, and money tools are available in Office iPad workspace.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="dashboardView">
+        <div class="card">
+          <div class="eyebrow">Office iPad</div>
+          <h2>Welcome Back, Jasz</h2>
+          <p class="subtle">Your office workspace is where you verify work, confirm pricing, invoice clients, track payments, and make sure you are paid.</p>
+        </div>
+        <div class="grid4" style="margin-top:16px">
+          <div class="metric"><span>Active jobs</span><strong id="dashActive">0</strong><small>Pending or follow-up</small></div>
+          <div class="metric"><span>Served jobs</span><strong id="dashServed">0</strong><small>Ready for billing review</small></div>
+          <div class="metric"><span>Outstanding</span><strong id="dashOutstanding">$0</strong><small>Unpaid invoices</small></div>
+          <div class="metric"><span>Net cash</span><strong id="dashNet">$0</strong><small>Income minus expenses</small></div>
+        </div>
+        <div class="grid2" style="margin-top:16px">
+          <div class="card">
+            <div class="toolbar"><div><h2>Field Desk</h2><p class="subtle">Smart Intake, manual entry, and route planning remain available on iPad.</p></div><button class="btn gold" type="button" data-go="intake">Open Field Desk</button></div>
+            <div class="list" id="dashJobsList"></div>
+          </div>
+          <div class="card">
+            <div class="toolbar"><div><h2>Payment Center</h2><p class="subtle">Review invoice status before money slips through the cracks.</p></div><button class="btn purple" type="button" data-go="invoices">Open Invoices</button></div>
+            <div class="list" id="dashInvoiceList"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="vaultView">
+        <div class="card">
+          <div class="toolbar">
+            <div><h2>Job Vault</h2><p class="subtle">Every job saved through Smart Intake lives here. Search, review, correct, and remove duplicates.</p></div>
+            <button class="btn gold" type="button" data-go="intake">New Smart Intake</button>
+          </div>
+          <div class="form-grid" style="margin-top:14px">
+            <label>Search<input id="vaultSearch" placeholder="Name, address, code, client"></label>
+            <label>Status Filter<select id="vaultStatus"><option value="all">All statuses</option><option value="pending">Pending</option><option value="attempted">Attempted</option><option value="served">Served</option><option value="non-served">Non-Served</option><option value="skipped">Follow-Up</option></select></label>
+          </div>
+          <div class="list" id="vaultList"></div>
+        </div>
+      </section>
+
+      <section class="view" id="routeView">
+        <div class="card">
+          <div class="toolbar">
+            <div><h2>Build Today’s Route</h2><p class="subtle">Select a county group, choose jobs, reorder them manually, then start a route or print a paper sheet.</p></div>
+            <span class="pill" id="routeSelectedPill">0 selected</span>
+          </div>
+          <div class="choice-grid" id="routeChoices">
+            <button class="choice selected" type="button" data-filter="osceola"><strong>Osceola County</strong><span id="osceolaCount">0 available jobs</span></button>
+            <button class="choice" type="button" data-filter="orange"><strong>Orange County</strong><span id="orangeCount">0 available jobs</span></button>
+            <button class="choice" type="button" data-filter="all"><strong>All Jobs</strong><span id="allRouteCount">0 available jobs</span></button>
+          </div>
+          <div class="button-row no-print" style="margin-top:15px">
+            <button class="btn secondary" type="button" id="selectVisibleBtn">Select All Visible</button>
+            <button class="btn secondary" type="button" id="clearVisibleBtn">Clear Selection</button>
+            <button class="btn gold" type="button" id="startRouteBtn">Start Route</button>
+            <button class="btn blue" type="button" id="printDetailedBtn">Print Detailed Sheet</button>
+            <button class="btn secondary" type="button" id="printCompactBtn">Print Compact List</button>
+          </div>
+          <div class="list" id="routeJobList"></div>
         </div>
 
         <div class="card">
           <div class="toolbar">
-            <div><h2>All Jobs</h2><p class="subtle">Edit statuses by working the route. Delete only if the job should be removed completely.</p></div>
-            <span class="pill" id="allJobsCount">0 jobs</span>
+            <div><h2>Route Order Preview</h2><p class="subtle">Use Move Up/Down to arrange your stops before printing or beginning the route.</p></div>
+            <button class="btn secondary no-print" type="button" id="clearRouteOrderBtn">Clear Route Order</button>
           </div>
-          <div class="list" id="allJobsList"></div>
+          <div class="route-order" id="routeOrderList"></div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="view" id="routeView">
-      <div class="card">
-        <h2>Build Today’s Route</h2>
-        <p class="subtle">Choose a county to avoid mixing areas. The full planning screen stays available on iPad; Start Route opens the large phone-friendly field screen.</p>
-        <div class="choice-grid" id="routeChoices">
-          <button class="choice selected" data-filter="osceola" type="button"><strong>Osceola County</strong><span id="osceolaCount">0 available jobs</span></button>
-          <button class="choice" data-filter="orange" type="button"><strong>Orange County</strong><span id="orangeCount">0 available jobs</span></button>
-          <button class="choice" data-filter="all" type="button"><strong>All Available Jobs</strong><span id="allRouteCount">0 available jobs</span></button>
+      <section class="view" id="pricingView">
+        <div class="grid2">
+          <div class="card">
+            <h2>Client Pricing</h2>
+            <p class="subtle">Set defaults used by Smart Intake. You can still change the fee on an individual job draft.</p>
+            <div class="list" id="pricingClientList"></div>
+          </div>
+          <div class="card">
+            <h2>Quick Pricing Notes</h2>
+            <p class="subtle">Use job fees for standard work. Add special travel, rush, mileage, print, or additional-attempt amounts into invoice descriptions as needed until you want a more detailed add-on system.</p>
+            <div class="button-row"><button class="btn purple" type="button" data-go="invoices">Open Invoice Builder</button></div>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <div class="card">
-        <div class="toolbar">
-          <div><h2 id="routeHeading">Osceola County Jobs</h2><p class="subtle" id="routeSubheading">Select stops for this work session.</p></div>
-          <span class="pill" id="selectedPill">0 selected</span>
+      <section class="view" id="invoicesView">
+        <div class="grid2">
+          <div class="card">
+            <h2>Create Invoice</h2>
+            <p class="subtle">Create a detailed billing record after you review served jobs and fees.</p>
+            <form id="invoiceForm" style="margin-top:14px">
+              <div class="form-grid">
+                <label>Client / Company<select id="invoiceClient"></select></label>
+                <label>Invoice Number<input id="invoiceNumber" required placeholder="Example: INV-1001"></label>
+                <label>Due Date<input id="invoiceDueDate" type="date"></label>
+                <label>Invoice Total<input id="invoiceAmount" required type="number" min="0" step="0.01" placeholder="0.00"></label>
+                <label class="full">Line Items / Description<textarea id="invoiceDescription" placeholder="List completed job codes, service fees, mileage, rush fees, or notes."></textarea></label>
+              </div>
+              <div class="button-row" style="margin-top:14px">
+                <button class="btn purple" type="submit">Save Invoice Draft</button>
+                <button class="btn secondary" type="button" id="draftInvoiceFromJobsBtn">Build From Served Jobs</button>
+              </div>
+            </form>
+          </div>
+          <div class="card">
+            <div class="toolbar"><div><h2>Invoice & Payment Tracker</h2><p class="subtle">Track drafts, sent invoices, and payments received.</p></div><span class="pill" id="invoicePill">$0 invoiced</span></div>
+            <div class="list" id="invoiceList"></div>
+          </div>
         </div>
-        <div class="button-row" style="margin-top:14px">
-          <button class="btn secondary" id="selectVisibleBtn" type="button">Select All Visible</button>
-          <button class="btn secondary" id="clearVisibleBtn" type="button">Clear Selection</button>
-          <button class="btn gold" id="startRouteBtn" type="button">Start Route</button>
-        </div>
-        <div class="list" id="routeJobsList"></div>
-      </div>
-    </section>
+      </section>
 
-    <section class="view" id="invoicesView">
-      <div class="grid2">
-        <div class="card">
-          <h2>Create Invoice</h2>
-          <p class="subtle">Create a simple invoice manually or from jobs you completed.</p>
-          <form id="invoiceForm" style="margin-top:15px">
-            <div class="form-grid">
-              <label>Client / Company<input id="invoiceClient" required placeholder="Example: ProVest"></label>
-              <label>Invoice Number<input id="invoiceNumber" required placeholder="Example: INV-1001"></label>
-              <label>Due Date<input id="invoiceDueDate" type="date"></label>
-              <label>Amount<input id="invoiceAmount" required type="number" min="0" step="0.01" placeholder="0.00"></label>
-              <label class="full">Description<textarea id="invoiceDescription" placeholder="Example: Service of process jobs completed for the week."></textarea></label>
-            </div>
-            <div class="button-row" style="margin-top:14px">
-              <button class="btn purple" type="submit">Save Invoice</button>
-              <button class="btn secondary" id="invoiceFromJobsBtn" type="button">Create Draft From Served Jobs</button>
-            </div>
-          </form>
+      <section class="view" id="moneyView">
+        <div class="grid4">
+          <div class="metric"><span>Income</span><strong id="incomeMetric">$0</strong><small>Recorded income</small></div>
+          <div class="metric"><span>Expenses</span><strong id="expenseMetric">$0</strong><small>Gas, tolls, supplies, etc.</small></div>
+          <div class="metric"><span>Net cash</span><strong id="netMetric">$0</strong><small>Income minus expenses</small></div>
+          <div class="metric"><span>Paid invoices</span><strong id="paidMetric">$0</strong><small>Invoice payments recorded</small></div>
         </div>
+        <div class="grid2" style="margin-top:16px">
+          <div class="card">
+            <h2>Add Money Entry</h2>
+            <form id="moneyForm">
+              <div class="form-grid">
+                <label>Type<select id="moneyType"><option value="income">Income</option><option value="expense">Expense</option></select></label>
+                <label>Amount<input id="moneyAmount" required type="number" min="0" step="0.01" placeholder="0.00"></label>
+                <label>Category<input id="moneyCategory" required placeholder="Gas, tolls, client payment, supplies"></label>
+                <label>Date<input id="moneyDate" type="date"></label>
+                <label class="full">Notes<textarea id="moneyNotes" placeholder="Optional details"></textarea></label>
+              </div>
+              <div class="button-row" style="margin-top:14px"><button class="btn green" type="submit">Save Money Entry</button></div>
+            </form>
+          </div>
+          <div class="card">
+            <h2>Money History</h2>
+            <div class="list" id="moneyList"></div>
+          </div>
+        </div>
+      </section>
 
-        <div class="card">
+      <section class="view" id="reviewView">
+        <div class="grid4">
+          <div class="metric"><span>Total jobs</span><strong id="reviewTotal">0</strong><small>All saved jobs</small></div>
+          <div class="metric"><span>Pending</span><strong id="reviewPending">0</strong><small>Needs a route or follow-up</small></div>
+          <div class="metric"><span>Served</span><strong id="reviewServed">0</strong><small>Completed jobs</small></div>
+          <div class="metric"><span>Follow-up</span><strong id="reviewFollow">0</strong><small>Attempted / non-served / skipped</small></div>
+        </div>
+        <div class="card" style="margin-top:16px">
           <div class="toolbar">
-            <div><h2>Invoices</h2><p class="subtle">Mark invoices sent or paid as your billing progresses.</p></div>
-            <span class="pill" id="invoiceTotalPill">$0 total</span>
-          </div>
-          <div class="list" id="invoiceList"></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="view" id="moneyView">
-      <div class="grid4">
-        <div class="metric"><span>Income</span><strong id="moneyIncome">$0</strong><small>All recorded income</small></div>
-        <div class="metric"><span>Expenses</span><strong id="moneyExpenses">$0</strong><small>All recorded expenses</small></div>
-        <div class="metric"><span>Safe to spend</span><strong id="moneySafe">$0</strong><small>Income minus expenses</small></div>
-        <div class="metric"><span>Invoice paid</span><strong id="moneyPaidInvoices">$0</strong><small>Paid invoice total</small></div>
-      </div>
-
-      <div class="grid2" style="margin-top:16px">
-        <div class="card">
-          <h2>Add Money Entry</h2>
-          <form id="moneyForm">
-            <div class="form-grid">
-              <label>Type<select id="moneyType"><option value="income">Income</option><option value="expense">Expense</option></select></label>
-              <label>Amount<input id="moneyAmount" required type="number" min="0" step="0.01" placeholder="0.00"></label>
-              <label>Category<input id="moneyCategory" required placeholder="Example: Gas, Filing fee, Payment"></label>
-              <label>Date<input id="moneyDate" type="date"></label>
-              <label class="full">Notes<textarea id="moneyNotes" placeholder="Optional details"></textarea></label>
+            <div><h2>End-of-Day Review</h2><p class="subtle">Review your field outcomes, correct records, invoice served work, and protect your payment.</p></div>
+            <div class="button-row no-print">
+              <button class="btn secondary" type="button" id="exportBtn">Export Backup</button>
+              <button class="btn red" type="button" id="clearAllBtn">Clear All Data</button>
             </div>
-            <div class="button-row" style="margin-top:14px">
-              <button class="btn green" type="submit">Save Money Entry</button>
-            </div>
-          </form>
-        </div>
-
-        <div class="card">
-          <h2>Money History</h2>
-          <p class="subtle">Use this for income, gas, tolls, filing expenses, supplies, and business spending.</p>
-          <div class="list" id="moneyList"></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="view" id="reviewView">
-      <div class="grid4">
-        <div class="metric"><span>Total jobs</span><strong id="reviewJobs">0</strong><small>All saved assignments</small></div>
-        <div class="metric"><span>Pending</span><strong id="reviewPending">0</strong><small>Needs work</small></div>
-        <div class="metric"><span>Served</span><strong id="reviewServed">0</strong><small>Completed successfully</small></div>
-        <div class="metric"><span>Follow-up</span><strong id="reviewFollow">0</strong><small>Attempted, non-served, or skipped</small></div>
-      </div>
-
-      <div class="card" style="margin-top:16px">
-        <div class="toolbar">
-          <div><h2>End-of-Day Review</h2><p class="subtle">Review statuses and notes here on the larger iPad screen.</p></div>
-          <div class="button-row">
-            <button class="btn secondary" id="exportBtn" type="button">Export Backup</button>
-            <button class="btn red" id="clearDataBtn" type="button">Clear All Data</button>
           </div>
+          <div class="list" id="reviewList"></div>
         </div>
-        <div class="list" id="reviewList"></div>
-      </div>
+      </section>
     </section>
+
+    <section class="print-sheet" id="printSheet"></section>
   </main>
 
   <dialog id="outcomeDialog">
     <form method="dialog" class="dialog-inner" id="outcomeForm">
-      <h2 id="outcomeTitle">Save Outcome</h2>
-      <p id="outcomeInfo" class="subtle"></p>
+      <h2 id="outcomeTitle">Save Job Outcome</h2>
+      <p class="subtle" id="outcomeInfo"></p>
       <label>
-        Route notes
+        Field notes
         <textarea id="outcomeNotes" placeholder="What happened at this stop?"></textarea>
       </label>
       <div class="dialog-actions">
-        <button class="btn secondary" type="submit" value="cancel">Cancel</button>
-        <button class="btn gold" type="submit" value="save">Save &amp; Continue</button>
+        <button class="btn secondary" value="cancel" type="submit">Cancel</button>
+        <button class="btn gold" value="save" type="submit">Save &amp; Continue</button>
       </div>
     </form>
   </dialog>
 
-  <section class="route-mode" id="routeMode" hidden aria-label="Active field route">
+  <dialog id="clientDialog">
+    <form method="dialog" class="dialog-inner" id="clientForm">
+      <h2>Client Profile</h2>
+      <p class="subtle">Profiles make Smart Intake faster. Add default fees and phrases that should be ignored in that client’s messages.</p>
+      <input id="clientId" type="hidden">
+      <div class="form-grid" style="margin-top:15px">
+        <label>Client Name<input id="clientName" required placeholder="Example: ProVest"></label>
+        <label>Default Fee<input id="clientFee" type="number" min="0" step="0.01" placeholder="0.00"></label>
+        <label class="full">Cleanup Phrases<textarea id="clientCleanup" placeholder="One phrase per line. These phrases will be automatically ignored when Smart Intake builds a working draft."></textarea></label>
+        <label class="full">Profile Notes<textarea id="clientNotes" placeholder="Optional reminders for this client’s work."></textarea></label>
+      </div>
+      <div class="dialog-actions">
+        <button class="btn secondary" value="cancel" type="submit">Cancel</button>
+        <button class="btn gold" value="save" type="submit">Save Client</button>
+      </div>
+    </form>
+  </dialog>
+
+  <section class="route-mode" id="routeMode" hidden>
     <div class="route-inner">
       <div class="route-head">
         <div>
           <div class="route-label" id="activeRouteLabel">Osceola County Route</div>
-          <h2 id="activeStopCount">Stop 1 of 1</h2>
-          <p id="activeProgressText" class="route-progress-text">0 complete · 1 remaining</p>
+          <h2 id="activeStopNumber">Stop 1 of 1</h2>
+          <p class="route-progress-text" id="activeProgressText">0 complete · 1 remaining</p>
         </div>
-        <button class="btn secondary" id="endRouteBtn" type="button">End Route</button>
+        <button class="btn secondary" type="button" id="endRouteBtn">End Route</button>
       </div>
-
-      <div class="progress"><div id="activeProgressFill"></div></div>
-      <article class="stop-card" id="activeStopCard"></article>
-      <div id="activeActions"></div>
+      <div class="progress"><div id="progressFill"></div></div>
+      <article class="stop-card" id="currentStopCard"></article>
+      <div id="routeActionArea"></div>
     </div>
   </section>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script>
-    const KEY = "jasz-field-office-combined-v1";
+    const STORAGE_KEY = "jasz-field-office-smart-intake-v2";
 
     const state = {
+      workspace: "",
+      clients: [
+        {
+          id: "client-provest",
+          name: "ProVest",
+          defaultFee: 55,
+          cleanupPhrases: [
+            "Please see attached",
+            "This message may contain confidential information",
+            "If you are not the intended recipient",
+            "Thank you"
+          ],
+          notes: ""
+        },
+        {
+          id: "client-abc",
+          name: "ABC Legal",
+          defaultFee: 55,
+          cleanupPhrases: [
+            "CONFIDENTIALITY NOTICE",
+            "Please do not reply to this email",
+            "This email and any attachments"
+          ],
+          notes: ""
+        },
+        {
+          id: "client-direct",
+          name: "Direct Legal",
+          defaultFee: 60,
+          cleanupPhrases: [
+            "Please review the attached documents",
+            "Automated message",
+            "This transmission is intended only"
+          ],
+          notes: ""
+        },
+        {
+          id: "client-other",
+          name: "Other / Custom",
+          defaultFee: 0,
+          cleanupPhrases: [],
+          notes: ""
+        }
+      ],
       jobs: [],
       invoices: [],
       money: [],
+      selectedClientId: "client-provest",
+      intake: {
+        originalText: "",
+        lines: [],
+        ignoredIndexes: []
+      },
       selectedIds: [],
       routeFilter: "osceola",
-      activeRoute: { active:false, ids:[], index:0, filter:"osceola" }
+      activeRoute: {
+        active: false,
+        ids: [],
+        index: 0,
+        filter: "osceola"
+      },
+      printMode: "detailed"
     };
 
     const $ = (id) => document.getElementById(id);
 
     const labels = {
-      pending:"Pending",
-      attempted:"Attempted",
-      served:"Served",
-      "non-served":"Non-Served",
-      skipped:"Follow-Up",
-      draft:"Draft",
-      sent:"Sent",
-      paid:"Paid",
-      overdue:"Overdue"
+      pending: "Pending",
+      attempted: "Attempted",
+      served: "Served",
+      "non-served": "Non-Served",
+      skipped: "Follow-Up",
+      draft: "Draft",
+      sent: "Sent",
+      paid: "Paid",
+      overdue: "Overdue"
     };
 
-    function id(){ return `${Date.now()}-${Math.random().toString(16).slice(2)}`; }
+    function uid() {
+      return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+    }
 
-    function esc(value){
+    function safe(value) {
       return String(value ?? "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
     }
 
-    function money(value){
-      return new Intl.NumberFormat("en-US",{style:"currency",currency:"USD"}).format(Number(value || 0));
+    function currency(value) {
+      return new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD"
+      }).format(Number(value || 0));
     }
 
-    function today(){
-      return new Date().toISOString().slice(0,10);
+    function dateToday() {
+      return new Date().toISOString().slice(0, 10);
     }
 
-    function save(){
-      localStorage.setItem(KEY, JSON.stringify(state));
+    function getClient(clientId) {
+      return state.clients.find((client) => client.id === clientId) || state.clients[0];
     }
 
-    function load(){
-      try{
-        const saved = JSON.parse(localStorage.getItem(KEY));
-        if(!saved) return;
+    function getJob(jobId) {
+      return state.jobs.find((job) => job.id === jobId);
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function loadState() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        if (!saved) return;
+
+        state.workspace = saved.workspace || "";
+        state.clients = Array.isArray(saved.clients) && saved.clients.length ? saved.clients : state.clients;
         state.jobs = Array.isArray(saved.jobs) ? saved.jobs : [];
         state.invoices = Array.isArray(saved.invoices) ? saved.invoices : [];
         state.money = Array.isArray(saved.money) ? saved.money : [];
+        state.selectedClientId = saved.selectedClientId || state.clients[0].id;
+        state.intake = saved.intake || state.intake;
         state.selectedIds = Array.isArray(saved.selectedIds) ? saved.selectedIds : [];
         state.routeFilter = saved.routeFilter || "osceola";
         state.activeRoute = saved.activeRoute || state.activeRoute;
-      }catch(e){
-        console.warn("Saved data could not be loaded.",e);
+      } catch (error) {
+        console.warn("Unable to load saved app data.", error);
       }
     }
 
-    function toast(message){
-      const el = $("toast");
-      el.textContent = message;
-      el.classList.add("show");
-      clearTimeout(toast.timer);
-      toast.timer = setTimeout(()=>el.classList.remove("show"),2600);
+    function showToast(message) {
+      const toast = $("toast");
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => toast.classList.remove("show"), 2800);
     }
 
-    function availableJobs(){
-      return state.jobs.filter(j => j.status === "pending" || j.status === "skipped");
+    function availableJobs() {
+      return state.jobs.filter((job) => job.status === "pending" || job.status === "skipped");
     }
 
-    function jobsForFilter(filter){
-      const list = availableJobs();
-      if(filter === "all") return list;
+    function jobsForFilter(filter) {
+      const jobs = availableJobs();
+      if (filter === "all") return jobs;
       const county = filter === "osceola" ? "Osceola" : "Orange";
-      return list.filter(j => j.county === county);
+      return jobs.filter((job) => job.county === county);
     }
 
-    function countCounty(county){
-      return availableJobs().filter(j=>j.county === county).length;
+    function countyCount(county) {
+      return availableJobs().filter((job) => job.county === county).length;
     }
 
-    function getJob(jobId){ return state.jobs.find(j=>j.id === jobId); }
+    function setWorkspace(workspace) {
+      state.workspace = workspace;
+      $("workspaceChooser").classList.add("hidden");
+      $("mainApp").classList.remove("hidden");
 
-    function setView(name){
-      document.querySelectorAll(".nav button").forEach(btn=>btn.classList.toggle("active",btn.dataset.view === name));
-      document.querySelectorAll(".view").forEach(view=>view.classList.toggle("active",view.id === `${name}View`));
+      const phone = workspace === "phone";
+      $("phoneNav").classList.toggle("hidden", !phone);
+      $("tabletNav").classList.toggle("hidden", phone);
+      $("workspaceLabel").textContent = phone ? "Field Phone" : "Office iPad";
+      $("appTitle").textContent = phone ? "Smart Intake" : "Office Dashboard";
+
+      const initialView = phone ? "intake" : "dashboard";
+      setView(initialView, false);
+      saveState();
       renderAll();
-      window.scrollTo({top:0,behavior:"smooth"});
     }
 
-    function renderHeader(){
-      $("jobPill").textContent = `${state.jobs.length} ${state.jobs.length === 1 ? "job" : "jobs"}`;
-      const invoiceSum = state.invoices.reduce((sum,inv)=>sum+Number(inv.amount||0),0);
-      $("invoicePill").textContent = `${money(invoiceSum)} invoiced`;
+    function exitToWorkspaceChooser() {
+      state.workspace = "";
+      $("mainApp").classList.add("hidden");
+      $("workspaceChooser").classList.remove("hidden");
+      saveState();
     }
 
-    function renderDashboard(){
-      const pending = state.jobs.filter(j=>j.status === "pending" || j.status === "skipped").length;
-      const served = state.jobs.filter(j=>j.status === "served").length;
-      const due = state.invoices.filter(i=>i.status !== "paid").reduce((s,i)=>s+Number(i.amount||0),0);
-      const income = state.money.filter(m=>m.type==="income").reduce((s,m)=>s+Number(m.amount||0),0);
-      const expense = state.money.filter(m=>m.type==="expense").reduce((s,m)=>s+Number(m.amount||0),0);
-      const safe = income-expense;
+    function setView(viewName, scroll = true) {
+      document.querySelectorAll(".nav button").forEach((button) => {
+        button.classList.toggle("active", button.dataset.view === viewName);
+      });
 
-      $("dashPending").textContent = pending;
+      document.querySelectorAll(".view").forEach((view) => {
+        view.classList.toggle("active", view.id === `${viewName}View`);
+      });
+
+      renderAll();
+      if (scroll) window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function renderClientSelects() {
+      const options = state.clients.map((client) =>
+        `<option value="${safe(client.id)}">${safe(client.name)}</option>`
+      ).join("");
+
+      $("draftClient").innerHTML = options;
+      $("invoiceClient").innerHTML = `<option value="">Choose client</option>${options}`;
+
+      $("draftClient").value = state.selectedClientId;
+      const selected = getClient(state.selectedClientId);
+      $("intakeClientPill").textContent = selected ? selected.name : "No client selected";
+    }
+
+    function renderIntakeClients() {
+      const container = $("intakeClientChips");
+      container.innerHTML = state.clients.map((client) => `
+        <button class="client-chip ${client.id === state.selectedClientId ? "selected" : ""}"
+          type="button" data-client-id="${safe(client.id)}">
+          ${safe(client.name)}
+        </button>
+      `).join("");
+    }
+
+    function renderCleanupLines() {
+      const box = $("cleanupLines");
+      const lines = state.intake.lines || [];
+
+      if (!lines.length) {
+        box.innerHTML = `<div class="empty">Paste an assignment, then choose <strong>Clean &amp; Build Draft</strong>.</div>`;
+        return;
+      }
+
+      box.innerHTML = lines.map((line, index) => {
+        const ignored = state.intake.ignoredIndexes.includes(index);
+        return `
+          <label class="cleanup-line ${ignored ? "ignored" : ""}">
+            <input type="checkbox" class="ignore-line" data-index="${index}" ${ignored ? "checked" : ""}>
+            <span>${safe(line)}</span>
+          </label>
+        `;
+      }).join("");
+    }
+
+    function renderDashboard() {
+      const active = state.jobs.filter((job) => ["pending", "skipped"].includes(job.status)).length;
+      const served = state.jobs.filter((job) => job.status === "served").length;
+      const outstanding = state.invoices
+        .filter((invoice) => invoice.status !== "paid")
+        .reduce((total, invoice) => total + Number(invoice.amount || 0), 0);
+      const income = state.money
+        .filter((entry) => entry.type === "income")
+        .reduce((total, entry) => total + Number(entry.amount || 0), 0);
+      const expenses = state.money
+        .filter((entry) => entry.type === "expense")
+        .reduce((total, entry) => total + Number(entry.amount || 0), 0);
+      const net = income - expenses;
+
+      $("dashActive").textContent = active;
       $("dashServed").textContent = served;
-      $("dashDue").textContent = money(due);
-      $("dashSafe").textContent = money(safe);
-      $("dashSafe").className = safe < 0 ? "money-negative" : "money-positive";
+      $("dashOutstanding").textContent = currency(outstanding);
+      $("dashNet").textContent = currency(net);
+      $("dashNet").className = net < 0 ? "negative" : "positive";
 
-      const routeList = $("dashboardRouteList");
-      const upcoming = availableJobs().slice(0,4);
-      routeList.innerHTML = upcoming.length ? upcoming.map(j=>`
-        <div class="row">
-          <span>📍</span>
-          <span><span class="row-title">${esc(j.name)}</span><span class="row-meta">${esc(j.county)} County · ${esc(j.company || "No company")}</span><span class="row-address">${esc(j.address)}</span></span>
-          <span class="badge ${esc(j.status)}">${esc(labels[j.status])}</span>
-        </div>`).join("") : `<div class="empty">No pending jobs. Add assignments in Smart Intake or Jobs.</div>`;
-
-      const invoiceList = $("dashboardInvoiceList");
-      const invoices = state.invoices.slice(0,4);
-      invoiceList.innerHTML = invoices.length ? invoices.map(i=>`
-        <div class="row">
-          <span>🧾</span>
-          <span><span class="row-title">${esc(i.client)}</span><span class="row-meta">${esc(i.number)} · Due ${esc(i.dueDate || "not set")}</span><span class="row-address">${money(i.amount)}</span></span>
-          <span class="badge ${esc(i.status)}">${esc(labels[i.status])}</span>
-        </div>`).join("") : `<div class="empty">No invoices saved yet.</div>`;
-    }
-
-    function renderJobs(){
-      $("allJobsCount").textContent = `${state.jobs.length} ${state.jobs.length === 1 ? "job" : "jobs"}`;
-      const list = $("allJobsList");
-      list.innerHTML = state.jobs.length ? state.jobs.map(j=>`
+      const recentJobs = availableJobs().slice(0, 4);
+      $("dashJobsList").innerHTML = recentJobs.length ? recentJobs.map((job) => `
         <div class="row">
           <span>📍</span>
           <span>
-            <span class="row-title">${esc(j.name)}</span>
-            <span class="row-meta">${esc(j.company || "No company")} · Job #${esc(j.number || "—")} · ${esc(j.county)} County · Fee ${money(j.fee)}</span>
-            <span class="row-address">${esc(j.address)}</span>
-            ${j.notes ? `<span class="row-address"><em>Notes: ${esc(j.notes)}</em></span>` : ""}
+            <span class="row-title">${safe(job.name)}</span>
+            <span class="row-meta">${safe(job.clientName)} · ${safe(job.county)} County · Job #${safe(job.code || "—")}</span>
+            <span class="row-address">${safe(job.address)}</span>
           </span>
-          <div class="button-row">
-            <span class="badge ${esc(j.status)}">${esc(labels[j.status])}</span>
-            <button class="btn secondary delete-job" type="button" data-id="${esc(j.id)}">Delete</button>
-          </div>
-        </div>`).join("") : `<div class="empty">No jobs saved yet. Add a job manually or through Smart Intake.</div>`;
+          <span class="badge ${safe(job.status)}">${safe(labels[job.status])}</span>
+        </div>
+      `).join("") : `<div class="empty">No active jobs yet. Start in Field Desk / Smart Intake.</div>`;
+
+      const invoices = state.invoices.slice(0, 4);
+      $("dashInvoiceList").innerHTML = invoices.length ? invoices.map((invoice) => `
+        <div class="row">
+          <span>🧾</span>
+          <span>
+            <span class="row-title">${safe(invoice.clientName)} · ${safe(invoice.number)}</span>
+            <span class="row-meta">Due ${safe(invoice.dueDate || "not set")} · ${currency(invoice.amount)}</span>
+          </span>
+          <span class="badge ${safe(invoice.status)}">${safe(labels[invoice.status])}</span>
+        </div>
+      `).join("") : `<div class="empty">No invoices saved yet.</div>`;
     }
 
-    function renderRoute(){
-      $("osceolaCount").textContent = `${countCounty("Osceola")} available ${countCounty("Osceola") === 1 ? "job" : "jobs"}`;
-      $("orangeCount").textContent = `${countCounty("Orange")} available ${countCounty("Orange") === 1 ? "job" : "jobs"}`;
+    function renderToday() {
+      const selected = state.jobs.filter((job) => job.today);
+      const list = $("todayList");
+
+      list.innerHTML = selected.length ? selected.map((job) => `
+        <div class="row">
+          <span>📍</span>
+          <span>
+            <span class="row-title">${safe(job.name)}</span>
+            <span class="row-meta">${safe(job.clientName)} · Job #${safe(job.code || "—")} · ${safe(job.county)} County</span>
+            <span class="row-address">${safe(job.address)}</span>
+          </span>
+          <span class="badge ${safe(job.status)}">${safe(labels[job.status])}</span>
+        </div>
+      `).join("") : `
+        <div class="empty">
+          No jobs have been added to Today yet.<br>
+          Save an intake with <strong>Save Job + Add to Today</strong>, or select jobs in Route.
+        </div>
+      `;
+    }
+
+    function renderPhoneSearch() {
+      const query = $("phoneSearch").value.trim().toLowerCase();
+      const list = $("phoneSearchList");
+
+      if (!query) {
+        list.innerHTML = `<div class="empty">Search by person, job code, client, or address.</div>`;
+        return;
+      }
+
+      const matches = state.jobs.filter((job) => {
+        const text = [job.name, job.code, job.clientName, job.address, job.county].join(" ").toLowerCase();
+        return text.includes(query);
+      });
+
+      list.innerHTML = matches.length ? matches.slice(0, 10).map((job) => `
+        <div class="row">
+          <span>🔎</span>
+          <span>
+            <span class="row-title">${safe(job.name)}</span>
+            <span class="row-meta">${safe(job.clientName)} · ${safe(job.code || "—")}</span>
+            <span class="row-address">${safe(job.address)}</span>
+          </span>
+          <span class="badge ${safe(job.status)}">${safe(labels[job.status])}</span>
+        </div>
+      `).join("") : `<div class="empty">No saved jobs match that search.</div>`;
+    }
+
+    function renderVault() {
+      const query = $("vaultSearch").value.trim().toLowerCase();
+      const status = $("vaultStatus").value;
+
+      const jobs = state.jobs.filter((job) => {
+        const matchesSearch = !query || [job.name, job.code, job.clientName, job.address, job.county]
+          .join(" ").toLowerCase().includes(query);
+        const matchesStatus = status === "all" || job.status === status;
+        return matchesSearch && matchesStatus;
+      });
+
+      $("vaultList").innerHTML = jobs.length ? jobs.map((job) => `
+        <div class="row">
+          <span>📁</span>
+          <span>
+            <span class="row-title">${safe(job.name)}</span>
+            <span class="row-meta">${safe(job.clientName)} · Job #${safe(job.code || "—")} · ${safe(job.county)} County · Fee ${currency(job.fee)}</span>
+            <span class="row-address">${safe(job.address)}</span>
+            ${job.notes ? `<span class="row-address"><em>Notes: ${safe(job.notes)}</em></span>` : ""}
+            ${job.outcomeNotes ? `<span class="row-address"><em>Outcome: ${safe(job.outcomeNotes)}</em></span>` : ""}
+          </span>
+          <div class="button-row">
+            <span class="badge ${safe(job.status)}">${safe(labels[job.status])}</span>
+            <button class="btn secondary show-original" data-id="${safe(job.id)}" type="button">Original</button>
+            <button class="btn secondary delete-job" data-id="${safe(job.id)}" type="button">Delete</button>
+          </div>
+        </div>
+      `).join("") : `<div class="empty">No jobs match your filters.</div>`;
+    }
+
+    function renderRoute() {
+      $("osceolaCount").textContent = `${countyCount("Osceola")} available ${countyCount("Osceola") === 1 ? "job" : "jobs"}`;
+      $("orangeCount").textContent = `${countyCount("Orange")} available ${countyCount("Orange") === 1 ? "job" : "jobs"}`;
       $("allRouteCount").textContent = `${availableJobs().length} available ${availableJobs().length === 1 ? "job" : "jobs"}`;
 
-      document.querySelectorAll(".choice").forEach(b=>b.classList.toggle("selected",b.dataset.filter === state.routeFilter));
+      document.querySelectorAll(".choice").forEach((button) => {
+        button.classList.toggle("selected", button.dataset.filter === state.routeFilter);
+      });
 
-      const heading = state.routeFilter === "all" ? "All Available Jobs" : `${state.routeFilter === "osceola" ? "Osceola" : "Orange"} County Jobs`;
-      $("routeHeading").textContent = heading;
-      $("routeSubheading").textContent = state.routeFilter === "all"
-        ? "Choose every stop you intentionally want to combine today."
-        : "Select stops for this work session.";
+      const visibleJobs = jobsForFilter(state.routeFilter);
+      const selectedVisible = state.selectedIds.filter((id) => visibleJobs.some((job) => job.id === id));
+      $("routeSelectedPill").textContent = `${selectedVisible.length} selected`;
 
-      const visible = jobsForFilter(state.routeFilter);
-      const selectedVisible = state.selectedIds.filter(id=>visible.some(j=>j.id===id));
-      $("selectedPill").textContent = `${selectedVisible.length} selected`;
+      $("routeJobList").innerHTML = visibleJobs.length ? visibleJobs.map((job) => {
+        const checked = state.selectedIds.includes(job.id);
+        return `
+          <label class="row ${checked ? "selected" : ""}">
+            <input class="route-check" data-id="${safe(job.id)}" type="checkbox" ${checked ? "checked" : ""}>
+            <span>
+              <span class="row-title">${safe(job.name)}</span>
+              <span class="row-meta">${safe(job.clientName)} · Job #${safe(job.code || "—")} · Fee ${currency(job.fee)}</span>
+              <span class="row-address">${safe(job.address)}</span>
+            </span>
+            <span class="badge ${safe(job.status)}">${safe(labels[job.status])}</span>
+          </label>
+        `;
+      }).join("") : `<div class="empty">No route-eligible jobs are available in this group.</div>`;
 
-      const list = $("routeJobsList");
-      list.innerHTML = visible.length ? visible.map(j=>{
-        const checked = state.selectedIds.includes(j.id);
-        return `<label class="row ${checked ? "selected" : ""}">
-          <input type="checkbox" class="route-check" data-id="${esc(j.id)}" ${checked ? "checked" : ""}>
-          <span><span class="row-title">${esc(j.name)}</span><span class="row-meta">${esc(j.company || "No company")} · Job #${esc(j.number || "—")}</span><span class="row-address">${esc(j.address)}</span></span>
-          <span class="badge ${esc(j.status)}">${esc(labels[j.status])}</span>
-        </label>`;
-      }).join("") : `<div class="empty">No route-eligible jobs are in this group yet.</div>`;
+      const selectedJobs = state.selectedIds.map(getJob).filter(Boolean);
+      $("routeOrderList").innerHTML = selectedJobs.length ? selectedJobs.map((job, index) => `
+        <div class="route-stop">
+          <span class="route-stop-number">${index + 1}</span>
+          <span>
+            <span class="row-title">${safe(job.name)} · ${safe(job.code || "—")}</span>
+            <span class="row-address">${safe(job.address)}</span>
+          </span>
+          <div class="button-row no-print">
+            <button class="btn secondary move-route" data-id="${safe(job.id)}" data-direction="up" type="button">Up</button>
+            <button class="btn secondary move-route" data-id="${safe(job.id)}" data-direction="down" type="button">Down</button>
+            <button class="btn secondary remove-route" data-id="${safe(job.id)}" type="button">Remove</button>
+          </div>
+        </div>
+      `).join("") : `<div class="empty">Select jobs above to build your route order.</div>`;
     }
 
-    function renderInvoices(){
-      const sum = state.invoices.reduce((s,i)=>s+Number(i.amount||0),0);
-      $("invoiceTotalPill").textContent = `${money(sum)} total`;
-      const list = $("invoiceList");
-      list.innerHTML = state.invoices.length ? state.invoices.map(i=>`
+    function renderPricing() {
+      $("pricingClientList").innerHTML = state.clients.map((client) => `
+        <div class="row">
+          <span>💲</span>
+          <span>
+            <span class="row-title">${safe(client.name)}</span>
+            <span class="row-meta">Default fee: ${currency(client.defaultFee)}</span>
+            <span class="row-address">${client.cleanupPhrases.length} cleanup phrase${client.cleanupPhrases.length === 1 ? "" : "s"} saved</span>
+          </span>
+          <button class="btn secondary edit-client" data-client-id="${safe(client.id)}" type="button">Edit</button>
+        </div>
+      `).join("");
+    }
+
+    function renderInvoices() {
+      const total = state.invoices.reduce((sum, invoice) => sum + Number(invoice.amount || 0), 0);
+      $("invoicePill").textContent = `${currency(total)} invoiced`;
+
+      $("invoiceList").innerHTML = state.invoices.length ? state.invoices.map((invoice) => `
         <div class="row">
           <span>🧾</span>
           <span>
-            <span class="row-title">${esc(i.client)} · ${esc(i.number)}</span>
-            <span class="row-meta">Due ${esc(i.dueDate || "not set")} · ${money(i.amount)}</span>
-            ${i.description ? `<span class="row-address">${esc(i.description)}</span>` : ""}
+            <span class="row-title">${safe(invoice.clientName)} · ${safe(invoice.number)}</span>
+            <span class="row-meta">Due ${safe(invoice.dueDate || "not set")} · ${currency(invoice.amount)}</span>
+            ${invoice.description ? `<span class="row-address">${safe(invoice.description)}</span>` : ""}
           </span>
           <div class="button-row">
-            <span class="badge ${esc(i.status)}">${esc(labels[i.status])}</span>
-            ${i.status==="draft" ? `<button class="btn blue invoice-status" type="button" data-id="${esc(i.id)}" data-status="sent">Mark Sent</button>` : ""}
-            ${i.status!=="paid" ? `<button class="btn green invoice-status" type="button" data-id="${esc(i.id)}" data-status="paid">Mark Paid</button>` : ""}
-            <button class="btn secondary delete-invoice" type="button" data-id="${esc(i.id)}">Delete</button>
+            <span class="badge ${safe(invoice.status)}">${safe(labels[invoice.status])}</span>
+            ${invoice.status === "draft" ? `<button class="btn blue invoice-status" type="button" data-id="${safe(invoice.id)}" data-status="sent">Mark Sent</button>` : ""}
+            ${invoice.status !== "paid" ? `<button class="btn green invoice-status" type="button" data-id="${safe(invoice.id)}" data-status="paid">Mark Paid</button>` : ""}
+            <button class="btn secondary delete-invoice" type="button" data-id="${safe(invoice.id)}">Delete</button>
           </div>
-        </div>`).join("") : `<div class="empty">No invoices yet. Create one on the left or build a draft from served jobs.</div>`;
+        </div>
+      `).join("") : `<div class="empty">No invoices saved yet.</div>`;
     }
 
-    function renderMoney(){
-      const income = state.money.filter(m=>m.type==="income").reduce((s,m)=>s+Number(m.amount||0),0);
-      const expense = state.money.filter(m=>m.type==="expense").reduce((s,m)=>s+Number(m.amount||0),0);
-      const safe = income-expense;
-      const paid = state.invoices.filter(i=>i.status==="paid").reduce((s,i)=>s+Number(i.amount||0),0);
+    function renderMoney() {
+      const income = state.money.filter((entry) => entry.type === "income")
+        .reduce((sum, entry) => sum + Number(entry.amount || 0), 0);
+      const expenses = state.money.filter((entry) => entry.type === "expense")
+        .reduce((sum, entry) => sum + Number(entry.amount || 0), 0);
+      const net = income - expenses;
+      const paidInvoices = state.invoices.filter((invoice) => invoice.status === "paid")
+        .reduce((sum, invoice) => sum + Number(invoice.amount || 0), 0);
 
-      $("moneyIncome").textContent = money(income);
-      $("moneyExpenses").textContent = money(expense);
-      $("moneySafe").textContent = money(safe);
-      $("moneySafe").className = safe < 0 ? "money-negative" : "money-positive";
-      $("moneyPaidInvoices").textContent = money(paid);
+      $("incomeMetric").textContent = currency(income);
+      $("expenseMetric").textContent = currency(expenses);
+      $("netMetric").textContent = currency(net);
+      $("netMetric").className = net < 0 ? "negative" : "positive";
+      $("paidMetric").textContent = currency(paidInvoices);
 
-      const list = $("moneyList");
-      list.innerHTML = state.money.length ? state.money.map(m=>`
+      $("moneyList").innerHTML = state.money.length ? state.money.map((entry) => `
         <div class="row">
-          <span>${m.type==="income" ? "↗" : "↘"}</span>
-          <span><span class="row-title">${esc(m.category)} · ${money(m.amount)}</span><span class="row-meta">${esc(m.date || "No date")} · ${m.type==="income" ? "Income" : "Expense"}</span>${m.notes ? `<span class="row-address">${esc(m.notes)}</span>` : ""}</span>
-          <button class="btn secondary delete-money" type="button" data-id="${esc(m.id)}">Delete</button>
-        </div>`).join("") : `<div class="empty">No money entries yet. Add income and business expenses here.</div>`;
+          <span>${entry.type === "income" ? "↗" : "↘"}</span>
+          <span>
+            <span class="row-title">${safe(entry.category)} · ${currency(entry.amount)}</span>
+            <span class="row-meta">${safe(entry.date || "No date")} · ${entry.type === "income" ? "Income" : "Expense"}</span>
+            ${entry.notes ? `<span class="row-address">${safe(entry.notes)}</span>` : ""}
+          </span>
+          <button class="btn secondary delete-money" type="button" data-id="${safe(entry.id)}">Delete</button>
+        </div>
+      `).join("") : `<div class="empty">No money entries yet.</div>`;
     }
 
-    function renderReview(){
-      const pending = state.jobs.filter(j=>j.status==="pending").length;
-      const served = state.jobs.filter(j=>j.status==="served").length;
-      const follow = state.jobs.filter(j=>["attempted","non-served","skipped"].includes(j.status)).length;
-      $("reviewJobs").textContent=state.jobs.length;
-      $("reviewPending").textContent=pending;
-      $("reviewServed").textContent=served;
-      $("reviewFollow").textContent=follow;
+    function renderReview() {
+      const pending = state.jobs.filter((job) => job.status === "pending").length;
+      const served = state.jobs.filter((job) => job.status === "served").length;
+      const follow = state.jobs.filter((job) => ["attempted", "non-served", "skipped"].includes(job.status)).length;
 
-      $("reviewList").innerHTML = state.jobs.length ? state.jobs.map(j=>`
+      $("reviewTotal").textContent = state.jobs.length;
+      $("reviewPending").textContent = pending;
+      $("reviewServed").textContent = served;
+      $("reviewFollow").textContent = follow;
+
+      $("reviewList").innerHTML = state.jobs.length ? state.jobs.map((job) => `
         <div class="row">
-          <span>${j.status==="served" ? "✓" : "•"}</span>
-          <span><span class="row-title">${esc(j.name)}</span><span class="row-meta">${esc(j.company || "No company")} · Job #${esc(j.number || "—")} · ${esc(j.county)} County</span><span class="row-address">${esc(j.address)}</span>${j.outcomeNotes ? `<span class="row-address"><em>Field notes: ${esc(j.outcomeNotes)}</em></span>` : ""}</span>
-          <span class="badge ${esc(j.status)}">${esc(labels[j.status])}</span>
-        </div>`).join("") : `<div class="empty">Your completed and pending jobs will appear here.</div>`;
+          <span>${job.status === "served" ? "✓" : "•"}</span>
+          <span>
+            <span class="row-title">${safe(job.name)}</span>
+            <span class="row-meta">${safe(job.clientName)} · ${safe(job.code || "—")} · ${safe(job.county)} County</span>
+            <span class="row-address">${safe(job.address)}</span>
+            ${job.outcomeNotes ? `<span class="row-address"><em>Field notes: ${safe(job.outcomeNotes)}</em></span>` : ""}
+          </span>
+          <span class="badge ${safe(job.status)}">${safe(labels[job.status])}</span>
+        </div>
+      `).join("") : `<div class="empty">No jobs yet.</div>`;
     }
 
-    function renderRouteMode(){
+    function renderRouteMode() {
       const route = state.activeRoute;
-      if(!route.active){ $("routeMode").hidden=true; return; }
+      if (!route.active) {
+        $("routeMode").hidden = true;
+        return;
+      }
 
       const jobs = route.ids.map(getJob).filter(Boolean);
-      if(!jobs.length || route.index >= jobs.length){ completeRoute(); return; }
+      if (!jobs.length || route.index >= jobs.length) {
+        completeRoute();
+        return;
+      }
 
-      $("routeMode").hidden=false;
-      const job=jobs[route.index];
-      const completed=jobs.filter(j=>!["pending","skipped"].includes(j.status)).length;
-      const remaining=jobs.length-route.index;
-      const county=route.filter==="all" ? "All Jobs" : route.filter==="osceola" ? "Osceola County" : "Orange County";
+      $("routeMode").hidden = false;
+      const current = jobs[route.index];
+      const completed = jobs.filter((job) => !["pending", "skipped"].includes(job.status)).length;
+      const remaining = jobs.length - route.index;
+      const groupName = route.filter === "all"
+        ? "All Jobs"
+        : route.filter === "osceola"
+          ? "Osceola County"
+          : "Orange County";
 
-      $("activeRouteLabel").textContent=`${county} Route`;
-      $("activeStopCount").textContent=`Stop ${route.index+1} of ${jobs.length}`;
-      $("activeProgressText").textContent=`${completed} complete · ${remaining} remaining`;
-      $("activeProgressFill").style.width=`${((route.index)/jobs.length)*100}%`;
+      $("activeRouteLabel").textContent = `${groupName} Route`;
+      $("activeStopNumber").textContent = `Stop ${route.index + 1} of ${jobs.length}`;
+      $("activeProgressText").textContent = `${completed} complete · ${remaining} remaining`;
+      $("progressFill").style.width = `${(route.index / jobs.length) * 100}%`;
 
-      $("activeStopCard").innerHTML=`
+      $("currentStopCard").innerHTML = `
         <div class="stop-kicker">Current Stop</div>
-        <div class="stop-company">${esc(job.company || "Field Job")} · Job #${esc(job.number || "—")}</div>
-        <h1 class="stop-name">${esc(job.name)}</h1>
-        <p class="stop-address">${esc(job.address)}</p>
+        <div class="stop-company">${safe(current.clientName)} · Job #${safe(current.code || "—")}</div>
+        <h1 class="stop-name">${safe(current.name)}</h1>
+        <p class="stop-address">${safe(current.address)}</p>
         <button class="btn blue wide navigate" id="navigateBtn" type="button">Open in Apple Maps</button>
-        ${job.notes ? `<p class="hint"><strong>Job notes:</strong> ${esc(job.notes)}</p>` : ""}
+        ${current.notes ? `<p class="hint"><strong>Job notes:</strong> ${safe(current.notes)}</p>` : ""}
       `;
 
-      const next=jobs[route.index+1];
-      $("activeActions").innerHTML=`
+      const next = jobs[route.index + 1];
+      $("routeActionArea").innerHTML = `
         <div class="route-title">What happened?</div>
         <div class="outcomes">
-          <button class="outcome attempt route-outcome" type="button" data-status="attempted"><span>Attempted<small>No completed service</small></span><span>›</span></button>
-          <button class="outcome serve route-outcome" type="button" data-status="served"><span>Served<small>Completed successfully</small></span><span>›</span></button>
-          <button class="outcome nonserve route-outcome" type="button" data-status="non-served"><span>Non-Served<small>Record the reason in notes</small></span><span>›</span></button>
+          <button class="outcome attempt outcome-btn" data-status="attempted" type="button">
+            <span>Attempted<small>No completed service</small></span><span>›</span>
+          </button>
+          <button class="outcome serve outcome-btn" data-status="served" type="button">
+            <span>Served<small>Completed successfully</small></span><span>›</span>
+          </button>
+          <button class="outcome nonserve outcome-btn" data-status="non-served" type="button">
+            <span>Non-Served<small>Record the reason in notes</small></span><span>›</span>
+          </button>
         </div>
+
         <div class="route-actions">
           <button class="btn blue" id="skipBtn" type="button">Skip / Follow-Up</button>
-          <button class="btn secondary" id="detailsBtn" type="button">Job Details</button>
+          <button class="btn secondary" id="routeDetailsBtn" type="button">Job Details</button>
         </div>
-        ${next ? `<div class="next-card"><small>Next Stop</small><strong>${esc(next.name)}</strong><span>${esc(next.address)}</span></div>` : `<div class="next-card"><small>Final Stop</small><strong>This is your last selected stop.</strong></div>`}
+
+        ${next ? `
+          <div class="next-card">
+            <small>Next Stop</small>
+            <strong>${safe(next.name)}</strong>
+            <span>${safe(next.address)}</span>
+          </div>
+        ` : `
+          <div class="next-card">
+            <small>Final Stop</small>
+            <strong>This is the last selected stop.</strong>
+          </div>
+        `}
       `;
 
-      $("navigateBtn").onclick=()=>openMaps(job.address);
-      document.querySelectorAll(".route-outcome").forEach(btn=>btn.onclick=()=>openOutcome(job.id,btn.dataset.status));
-      $("skipBtn").onclick=()=>saveOutcome(job.id,"skipped","Skipped during route. Follow-up needed.");
-      $("detailsBtn").onclick=()=>alert(`${job.name}\n\nCompany: ${job.company || "—"}\nJob #: ${job.number || "—"}\nCounty: ${job.county}\n\nAddress:\n${job.address}\n\nNotes:\n${job.notes || "No notes saved."}`);
-    }
+      $("navigateBtn").onclick = () => {
+        window.open(`https://maps.apple.com/?daddr=${encodeURIComponent(current.address)}&dirflg=d`, "_blank", "noopener");
+      };
 
-    function renderAll(){
-      renderHeader(); renderDashboard(); renderJobs(); renderRoute(); renderInvoices(); renderMoney(); renderReview(); renderRouteMode();
-    }
-
-    function openMaps(address){
-      window.open(`https://maps.apple.com/?daddr=${encodeURIComponent(address)}&dirflg=d`,"_blank","noopener");
-    }
-
-    function parseIntake(){
-      const text=$("intakeText").value.trim();
-      if(!text){ toast("Paste job details first."); return; }
-
-      const lines=text.split(/\n|,/).map(x=>x.trim()).filter(Boolean);
-      const email=/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i;
-      const jobMatch=text.match(/(?:job|file|case|assignment)\s*(?:#|number|no\.?)?\s*[:\-]?\s*([A-Z0-9\-]+)/i);
-      const addressMatch=text.match(/\d{1,6}\s+[A-Za-z0-9 .#\-]+(?:Street|St|Avenue|Ave|Road|Rd|Drive|Dr|Court|Ct|Lane|Ln|Boulevard|Blvd|Way|Place|Pl|Trail|Terrace|Ter|Circle|Cir)[^,\n]*(?:,\s*[^,\n]+){0,3}/i);
-
-      $("intakeNumber").value=jobMatch ? jobMatch[1] : "";
-      $("intakeAddress").value=addressMatch ? addressMatch[0].trim() : "";
-      $("intakeName").value=lines.find(line=>line.length>3 && !email.test(line) && !/\d{1,6}\s/.test(line) && !/job|case|file|assignment/i.test(line)) || "";
-      $("intakeCompany").value=/provest/i.test(text) ? "ProVest" : /abc legal/i.test(text) ? "ABC Legal" : "";
-      $("intakeCounty").value=/orlando|orange county/i.test(text) ? "Orange" : /kissimmee|saint cloud|st\.?\s*cloud|osceola/i.test(text) ? "Osceola" : "Other";
-      $("intakeNotes").value=text;
-      toast("Draft created. Please review and correct it before saving.");
-    }
-
-    function addJob(data){
-      state.jobs.unshift({
-        id:id(),
-        name:data.name,
-        company:data.company || "",
-        number:data.number || "",
-        county:data.county,
-        address:data.address,
-        notes:data.notes || "",
-        fee:Number(data.fee || 0),
-        status:"pending",
-        outcomeNotes:"",
-        createdAt:new Date().toISOString()
+      document.querySelectorAll(".outcome-btn").forEach((button) => {
+        button.onclick = () => openOutcomeDialog(current.id, button.dataset.status);
       });
-      save(); renderAll();
+
+      $("skipBtn").onclick = () => saveOutcome(current.id, "skipped", "Skipped during route. Follow-up needed.");
+
+      $("routeDetailsBtn").onclick = () => {
+        alert(
+          `${current.name}\n\n` +
+          `Client: ${current.clientName}\n` +
+          `Job Code: ${current.code || "—"}\n` +
+          `County: ${current.county}\n` +
+          `Fee: ${currency(current.fee)}\n\n` +
+          `Address:\n${current.address}\n\n` +
+          `Instructions:\n${current.notes || "No notes saved."}`
+        );
+      };
     }
 
-    function startRoute(){
-      const visible=jobsForFilter(state.routeFilter);
-      const ids=state.selectedIds.filter(x=>visible.some(j=>j.id===x));
-      if(!ids.length){ toast("Select route jobs first, or tap Select All Visible."); return; }
-      state.activeRoute={active:true,ids,index:0,filter:state.routeFilter};
-      save(); renderAll(); window.scrollTo({top:0,behavior:"smooth"});
+    function renderPrintSheet() {
+      const jobs = state.selectedIds.map(getJob).filter(Boolean);
+      const group = state.routeFilter === "all"
+        ? "All Selected Jobs"
+        : state.routeFilter === "osceola"
+          ? "Osceola County"
+          : "Orange County";
+
+      const compact = state.printMode === "compact";
+
+      $("printSheet").innerHTML = `
+        <div class="print-only">
+          <h1>Jasz Field System — Route Sheet</h1>
+          <p><strong>Date:</strong> ${new Date().toLocaleDateString()} &nbsp; | &nbsp; <strong>Route Group:</strong> ${safe(group)} &nbsp; | &nbsp; <strong>Stops:</strong> ${jobs.length}</p>
+          <hr>
+          ${jobs.map((job, index) => compact ? `
+            <div class="print-stop">
+              <h3>${index + 1}. □ ${safe(job.name)} — Job #${safe(job.code || "—")}</h3>
+              <p><strong>Client:</strong> ${safe(job.clientName)}<br>
+              <strong>Address:</strong> ${safe(job.address)}<br>
+              □ Attempted &nbsp; □ Served &nbsp; □ Non-Served &nbsp; □ Follow-Up</p>
+            </div>
+          ` : `
+            <div class="print-stop">
+              <h3>STOP ${index + 1} &nbsp; □ Completed</h3>
+              <p><strong>Client:</strong> ${safe(job.clientName)}<br>
+              <strong>Job Code:</strong> ${safe(job.code || "—")}<br>
+              <strong>Person / Entity:</strong> ${safe(job.name)}<br><br>
+              <strong>Address:</strong><br>${safe(job.address)}<br><br>
+              <strong>Instructions:</strong> ${safe(job.notes || "—")}<br><br>
+              <strong>Outcome:</strong> □ Attempted &nbsp; □ Served &nbsp; □ Non-Served &nbsp; □ Follow-Up</p>
+              <div class="print-lines"><strong>Notes:</strong><br><br>____________________________________________________________<br><br>____________________________________________________________</div>
+            </div>
+          `).join("") || "<p>No route jobs selected.</p>"}
+        </div>
+      `;
     }
 
-    let pendingOutcome=null;
+    function renderAll() {
+      $("jobPill").textContent = `${state.jobs.length} ${state.jobs.length === 1 ? "job" : "jobs"}`;
+      renderClientSelects();
+      renderIntakeClients();
+      renderCleanupLines();
+      renderDashboard();
+      renderToday();
+      renderPhoneSearch();
+      renderVault();
+      renderRoute();
+      renderPricing();
+      renderInvoices();
+      renderMoney();
+      renderReview();
+      renderRouteMode();
+      renderPrintSheet();
+    }
 
-    function openOutcome(jobId,status){
-      const job=getJob(jobId);
-      if(!job) return;
-      pendingOutcome={jobId,status};
-      $("outcomeTitle").textContent=`Mark as ${labels[status]}`;
-      $("outcomeInfo").textContent=`${job.name} · ${job.address}`;
-      $("outcomeNotes").value="";
+    function detectCounty(text) {
+      const value = text.toLowerCase();
+      if (/(orlando|orange county|winter park|apopka|ocoee|windermere|lake nona)/.test(value)) return "Orange";
+      if (/(kissimmee|saint cloud|st\.?\s*cloud|osceola|poinciana|celebration|davenport)/.test(value)) return "Osceola";
+      return "Other";
+    }
+
+    function extractAddress(text) {
+      const match = text.match(/\d{1,6}\s+[A-Za-z0-9 .#\-]+(?:Street|St|Avenue|Ave|Road|Rd|Drive|Dr|Court|Ct|Lane|Ln|Boulevard|Blvd|Way|Place|Pl|Trail|Terrace|Ter|Circle|Cir|Parkway|Pkwy)[^,\n]*(?:,\s*[^,\n]+){0,3}/i);
+      return match ? match[0].trim() : "";
+    }
+
+    function buildIntakeDraft() {
+      const original = $("originalText").value.trim();
+      const client = getClient(state.selectedClientId);
+
+      if (!original) {
+        showToast("Paste the assignment first.");
+        return;
+      }
+
+      const rawLines = original.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+      const ignored = [];
+
+      rawLines.forEach((line, index) => {
+        const lower = line.toLowerCase();
+        if (client.cleanupPhrases.some((phrase) => phrase && lower.includes(phrase.toLowerCase()))) {
+          ignored.push(index);
+        }
+      });
+
+      state.intake = {
+        originalText: original,
+        lines: rawLines,
+        ignoredIndexes: ignored
+      };
+
+      const workingText = rawLines.filter((line, index) => !ignored.includes(index)).join("\n");
+      const codeMatch = workingText.match(/(?:job|file|case|assignment|ref(?:erence)?)\s*(?:#|number|no\.?)?\s*[:\-]?\s*([A-Z0-9\-]+)/i);
+      const address = extractAddress(workingText);
+
+      const likelyName = rawLines.find((line) => {
+        const lower = line.toLowerCase();
+        return line.length > 3 &&
+          !/\d{1,6}\s/.test(line) &&
+          !/(job|file|case|assignment|address|client|county|confidential|email|phone|attached)/.test(lower) &&
+          line.length < 65;
+      }) || "";
+
+      $("draftClient").value = client.id;
+      $("draftFee").value = Number(client.defaultFee || 0).toFixed(2);
+      $("draftCode").value = codeMatch ? codeMatch[1] : "";
+      $("draftAddress").value = address;
+      $("draftCounty").value = detectCounty(`${workingText} ${address}`);
+      $("draftName").value = likelyName;
+      $("draftNotes").value = workingText;
+      renderAll();
+      showToast("Draft built. Review the cleanup lines and edit the fields before saving.");
+    }
+
+    function workingIntakeText() {
+      return state.intake.lines
+        .filter((_, index) => !state.intake.ignoredIndexes.includes(index))
+        .join("\n");
+    }
+
+    function saveIntake(event) {
+      event.preventDefault();
+      const mode = event.submitter.dataset.saveMode;
+      const client = getClient($("draftClient").value);
+
+      const job = {
+        id: uid(),
+        clientId: client.id,
+        clientName: client.name,
+        name: $("draftName").value.trim(),
+        code: $("draftCode").value.trim(),
+        county: $("draftCounty").value,
+        address: $("draftAddress").value.trim(),
+        serviceType: $("draftServiceType").value.trim(),
+        dueDate: $("draftDueDate").value,
+        fee: Number($("draftFee").value || 0),
+        notes: $("draftNotes").value.trim(),
+        originalText: state.intake.originalText || $("originalText").value.trim(),
+        cleanedText: workingIntakeText() || $("draftNotes").value.trim(),
+        ignoredLines: state.intake.ignoredIndexes.map((index) => state.intake.lines[index]).filter(Boolean),
+        today: mode === "today",
+        status: "pending",
+        outcomeNotes: "",
+        createdAt: new Date().toISOString()
+      };
+
+      state.jobs.unshift(job);
+      resetIntake();
+      saveState();
+      renderAll();
+      showToast(mode === "today" ? "Job saved and added to Today." : "Job saved to Job Vault.");
+    }
+
+    function resetIntake() {
+      state.intake = { originalText: "", lines: [], ignoredIndexes: [] };
+      $("originalText").value = "";
+      $("intakeForm").reset();
+      const client = getClient(state.selectedClientId);
+      $("draftClient").value = client.id;
+      $("draftFee").value = Number(client.defaultFee || 0).toFixed(2);
+    }
+
+    function selectClient(clientId) {
+      state.selectedClientId = clientId;
+      const client = getClient(clientId);
+      $("draftClient").value = client.id;
+      $("draftFee").value = Number(client.defaultFee || 0).toFixed(2);
+      saveState();
+      renderAll();
+    }
+
+    function openClientDialog(clientId = "") {
+      const client = clientId ? getClient(clientId) : null;
+      $("clientId").value = client ? client.id : "";
+      $("clientName").value = client ? client.name : "";
+      $("clientFee").value = client ? client.defaultFee : "";
+      $("clientCleanup").value = client ? client.cleanupPhrases.join("\n") : "";
+      $("clientNotes").value = client ? client.notes : "";
+      $("clientDialog").showModal();
+    }
+
+    function saveClient(event) {
+      event.preventDefault();
+      if (event.submitter.value === "cancel") {
+        $("clientDialog").close();
+        return;
+      }
+
+      const clientId = $("clientId").value || `client-${uid()}`;
+      const profile = {
+        id: clientId,
+        name: $("clientName").value.trim(),
+        defaultFee: Number($("clientFee").value || 0),
+        cleanupPhrases: $("clientCleanup").value.split(/\r?\n/).map((item) => item.trim()).filter(Boolean),
+        notes: $("clientNotes").value.trim()
+      };
+
+      const index = state.clients.findIndex((client) => client.id === clientId);
+      if (index >= 0) state.clients[index] = profile;
+      else state.clients.push(profile);
+
+      state.selectedClientId = profile.id;
+      saveState();
+      $("clientDialog").close();
+      renderAll();
+      showToast("Client profile saved.");
+    }
+
+    function startRoute() {
+      const visibleJobs = jobsForFilter(state.routeFilter);
+      const selected = state.selectedIds.filter((id) => visibleJobs.some((job) => job.id === id));
+
+      if (!selected.length) {
+        showToast("Select route jobs first, or use Select All Visible.");
+        return;
+      }
+
+      selected.forEach((id) => {
+        const job = getJob(id);
+        if (job) job.today = true;
+      });
+
+      state.activeRoute = {
+        active: true,
+        ids: [...state.selectedIds],
+        index: 0,
+        filter: state.routeFilter
+      };
+
+      saveState();
+      renderAll();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    let pendingOutcome = null;
+
+    function openOutcomeDialog(jobId, status) {
+      const job = getJob(jobId);
+      if (!job) return;
+
+      pendingOutcome = { jobId, status };
+      $("outcomeTitle").textContent = `Mark as ${labels[status]}`;
+      $("outcomeInfo").textContent = `${job.name} · ${job.address}`;
+      $("outcomeNotes").value = "";
       $("outcomeDialog").showModal();
     }
 
-    function saveOutcome(jobId,status,notes){
-      const job=getJob(jobId);
-      if(!job) return;
-      job.status=status;
-      job.outcomeNotes=notes || "";
-      job.updatedAt=new Date().toISOString();
+    function saveOutcome(jobId, status, notes) {
+      const job = getJob(jobId);
+      if (!job) return;
 
-      if(state.activeRoute.active && state.activeRoute.ids[state.activeRoute.index]===jobId){
-        state.activeRoute.index++;
+      job.status = status;
+      job.outcomeNotes = notes || "";
+      job.updatedAt = new Date().toISOString();
+
+      if (state.activeRoute.active && state.activeRoute.ids[state.activeRoute.index] === jobId) {
+        state.activeRoute.index += 1;
       }
 
-      save(); renderAll();
-      toast(`${labels[status]} saved. Moving to the next stop.`);
+      saveState();
+      renderAll();
+      showToast(`${labels[status]} saved. Moving to the next stop.`);
     }
 
-    function endRoute(){
-      state.activeRoute.active=false;
-      save(); renderAll();
-      toast("Route paused. All saved outcomes are still there.");
+    function endRoute() {
+      state.activeRoute.active = false;
+      saveState();
+      renderAll();
+      showToast("Route paused. Saved outcomes are still there.");
     }
 
-    function completeRoute(){
-      state.activeRoute.active=false;
-      state.selectedIds=[];
-      save(); renderAll();
-      toast("Route complete. Review your outcomes when ready.");
+    function completeRoute() {
+      state.activeRoute.active = false;
+      state.selectedIds = [];
+      saveState();
+      renderAll();
+      showToast("Route complete. Review your work in Office iPad mode.");
     }
 
-    function sampleJobs(){
-      if(state.jobs.length && !confirm("Add sample jobs to your existing jobs?")) return;
-      const data=[
-        {name:"Franklin Sanchez",company:"ProVest",number:"311005",county:"Osceola",address:"2201 Key West Ct, Apt 337, Kissimmee, FL 34741",notes:"Verify apartment number before attempting.",fee:55},
-        {name:"Danielle Morgan",company:"ABC Legal",number:"311006",county:"Osceola",address:"2947 Pioneer Street, Saint Cloud, FL 34772",notes:"",fee:55},
-        {name:"Christopher Reed",company:"ProVest",number:"311007",county:"Orange",address:"1800 Sand Lake Road, Orlando, FL 32809",notes:"Business address. Check office hours.",fee:65},
-        {name:"Maria Rodriguez",company:"Direct Legal",number:"311008",county:"Orange",address:"7250 S Orange Blossom Trail, Orlando, FL 32809",notes:"",fee:60}
-      ];
-      data.forEach(addJob);
-      toast("Sample jobs added.");
+    function moveRoute(jobId, direction) {
+      const index = state.selectedIds.indexOf(jobId);
+      if (index < 0) return;
+
+      const nextIndex = direction === "up" ? index - 1 : index + 1;
+      if (nextIndex < 0 || nextIndex >= state.selectedIds.length) return;
+
+      [state.selectedIds[index], state.selectedIds[nextIndex]] =
+        [state.selectedIds[nextIndex], state.selectedIds[index]];
+
+      saveState();
+      renderAll();
     }
 
-    function invoiceFromJobs(){
-      const served=state.jobs.filter(j=>j.status==="served");
-      if(!served.length){ toast("There are no served jobs available for an invoice draft."); return; }
-      const total=served.reduce((sum,j)=>sum+Number(j.fee||0),0);
-      const companies=[...new Set(served.map(j=>j.company).filter(Boolean))];
-      $("invoiceClient").value=companies.length===1 ? companies[0] : "";
-      $("invoiceNumber").value=`INV-${String(state.invoices.length+1001)}`;
-      $("invoiceAmount").value=total.toFixed(2);
-      $("invoiceDescription").value=`Completed service jobs: ${served.map(j=>j.number || j.name).join(", ")}`;
-      $("invoiceDueDate").value=today();
-      toast("Invoice draft fields were filled from served jobs. Review, then save.");
-    }
-
-    function exportBackup(){
-      const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"});
-      const url=URL.createObjectURL(blob);
-      const link=document.createElement("a");
-      link.href=url; link.download=`jasz-field-office-backup-${today()}.json`;
-      document.body.appendChild(link); link.click(); link.remove(); URL.revokeObjectURL(url);
-      toast("Backup downloaded.");
-    }
-
-    document.querySelectorAll(".nav button").forEach(btn=>btn.onclick=()=>setView(btn.dataset.view));
-    document.querySelectorAll("[data-go]").forEach(btn=>btn.onclick=()=>setView(btn.dataset.go));
-
-    $("parseIntakeBtn").onclick=parseIntake;
-    $("clearIntakeBtn").onclick=()=>{ $("intakeText").value=""; $("intakeForm").reset(); };
-    $("intakeForm").onsubmit=(e)=>{
-      e.preventDefault();
-      addJob({name:$("intakeName").value.trim(),company:$("intakeCompany").value.trim(),number:$("intakeNumber").value.trim(),county:$("intakeCounty").value,address:$("intakeAddress").value.trim(),notes:$("intakeNotes").value.trim(),fee:0});
-      $("intakeForm").reset(); $("intakeText").value=""; toast("Job saved from Smart Intake.");
-    };
-
-    $("jobForm").onsubmit=(e)=>{
-      e.preventDefault();
-      addJob({name:$("jobName").value.trim(),company:$("jobCompany").value.trim(),number:$("jobNumber").value.trim(),county:$("jobCounty").value,address:$("jobAddress").value.trim(),notes:$("jobNotes").value.trim(),fee:$("jobFee").value});
-      e.target.reset(); toast("Job saved.");
-    };
-    $("sampleJobsBtn").onclick=sampleJobs;
-
-    $("allJobsList").onclick=(e)=>{
-      const btn=e.target.closest(".delete-job");
-      if(!btn) return;
-      const job=getJob(btn.dataset.id);
-      if(job && confirm(`Delete ${job.name}?`)){
-        state.jobs=state.jobs.filter(j=>j.id!==job.id);
-        state.selectedIds=state.selectedIds.filter(x=>x!==job.id);
-        state.activeRoute.ids=state.activeRoute.ids.filter(x=>x!==job.id);
-        save(); renderAll(); toast("Job deleted.");
+    function makeInvoiceFromServedJobs() {
+      const served = state.jobs.filter((job) => job.status === "served");
+      if (!served.length) {
+        showToast("There are no served jobs available for an invoice draft.");
+        return;
       }
-    };
 
-    document.querySelectorAll(".choice").forEach(btn=>btn.onclick=()=>{
-      state.routeFilter=btn.dataset.filter; save(); renderAll();
+      const total = served.reduce((sum, job) => sum + Number(job.fee || 0), 0);
+      const clientIds = [...new Set(served.map((job) => job.clientId))];
+
+      $("invoiceClient").value = clientIds.length === 1 ? clientIds[0] : "";
+      $("invoiceNumber").value = `INV-${1000 + state.invoices.length + 1}`;
+      $("invoiceDueDate").value = dateToday();
+      $("invoiceAmount").value = total.toFixed(2);
+      $("invoiceDescription").value = served.map((job) =>
+        `${job.clientName}: Job ${job.code || job.name} — ${currency(job.fee)}`
+      ).join("\n");
+
+      showToast("Invoice draft filled from served jobs. Review the client, amount, and line items.");
+    }
+
+    function exportBackup() {
+      const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `jasz-field-office-backup-${dateToday()}.json`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      showToast("Backup exported.");
+    }
+
+    function printRoute(mode) {
+      if (!state.selectedIds.length) {
+        showToast("Select route jobs before printing.");
+        return;
+      }
+
+      state.printMode = mode;
+      renderPrintSheet();
+      setTimeout(() => window.print(), 100);
+    }
+
+    document.querySelectorAll("[data-workspace]").forEach((button) => {
+      button.addEventListener("click", () => setWorkspace(button.dataset.workspace));
     });
 
-    $("routeJobsList").onchange=(e)=>{
-      if(!e.target.classList.contains("route-check")) return;
-      const jobId=e.target.dataset.id;
-      if(e.target.checked) state.selectedIds=[...new Set([...state.selectedIds,jobId])];
-      else state.selectedIds=state.selectedIds.filter(x=>x!==jobId);
-      save(); renderAll();
-    };
+    $("switchWorkspaceBtn").addEventListener("click", exitToWorkspaceChooser);
 
-    $("selectVisibleBtn").onclick=()=>{
-      const ids=jobsForFilter(state.routeFilter).map(j=>j.id);
-      state.selectedIds=[...new Set([...state.selectedIds,...ids])];
-      save(); renderAll(); toast("All visible jobs selected.");
-    };
+    document.querySelectorAll(".nav button").forEach((button) => {
+      button.addEventListener("click", () => setView(button.dataset.view));
+    });
 
-    $("clearVisibleBtn").onclick=()=>{
-      const ids=new Set(jobsForFilter(state.routeFilter).map(j=>j.id));
-      state.selectedIds=state.selectedIds.filter(x=>!ids.has(x));
-      save(); renderAll(); toast("Visible route selection cleared.");
-    };
+    document.querySelectorAll("[data-go]").forEach((button) => {
+      button.addEventListener("click", () => setView(button.dataset.go));
+    });
 
-    $("startRouteBtn").onclick=startRoute;
-    $("endRouteBtn").onclick=endRoute;
+    $("buildDraftBtn").addEventListener("click", buildIntakeDraft);
+    $("clearIntakeBtn").addEventListener("click", () => {
+      resetIntake();
+      renderAll();
+      showToast("Smart Intake cleared.");
+    });
 
-    $("outcomeForm").onsubmit=(e)=>{
-      e.preventDefault();
-      if(e.submitter.value==="cancel" || !pendingOutcome){
-        $("outcomeDialog").close(); pendingOutcome=null; return;
-      }
-      saveOutcome(pendingOutcome.jobId,pendingOutcome.status,$("outcomeNotes").value.trim());
-      $("outcomeDialog").close(); pendingOutcome=null;
-    };
+    $("intakeClientChips").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-client-id]");
+      if (button) selectClient(button.dataset.clientId);
+    });
 
-    $("invoiceForm").onsubmit=(e)=>{
-      e.preventDefault();
-      state.invoices.unshift({
-        id:id(),
-        client:$("invoiceClient").value.trim(),
-        number:$("invoiceNumber").value.trim(),
-        dueDate:$("invoiceDueDate").value || "",
-        amount:Number($("invoiceAmount").value || 0),
-        description:$("invoiceDescription").value.trim(),
-        status:"draft",
-        createdAt:new Date().toISOString()
-      });
-      save(); e.target.reset(); renderAll(); toast("Invoice saved as draft.");
-    };
+    $("manageClientsBtn").addEventListener("click", () => openClientDialog());
+    $("clientForm").addEventListener("submit", saveClient);
 
-    $("invoiceFromJobsBtn").onclick=invoiceFromJobs;
+    $("cleanupLines").addEventListener("change", (event) => {
+      if (!event.target.classList.contains("ignore-line")) return;
+      const index = Number(event.target.dataset.index);
 
-    $("invoiceList").onclick=(e)=>{
-      const statusBtn=e.target.closest(".invoice-status");
-      const deleteBtn=e.target.closest(".delete-invoice");
-
-      if(statusBtn){
-        const invoice=state.invoices.find(i=>i.id===statusBtn.dataset.id);
-        if(!invoice) return;
-        invoice.status=statusBtn.dataset.status;
-        save(); renderAll(); toast(`Invoice marked ${labels[invoice.status]}.`);
+      if (event.target.checked) {
+        state.intake.ignoredIndexes = [...new Set([...state.intake.ignoredIndexes, index])];
+      } else {
+        state.intake.ignoredIndexes = state.intake.ignoredIndexes.filter((item) => item !== index);
       }
 
-      if(deleteBtn){
-        const invoice=state.invoices.find(i=>i.id===deleteBtn.dataset.id);
-        if(invoice && confirm(`Delete invoice ${invoice.number}?`)){
-          state.invoices=state.invoices.filter(i=>i.id!==invoice.id);
-          save(); renderAll(); toast("Invoice deleted.");
+      $("draftNotes").value = workingIntakeText();
+      saveState();
+      renderAll();
+    });
+
+    $("draftClient").addEventListener("change", () => {
+      state.selectedClientId = $("draftClient").value;
+      const client = getClient(state.selectedClientId);
+      $("draftFee").value = Number(client.defaultFee || 0).toFixed(2);
+      saveState();
+      renderAll();
+    });
+
+    $("intakeForm").addEventListener("submit", saveIntake);
+
+    $("phoneSearch").addEventListener("input", renderPhoneSearch);
+    $("vaultSearch").addEventListener("input", renderVault);
+    $("vaultStatus").addEventListener("change", renderVault);
+
+    $("vaultList").addEventListener("click", (event) => {
+      const originalButton = event.target.closest(".show-original");
+      const deleteButton = event.target.closest(".delete-job");
+
+      if (originalButton) {
+        const job = getJob(originalButton.dataset.id);
+        if (!job) return;
+        alert(
+          `Original assignment:\n\n${job.originalText || "No original assignment saved."}\n\n` +
+          `Ignored/canceled wording:\n${(job.ignoredLines || []).join("\n") || "None"}`
+        );
+      }
+
+      if (deleteButton) {
+        const job = getJob(deleteButton.dataset.id);
+        if (job && confirm(`Delete ${job.name}?`)) {
+          state.jobs = state.jobs.filter((item) => item.id !== job.id);
+          state.selectedIds = state.selectedIds.filter((id) => id !== job.id);
+          state.activeRoute.ids = state.activeRoute.ids.filter((id) => id !== job.id);
+          saveState();
+          renderAll();
+          showToast("Job deleted.");
         }
       }
-    };
+    });
 
-    $("moneyDate").value=today();
-
-    $("moneyForm").onsubmit=(e)=>{
-      e.preventDefault();
-      state.money.unshift({
-        id:id(),
-        type:$("moneyType").value,
-        amount:Number($("moneyAmount").value || 0),
-        category:$("moneyCategory").value.trim(),
-        date:$("moneyDate").value || today(),
-        notes:$("moneyNotes").value.trim(),
-        createdAt:new Date().toISOString()
+    document.querySelectorAll(".choice").forEach((button) => {
+      button.addEventListener("click", () => {
+        state.routeFilter = button.dataset.filter;
+        saveState();
+        renderAll();
       });
-      save(); e.target.reset(); $("moneyDate").value=today(); renderAll(); toast("Money entry saved.");
-    };
+    });
 
-    $("moneyList").onclick=(e)=>{
-      const btn=e.target.closest(".delete-money");
-      if(!btn) return;
-      if(confirm("Delete this money entry?")){
-        state.money=state.money.filter(m=>m.id!==btn.dataset.id);
-        save(); renderAll(); toast("Money entry deleted.");
+    $("routeJobList").addEventListener("change", (event) => {
+      if (!event.target.classList.contains("route-check")) return;
+      const jobId = event.target.dataset.id;
+
+      if (event.target.checked) {
+        state.selectedIds = [...new Set([...state.selectedIds, jobId])];
+      } else {
+        state.selectedIds = state.selectedIds.filter((id) => id !== jobId);
       }
-    };
 
-    $("exportBtn").onclick=exportBackup;
-    $("clearDataBtn").onclick=()=>{
-      if(!confirm("This permanently clears all jobs, invoices, money entries, and route data from this browser. Continue?")) return;
-      state.jobs=[]; state.invoices=[]; state.money=[]; state.selectedIds=[]; state.routeFilter="osceola";
-      state.activeRoute={active:false,ids:[],index:0,filter:"osceola"};
-      save(); renderAll(); toast("All local app data was cleared.");
-    };
+      saveState();
+      renderAll();
+    });
 
-    load();
+    $("selectVisibleBtn").addEventListener("click", () => {
+      const ids = jobsForFilter(state.routeFilter).map((job) => job.id);
+      state.selectedIds = [...new Set([...state.selectedIds, ...ids])];
+      saveState();
+      renderAll();
+      showToast("All visible jobs selected.");
+    });
+
+    $("clearVisibleBtn").addEventListener("click", () => {
+      const ids = new Set(jobsForFilter(state.routeFilter).map((job) => job.id));
+      state.selectedIds = state.selectedIds.filter((id) => !ids.has(id));
+      saveState();
+      renderAll();
+      showToast("Visible route selection cleared.");
+    });
+
+    $("clearRouteOrderBtn").addEventListener("click", () => {
+      state.selectedIds = [];
+      saveState();
+      renderAll();
+      showToast("Route order cleared.");
+    });
+
+    $("routeOrderList").addEventListener("click", (event) => {
+      const moveButton = event.target.closest(".move-route");
+      const removeButton = event.target.closest(".remove-route");
+
+      if (moveButton) moveRoute(moveButton.dataset.id, moveButton.dataset.direction);
+
+      if (removeButton) {
+        state.selectedIds = state.selectedIds.filter((id) => id !== removeButton.dataset.id);
+        saveState();
+        renderAll();
+      }
+    });
+
+    $("startRouteBtn").addEventListener("click", startRoute);
+    $("endRouteBtn").addEventListener("click", endRoute);
+
+    $("printDetailedBtn").addEventListener("click", () => printRoute("detailed"));
+    $("printCompactBtn").addEventListener("click", () => printRoute("compact"));
+
+    $("pricingClientList").addEventListener("click", (event) => {
+      const edit = event.target.closest(".edit-client");
+      if (edit) openClientDialog(edit.dataset.clientId);
+    });
+
+    $("invoiceForm").addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const client = getClient($("invoiceClient").value);
+      state.invoices.unshift({
+        id: uid(),
+        clientId: client.id,
+        clientName: client.name,
+        number: $("invoiceNumber").value.trim(),
+        dueDate: $("invoiceDueDate").value,
+        amount: Number($("invoiceAmount").value || 0),
+        description: $("invoiceDescription").value.trim(),
+        status: "draft",
+        createdAt: new Date().toISOString()
+      });
+
+      event.target.reset();
+      saveState();
+      renderAll();
+      showToast("Invoice saved as draft.");
+    });
+
+    $("draftInvoiceFromJobsBtn").addEventListener("click", makeInvoiceFromServedJobs);
+
+    $("invoiceList").addEventListener("click", (event) => {
+      const statusButton = event.target.closest(".invoice-status");
+      const deleteButton = event.target.closest(".delete-invoice");
+
+      if (statusButton) {
+        const invoice = state.invoices.find((item) => item.id === statusButton.dataset.id);
+        if (invoice) {
+          invoice.status = statusButton.dataset.status;
+          saveState();
+          renderAll();
+          showToast(`Invoice marked ${labels[invoice.status]}.`);
+        }
+      }
+
+      if (deleteButton) {
+        const invoice = state.invoices.find((item) => item.id === deleteButton.dataset.id);
+        if (invoice && confirm(`Delete invoice ${invoice.number}?`)) {
+          state.invoices = state.invoices.filter((item) => item.id !== invoice.id);
+          saveState();
+          renderAll();
+          showToast("Invoice deleted.");
+        }
+      }
+    });
+
+    $("moneyDate").value = dateToday();
+
+    $("moneyForm").addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      state.money.unshift({
+        id: uid(),
+        type: $("moneyType").value,
+        amount: Number($("moneyAmount").value || 0),
+        category: $("moneyCategory").value.trim(),
+        date: $("moneyDate").value || dateToday(),
+        notes: $("moneyNotes").value.trim(),
+        createdAt: new Date().toISOString()
+      });
+
+      event.target.reset();
+      $("moneyDate").value = dateToday();
+      saveState();
+      renderAll();
+      showToast("Money entry saved.");
+    });
+
+    $("moneyList").addEventListener("click", (event) => {
+      const button = event.target.closest(".delete-money");
+      if (!button) return;
+
+      if (confirm("Delete this money entry?")) {
+        state.money = state.money.filter((entry) => entry.id !== button.dataset.id);
+        saveState();
+        renderAll();
+        showToast("Money entry deleted.");
+      }
+    });
+
+    $("outcomeForm").addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      if (event.submitter.value === "cancel" || !pendingOutcome) {
+        $("outcomeDialog").close();
+        pendingOutcome = null;
+        return;
+      }
+
+      saveOutcome(pendingOutcome.jobId, pendingOutcome.status, $("outcomeNotes").value.trim());
+      $("outcomeDialog").close();
+      pendingOutcome = null;
+    });
+
+    $("exportBtn").addEventListener("click", exportBackup);
+    $("exportPhoneBtn").addEventListener("click", exportBackup);
+    $("goTabletBtn").addEventListener("click", () => setWorkspace("tablet"));
+
+    $("clearAllBtn").addEventListener("click", () => {
+      if (!confirm("This permanently removes all jobs, client profiles, invoices, money entries, and route data saved in this browser. Continue?")) return;
+
+      localStorage.removeItem(STORAGE_KEY);
+      location.reload();
+    });
+
+    loadState();
+
+    if (state.workspace) {
+      setWorkspace(state.workspace);
+    } else {
+      $("workspaceChooser").classList.remove("hidden");
+    }
+
     renderAll();
   </script>
 </body>
