@@ -3,1200 +3,456 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#f7f0e5">
-  <title>J Empire Serving</title>
+  <title>J Empire Serving — Sync Test</title>
 
   <style>
-    :root{
-      --cream:#f7f0e5;
-      --ivory:#fffdf8;
-      --ink:#1d1a18;
-      --espresso:#3d302b;
-      --walnut:#654a3b;
-      --taupe:#c7b8a8;
-      --taupe-dark:#917f70;
-      --gold:#b88a2d;
-      --gold-light:#d9bb73;
-      --gold-soft:#f4e6be;
-      --olive:#536b52;
-      --olive-soft:#e2eadf;
-      --clay:#a66150;
-      --clay-soft:#f4e1db;
-      --line:#dfd0be;
-      --muted:#74675e;
-      --shadow:0 12px 30px rgba(66,45,26,.10);
-      --radius:18px;
-      --font-scale:1;
+    :root {
+      --cream: #f7f0e5;
+      --paper: #fffdf8;
+      --ink: #1d1a18;
+      --espresso: #3d302b;
+      --taupe: #c7b8a8;
+      --gold: #b88a2d;
+      --gold-soft: #f4e6be;
+      --line: #dfd0be;
+      --green: #536b52;
+      --red: #a66150;
     }
 
-    *{box-sizing:border-box}
-    html{background:var(--cream);font-size:calc(16px * var(--font-scale))}
-    body{
-      margin:0;
-      min-width:320px;
-      color:var(--ink);
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-width: 320px;
       background:
-        radial-gradient(circle at top right,rgba(217,187,115,.18),transparent 32rem),
+        radial-gradient(circle at top right, rgba(217,187,115,.18), transparent 30rem),
         var(--cream);
-      font-family:Georgia,"Times New Roman",serif;
-      -webkit-font-smoothing:antialiased;
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
     }
 
-    button,input,textarea,select{font:inherit}
-    button{cursor:pointer;touch-action:manipulation}
-    button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{
-      outline:3px solid rgba(184,138,45,.42);
-      outline-offset:2px;
+    .app {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 24px 16px 80px;
     }
 
-    .ui{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
-    .hidden{display:none!important}
-    .app{max-width:1400px;margin:auto;padding:18px 20px calc(110px + env(safe-area-inset-bottom))}
-    .eyebrow{
-      color:var(--gold);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-      font-size:.7rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase;
-    }
-    h1,h2,h3,p{margin-top:0}
-    h1{margin:5px 0 0;font-size:clamp(1.7rem,4vw,2.5rem);font-weight:600;letter-spacing:.01em}
-    h2{margin-bottom:7px;font-size:1.4rem;font-weight:600}
-    h3{margin-bottom:6px;font-size:1.05rem;font-weight:600}
-    .subtle,.hint{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--muted);line-height:1.45}
-    .subtle{margin-bottom:0}
-    .hint{font-size:.87rem;margin:10px 0 0}
-
-    .topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:5px 0 20px}
-    .brand{display:flex;align-items:center;gap:12px}
-    .brand-mark{
-      width:50px;height:50px;display:grid;place-items:center;position:relative;flex:0 0 auto;
-      border:1px solid var(--gold-light);border-radius:50%;background:var(--ivory);color:var(--ink);
-      font-size:2rem;font-style:italic;line-height:1;box-shadow:0 3px 12px rgba(60,42,25,.08);
-    }
-    .brand-mark::before{
-      content:"♕";position:absolute;top:-13px;color:var(--gold);font-size:1.05rem;font-family:Georgia,serif;
-    }
-    .top-actions{display:flex;align-items:center;justify-content:flex-end;gap:9px;flex-wrap:wrap}
-    .font-control{display:flex;align-items:center;gap:4px;padding:4px;border:1px solid var(--line);border-radius:999px;background:var(--ivory)}
-    .font-control button{
-      min-width:31px;height:30px;padding:0;border:0;border-radius:50%;background:transparent;color:var(--espresso);
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-weight:700;font-size:.82rem;
-    }
-    .font-control button.active{background:var(--gold-soft);color:var(--espresso)}
-
-    .pill,.badge{
-      display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;
-      border-radius:999px;padding:7px 10px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-      font-size:.74rem;font-weight:700;letter-spacing:.02em;
-    }
-    .pill{background:var(--gold-soft);color:var(--espresso)}
-    .badge.pending,.badge.draft{background:#eee8df;color:#63584f}
-    .badge.attempted{background:var(--gold-soft);color:#765209}
-    .badge.served,.badge.paid{background:var(--olive-soft);color:#345438}
-    .badge.non-served,.badge.overdue{background:var(--clay-soft);color:#834234}
-    .badge.skipped,.badge.sent{background:#eee8df;color:#63584f}
-
-    .btn{
-      min-height:44px;padding:10px 14px;border:0;border-radius:12px;background:var(--walnut);color:#fff;
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-weight:700;
-    }
-    .btn.secondary{border:1px solid var(--line);background:#fbf7f0;color:var(--espresso)}
-    .btn.gold{background:var(--gold);color:#231b15}
-    .btn.ink{background:var(--ink);color:#fff}
-    .btn.olive{background:var(--olive);color:#fff}
-    .btn.clay{background:var(--clay);color:#fff}
-    .btn.wide{width:100%}
-    .button-row{display:flex;gap:10px;flex-wrap:wrap}
-
-    .card{
-      padding:20px;border:1px solid var(--line);border-radius:var(--radius);background:rgba(255,253,248,.96);box-shadow:var(--shadow);
-    }
-    .card + .card{margin-top:16px}
-    .toolbar{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
-    .toolbar h2{margin-bottom:5px}
-    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-    .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-
-    label{
-      display:grid;gap:6px;color:var(--espresso);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-      font-size:.86rem;font-weight:600;
-    }
-    input,textarea,select{
-      width:100%;min-height:45px;padding:10px 11px;border:1px solid var(--line);border-radius:11px;
-      color:var(--ink);background:#fffefa;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-    }
-    textarea{min-height:92px;resize:vertical;line-height:1.42}
-    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
-    .form-grid .full{grid-column:1/-1}
-
-    .workspace-chooser{
-      max-width:870px;margin:6vh auto 0;padding:29px;border:1px solid var(--line);border-radius:24px;background:rgba(255,253,248,.97);
-      box-shadow:var(--shadow);text-align:center;
-    }
-    .workspace-options{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px;text-align:left}
-    .workspace-option{
-      min-height:205px;padding:20px;border:1px solid var(--line);border-radius:18px;background:var(--ivory);color:var(--ink);text-align:left;
-    }
-    .workspace-option:hover{border-color:var(--gold);background:#fffaf0}
-    .workspace-option strong{display:block;margin:8px 0;font-size:1.25rem;font-weight:600}
-    .workspace-option span{display:block;color:var(--muted);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
-    .workspace-icon{font-size:1.85rem;color:var(--gold)}
-
-    .nav{
-      display:grid;gap:7px;padding:7px;margin-bottom:20px;border:1px solid var(--line);border-radius:16px;
-      background:rgba(255,253,248,.8);box-shadow:var(--shadow);
-    }
-    .phone-nav{grid-template-columns:repeat(4,1fr)}
-    .tablet-nav{grid-template-columns:repeat(8,1fr)}
-    .nav button{
-      min-height:45px;padding:8px;border:0;border-radius:11px;background:transparent;color:var(--muted);
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:.82rem;font-weight:700;
-    }
-    .nav button.active{background:var(--espresso);color:#fff}
-
-    .view{display:none}.view.active{display:block}
-    .metric{padding:16px;border:1px solid var(--line);border-radius:15px;background:var(--ivory)}
-    .metric span{display:block;color:var(--muted);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase}
-    .metric strong{display:block;margin-top:6px;font-size:1.62rem;font-weight:600}
-    .metric small{display:block;margin-top:4px;color:var(--muted);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.3}
-    .positive{color:var(--olive)!important}.negative{color:var(--clay)!important}
-
-    .list{display:grid;gap:10px;margin-top:14px}
-    .row{
-      display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:14px;
-      border:1px solid var(--line);border-radius:14px;background:var(--ivory);
-    }
-    .row.selected{border-color:var(--gold);background:#fff9eb}
-    .row input[type=checkbox]{width:21px;height:21px;min-height:21px;accent-color:var(--gold)}
-    .row-title{display:block;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-weight:700;line-height:1.3}
-    .row-meta,.row-address{display:block;color:var(--muted);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:.88rem;line-height:1.37}
-    .row-address{margin-top:3px}
-    .empty{padding:26px 16px;border:1px dashed var(--taupe);border-radius:14px;background:#fffcf7;color:var(--muted);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;text-align:center;line-height:1.45}
-
-    .client-chips{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
-    .client-chip{
-      min-height:39px;padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:#fbf6ed;color:var(--espresso);
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-weight:700;
-    }
-    .client-chip.selected{background:var(--espresso);border-color:var(--espresso);color:#fff}
-
-    .intake-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:17px 0}
-    .intake-step{
-      padding:10px;border-radius:11px;background:#f1e9de;color:var(--muted);text-align:center;
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:.77rem;font-weight:700;
-    }
-    .intake-step.active{background:var(--gold-soft);color:var(--espresso)}
-    .intake-layout{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-    .cleanup-lines{display:grid;gap:8px;margin-top:12px;max-height:330px;overflow:auto}
-    .cleanup-line{
-      display:flex;gap:10px;align-items:flex-start;padding:10px;border:1px solid var(--line);border-radius:11px;background:var(--ivory);
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-    }
-    .cleanup-line.ignored{background:#f2ede5;color:#9a8d82;text-decoration:line-through}
-    .cleanup-line input{width:20px;height:20px;min-height:20px;flex:0 0 auto;margin-top:1px;accent-color:var(--gold)}
-    .cleanup-line span{font-size:.88rem;line-height:1.38}
-
-    .batch-summary{margin-top:16px;padding:16px;border:1px solid var(--gold-light);border-radius:15px;background:#fff9eb}
-    .batch-summary h3{margin-bottom:4px}
-    .draft-grid{display:grid;gap:11px;margin-top:13px}
-    .draft-card{padding:15px;border:1px solid var(--line);border-radius:15px;background:var(--ivory)}
-    .draft-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
-    .draft-number{color:var(--gold);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:.76rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
-    .draft-address{margin:7px 0;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:1rem;font-weight:700;line-height:1.35}
-    .draft-notes{color:var(--muted);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:.87rem;line-height:1.4}
-
-    .choice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-top:17px}
-    .choice{min-height:116px;padding:16px;border:2px solid var(--line);border-radius:16px;background:var(--ivory);color:var(--ink);text-align:left}
-    .choice.selected,.choice:hover{border-color:var(--gold);background:#fff9eb}
-    .choice strong{display:block;margin-bottom:7px;font-size:1.05rem;font-weight:600}
-    .choice span{display:block;color:var(--muted);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:.87rem;line-height:1.35}
-
-    .route-order{display:grid;gap:10px;margin-top:14px}
-    .route-stop{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:13px;border:1px solid var(--line);border-radius:14px;background:var(--ivory)}
-    .route-stop-number{width:33px;height:33px;display:grid;place-items:center;border-radius:50%;background:var(--gold-soft);color:var(--espresso);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-weight:800}
-
-    dialog{width:min(620px,calc(100vw - 28px));max-height:90vh;padding:0;border:0;border-radius:20px;color:var(--ink);background:var(--ivory);box-shadow:0 22px 70px rgba(38,26,18,.4)}
-    dialog::backdrop{background:rgba(31,22,16,.5)}
-    .dialog-inner{max-height:90vh;overflow:auto;padding:22px}
-    .dialog-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:17px}
-
-    .route-mode{position:fixed;z-index:50;inset:0;overflow:auto;background:var(--cream)}
-    .route-mode[hidden]{display:none}
-    .route-inner{max-width:640px;min-height:100%;margin:auto;padding:max(18px,env(safe-area-inset-top)) 18px calc(25px + env(safe-area-inset-bottom))}
-    .route-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:13px;border-radius:16px;background:#ded1c3;border:1px solid var(--line)}
-    .route-label{color:var(--gold);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:.73rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
-    .route-head h2{margin:4px 0 0;font-size:1.4rem}
-    .route-progress-text{margin:5px 0 0;color:var(--espresso);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-weight:600}
-    .progress{height:10px;overflow:hidden;margin:17px 0 18px;border-radius:999px;background:#e6dac9}
-    .progress>div{height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--gold),var(--gold-light))}
-    .stop-card{padding:24px;border:1px solid var(--gold-light);border-radius:22px;background:var(--ivory);box-shadow:var(--shadow)}
-    .stop-kicker{color:var(--gold);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:.76rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
-    .stop-company{margin-top:13px;color:var(--muted);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:.9rem;font-weight:600}
-    .stop-name{margin:4px 0 18px;font-size:clamp(1.4rem,6vw,1.9rem);font-weight:600;line-height:1.12}
-    .stop-address{margin:0 0 20px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:clamp(1.15rem,5vw,1.53rem);font-weight:800;line-height:1.28}
-    .navigate{min-height:64px;border-radius:16px;font-size:1.06rem}
-    .route-title{margin:22px 0 10px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:.95rem;font-weight:800}
-    .outcomes{display:grid;gap:11px}
-    .outcome{display:flex;align-items:center;justify-content:space-between;min-height:63px;padding:14px 17px;border:0;border-radius:16px;color:#fff;text-align:left;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:1rem;font-weight:800}
-    .outcome small{display:block;margin-top:2px;font-size:.76rem;font-weight:600;opacity:.9}
-    .attempt{background:#9a7226}.serve{background:var(--olive)}.nonserve{background:var(--clay)}
-    .route-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:17px}
-    .next-card{margin-top:15px;padding:14px;border:1px solid var(--line);border-radius:15px;background:#f8f2e9;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-    .next-card small{display:block;margin-bottom:4px;color:var(--gold);font-size:.73rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase}
-    .next-card strong{display:block;margin-bottom:2px}
-
-    .toast{position:fixed;z-index:100;right:16px;bottom:calc(18px + env(safe-area-inset-bottom));max-width:min(390px,calc(100vw - 32px));padding:13px 15px;border-radius:13px;color:#fff;background:var(--espresso);box-shadow:var(--shadow);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-weight:700;opacity:0;transform:translateY(15px);pointer-events:none;transition:.2s}
-    .toast.show{opacity:1;transform:translateY(0)}
-
-    .print-sheet{display:none}
-    @media print{
-      body{background:#fff;color:#000;font-size:11pt}
-      .no-print,.topbar,.nav,.workspace-chooser,.route-mode,.toast,dialog{display:none!important}
-      .app{max-width:none;padding:0}
-      .print-sheet{display:block!important}
-      .print-stop{page-break-inside:avoid;border:1px solid #222;padding:14px;margin:0 0 12px}
-      .print-stop h3{margin:0 0 7px}
-      .print-lines{min-height:60px;margin-top:10px;border-top:1px solid #555;padding-top:7px}
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
     }
 
-    @media(max-width:1050px){.tablet-nav{grid-template-columns:repeat(4,1fr)}}
-    @media(max-width:760px){
-      .app{padding:14px 13px calc(103px + env(safe-area-inset-bottom))}
-      .topbar{padding-bottom:15px}
-      .workspace-options,.grid2,.grid3,.choice-grid,.form-grid,.intake-layout{grid-template-columns:1fr}
-      .form-grid .full{grid-column:auto}
-      .grid4{grid-template-columns:repeat(2,1fr)}
-      .tablet-nav{grid-template-columns:repeat(3,1fr)}
-      .card{padding:16px}
-      .row{grid-template-columns:auto 1fr}
-      .row>.badge,.row>.button-row,.row>.btn{grid-column:2;justify-self:start}
-      .intake-steps{grid-template-columns:repeat(2,1fr)}
+    .mark {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      position: relative;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Georgia, serif;
+      font-size: 2rem;
+      font-style: italic;
+    }
+
+    .mark::before {
+      content: "♕";
+      position: absolute;
+      top: -14px;
+      color: var(--gold);
+      font-size: 1.15rem;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, p { margin-top: 0; }
+
+    h1 {
+      margin-bottom: 0;
+      font-family: Georgia, serif;
+      font-size: 1.75rem;
+      font-weight: 600;
+    }
+
+    h2 {
+      font-family: Georgia, serif;
+      font-weight: 600;
+    }
+
+    .subtle {
+      color: #74675e;
+      line-height: 1.45;
+    }
+
+    .card {
+      margin-top: 16px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255,253,248,.96);
+      box-shadow: 0 12px 30px rgba(66,45,26,.1);
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+      margin-top: 12px;
+      color: var(--espresso);
+      font-size: .88rem;
+      font-weight: 700;
+    }
+
+    input, textarea {
+      width: 100%;
+      min-height: 46px;
+      padding: 11px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      background: #fffefa;
+      color: var(--ink);
+      font: inherit;
+    }
+
+    textarea {
+      min-height: 82px;
+      resize: vertical;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .btn {
+      min-height: 45px;
+      margin-top: 14px;
+      padding: 10px 14px;
+      border: 0;
+      border-radius: 12px;
+      background: var(--espresso);
+      color: white;
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .btn.gold {
+      background: var(--gold);
+      color: #241b14;
+    }
+
+    .btn.secondary {
+      border: 1px solid var(--line);
+      background: #fbf7f0;
+      color: var(--espresso);
+    }
+
+    .status {
+      margin-top: 14px;
+      padding: 12px;
+      border-radius: 12px;
+      line-height: 1.4;
+    }
+
+    .status.good {
+      background: #e2eadf;
+      color: #345438;
+    }
+
+    .status.bad {
+      background: #f4e1db;
+      color: #834234;
+    }
+
+    .job-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .job {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--paper);
+    }
+
+    .job strong {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .job span {
+      display: block;
+      color: #74675e;
+      font-size: .9rem;
+      line-height: 1.4;
+    }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 560px) {
+      .row { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 
 <body>
   <main class="app">
-    <section id="workspaceChooser" class="workspace-chooser">
-      <div class="brand" style="justify-content:center">
-        <div class="brand-mark">J</div>
+    <header class="brand">
+      <div class="mark">J</div>
+      <div>
+        <div class="eyebrow">J Empire Serving</div>
+        <h1>Phone + iPad Sync Test</h1>
       </div>
-      <div class="eyebrow" style="margin-top:14px">J Empire Serving</div>
-      <h1>Field work, organized with intention.</h1>
-      <p class="subtle">“Every completed detail is a step toward the empire you are building.”</p>
+    </header>
 
-      <div class="workspace-options">
-        <button class="workspace-option" type="button" data-workspace="phone">
-          <div class="workspace-icon">⌁</div>
-          <strong>Field Phone</strong>
-          <span>Smart Intake first. Paste assignments, separate multiple addresses into individual job drafts, build your route, navigate, and record outcomes.</span>
-        </button>
-        <button class="workspace-option" type="button" data-workspace="tablet">
-          <div class="workspace-icon">▤</div>
-          <strong>Office iPad</strong>
-          <span>Full office control. Smart Intake and route planning remain here, with Job Vault, pricing, invoices, money, review, and printable route sheets.</span>
-        </button>
-      </div>
+    <section id="loginCard" class="card">
+      <h2>Sign in</h2>
+      <p class="subtle">
+        Enter the same email address on your iPhone and iPad. Supabase will send a sign-in link to that email.
+      </p>
+
+      <label>
+        Email address
+        <input id="email" type="email" autocomplete="email" placeholder="you@example.com">
+      </label>
+
+      <button id="sendLinkBtn" class="btn gold" type="button">Send Sign-In Link</button>
+      <div id="loginMessage"></div>
     </section>
 
-    <section id="mainApp" class="hidden">
-      <header class="topbar">
-        <div class="brand">
-          <div class="brand-mark">J</div>
-          <div>
-            <div class="eyebrow" id="workspaceLabel">Field Phone</div>
-            <h1 id="appTitle">Smart Intake</h1>
-          </div>
-        </div>
-        <div class="top-actions ui">
-          <span class="pill" id="jobPill">0 jobs</span>
-          <div class="font-control" aria-label="Text size">
-            <button type="button" data-font="small">A−</button>
-            <button type="button" data-font="normal">A</button>
-            <button type="button" data-font="large">A+</button>
-          </div>
-          <button class="btn secondary no-print" id="switchWorkspaceBtn" type="button">Switch</button>
-        </div>
-      </header>
+    <section id="appCard" class="hidden">
+      <div class="card">
+        <h2>Connected</h2>
+        <p class="subtle">
+          Signed in as <strong id="userEmail"></strong>. Add one test job here, then open this same page on your iPad and sign in with the same email.
+        </p>
+        <button id="signOutBtn" class="btn secondary" type="button">Sign Out</button>
+      </div>
 
-      <nav class="nav phone-nav no-print" id="phoneNav">
-        <button class="active" data-view="intake" type="button">Intake</button>
-        <button data-view="today" type="button">Today</button>
-        <button data-view="route" type="button">Route</button>
-        <button data-view="more" type="button">More</button>
-      </nav>
+      <div class="card">
+        <h2>Add Test Job</h2>
 
-      <nav class="nav tablet-nav no-print hidden" id="tabletNav">
-        <button class="active" data-view="dashboard" type="button">Dashboard</button>
-        <button data-view="intake" type="button">Field Desk</button>
-        <button data-view="vault" type="button">Job Vault</button>
-        <button data-view="route" type="button">Route</button>
-        <button data-view="pricing" type="button">Pricing</button>
-        <button data-view="invoices" type="button">Invoices</button>
-        <button data-view="money" type="button">Money</button>
-        <button data-view="review" type="button">Review</button>
-      </nav>
+        <div class="row">
+          <label>
+            Client
+            <input id="clientName" value="ProVest">
+          </label>
 
-      <!-- SMART INTAKE -->
-      <section class="view" id="intakeView">
-        <div class="card">
-          <div class="toolbar">
-            <div>
-              <div class="eyebrow">J Empire Serving</div>
-              <h2>Smart Intake</h2>
-              <p class="subtle">Select the client, paste the assignment, clean unnecessary wording, then review each detected address as its own job draft.</p>
-            </div>
-            <span class="pill" id="intakeClientPill">No client selected</span>
-          </div>
-
-          <div class="intake-steps ui">
-            <div class="intake-step active">1. Client</div>
-            <div class="intake-step active">2. Paste</div>
-            <div class="intake-step active">3. Review</div>
-            <div class="intake-step active">4. Save Jobs</div>
-          </div>
-
-          <h3>Choose Client / Platform</h3>
-          <div class="client-chips ui" id="clientChips"></div>
-          <div class="button-row ui" style="margin-top:10px">
-            <button class="btn secondary" id="addClientBtn" type="button">+ Add / Edit Client</button>
-          </div>
+          <label>
+            Job Number
+            <input id="jobCode" placeholder="Example: PV-001">
+          </label>
         </div>
 
-        <div class="intake-layout" style="margin-top:16px">
-          <div class="card">
-            <h2>Paste Original Assignment</h2>
-            <p class="subtle">The original is retained for your records. This tool will create one separate draft for each detected street address.</p>
-            <label style="margin-top:14px">
-              Assignment text
-              <textarea id="intakeText" placeholder="Paste the complete ProVest or client assignment here. Multiple addresses are separated into separate draft jobs."></textarea>
-            </label>
-            <div class="button-row ui" style="margin-top:14px">
-              <button class="btn gold" id="analyzeBtn" type="button">Review & Separate Jobs</button>
-              <button class="btn secondary" id="clearIntakeBtn" type="button">Clear</button>
-            </div>
-          </div>
+        <label>
+          Name / Entity
+          <input id="jobName" placeholder="Example: Sample Person">
+        </label>
 
-          <div class="card">
-            <h2>Cleanup Review</h2>
-            <p class="subtle">Check any line that should be ignored. Ignored wording stays in the original record, but is excluded from the working text.</p>
-            <div class="cleanup-lines" id="cleanupLines">
-              <div class="empty">Paste an assignment and choose <strong>Review &amp; Separate Jobs</strong>.</div>
-            </div>
-          </div>
-        </div>
+        <label>
+          Address
+          <textarea id="jobAddress" placeholder="123 Sample Street, Kissimmee, FL 34700"></textarea>
+        </label>
 
-        <div class="card" style="margin-top:16px">
-          <div class="toolbar">
-            <div>
-              <h2>Separate Job Drafts</h2>
-              <p class="subtle">One address equals one job. Other detected addresses are never placed into another job’s notes.</p>
-            </div>
-            <span class="pill" id="draftCountPill">0 drafts</span>
-          </div>
+        <button id="saveJobBtn" class="btn gold" type="button">Save Test Job</button>
+        <div id="jobMessage"></div>
+      </div>
 
-          <div id="batchArea">
-            <div class="empty">Your separate job drafts will appear here after review.</div>
-          </div>
-        </div>
-      </section>
-
-      <section class="view" id="todayView">
-        <div class="card">
-          <div class="toolbar">
-            <div><h2>Today’s Jobs</h2><p class="subtle">The jobs you chose for your current work day.</p></div>
-            <button class="btn gold ui" data-go="route" type="button">Build Route</button>
-          </div>
-          <div class="list" id="todayList"></div>
-        </div>
-      </section>
-
-      <section class="view" id="moreView">
-        <div class="grid2">
-          <div class="card">
-            <h2>Quick Lookup</h2>
-            <label class="ui">Search saved jobs<input id="phoneSearch" placeholder="Name, address, job code, or client"></label>
-            <div class="list" id="phoneSearchList"></div>
-          </div>
-          <div class="card">
-            <h2>Field Tools</h2>
-            <div class="button-row ui">
-              <button class="btn secondary" data-go="vault" type="button">Job Vault</button>
-              <button class="btn secondary" data-go="review" type="button">Review</button>
-              <button class="btn secondary" id="phoneExportBtn" type="button">Export</button>
-              <button class="btn gold" id="goOfficeBtn" type="button">Office iPad</button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="view" id="dashboardView">
-        <div class="card">
-          <div class="eyebrow">J Empire Serving</div>
-          <h2>Office Dashboard</h2>
-          <p class="subtle">Review your work, protect the paper trail, and make sure completed service turns into invoices and payment.</p>
-        </div>
-        <div class="grid4" style="margin-top:16px">
-          <div class="metric"><span>Active jobs</span><strong id="dashActive">0</strong><small>Pending or follow-up</small></div>
-          <div class="metric"><span>Served</span><strong id="dashServed">0</strong><small>Completed jobs</small></div>
-          <div class="metric"><span>Outstanding</span><strong id="dashOutstanding">$0</strong><small>Unpaid invoices</small></div>
-          <div class="metric"><span>Net cash</span><strong id="dashNet">$0</strong><small>Income minus expenses</small></div>
-        </div>
-        <div class="grid2" style="margin-top:16px">
-          <div class="card">
-            <div class="toolbar">
-              <div><h2>Field Desk</h2><p class="subtle">Smart Intake and route planning remain fully available on iPad.</p></div>
-              <button class="btn gold ui" data-go="intake" type="button">Open Intake</button>
-            </div>
-            <div class="list" id="dashJobsList"></div>
-          </div>
-          <div class="card">
-            <div class="toolbar">
-              <div><h2>Invoice Snapshot</h2><p class="subtle">Keep track of billing and payment status.</p></div>
-              <button class="btn secondary ui" data-go="invoices" type="button">Invoices</button>
-            </div>
-            <div class="list" id="dashInvoicesList"></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="view" id="vaultView">
-        <div class="card">
-          <div class="toolbar">
-            <div><h2>Job Vault</h2><p class="subtle">Every saved job, including the original intake text and outcome notes.</p></div>
-            <button class="btn gold ui" data-go="intake" type="button">New Intake</button>
-          </div>
-          <div class="form-grid ui" style="margin-top:14px">
-            <label>Search<input id="vaultSearch" placeholder="Name, address, client, code"></label>
-            <label>Status<select id="vaultStatus"><option value="all">All statuses</option><option value="pending">Pending</option><option value="attempted">Attempted</option><option value="served">Served</option><option value="non-served">Non-Served</option><option value="skipped">Follow-Up</option></select></label>
-          </div>
-          <div class="list" id="vaultList"></div>
-        </div>
-      </section>
-
-      <section class="view" id="routeView">
-        <div class="card">
-          <div class="toolbar">
-            <div><h2>Build Today’s Route</h2><p class="subtle">Choose the area, select jobs, manually order stops, print a route sheet, or begin phone Route Mode.</p></div>
-            <span class="pill" id="selectedPill">0 selected</span>
-          </div>
-          <div class="choice-grid" id="routeChoices">
-            <button class="choice selected" data-filter="osceola" type="button"><strong>Osceola County</strong><span id="osceolaCount">0 available jobs</span></button>
-            <button class="choice" data-filter="orange" type="button"><strong>Orange County</strong><span id="orangeCount">0 available jobs</span></button>
-            <button class="choice" data-filter="all" type="button"><strong>All Available Jobs</strong><span id="allCount">0 available jobs</span></button>
-          </div>
-          <div class="button-row ui no-print" style="margin-top:15px">
-            <button class="btn secondary" id="selectAllBtn" type="button">Select All Visible</button>
-            <button class="btn secondary" id="clearSelectionBtn" type="button">Clear Selection</button>
-            <button class="btn gold" id="startRouteBtn" type="button">Start Route</button>
-            <button class="btn ink" id="printDetailedBtn" type="button">Print Detailed</button>
-            <button class="btn secondary" id="printCompactBtn" type="button">Print Compact</button>
-          </div>
-          <div class="list" id="routeList"></div>
-        </div>
-        <div class="card">
-          <div class="toolbar">
-            <div><h2>Route Order</h2><p class="subtle">Move stops up or down before printing or starting the route.</p></div>
-            <button class="btn secondary ui no-print" id="clearOrderBtn" type="button">Clear Route</button>
-          </div>
-          <div class="route-order" id="routeOrder"></div>
-        </div>
-      </section>
-
-      <section class="view" id="pricingView">
-        <div class="card">
-          <div class="toolbar">
-            <div><h2>Client Pricing</h2><p class="subtle">Default fees feed into new Smart Intake drafts. Each individual job remains editable.</p></div>
-            <button class="btn gold ui" id="pricingAddClientBtn" type="button">+ Add Client</button>
-          </div>
-          <div class="list" id="pricingList"></div>
-        </div>
-      </section>
-
-      <section class="view" id="invoicesView">
-        <div class="grid2">
-          <div class="card">
-            <h2>Create Invoice</h2>
-            <p class="subtle">Build the detailed paper trail for completed work and payment follow-up.</p>
-            <form id="invoiceForm" class="ui" style="margin-top:14px">
-              <div class="form-grid">
-                <label>Client<select id="invoiceClient"></select></label>
-                <label>Invoice Number<input id="invoiceNumber" required placeholder="INV-1001"></label>
-                <label>Due Date<input id="invoiceDue" type="date"></label>
-                <label>Total<input id="invoiceAmount" required type="number" min="0" step="0.01" placeholder="0.00"></label>
-                <label class="full">Details / Line Items<textarea id="invoiceDescription" placeholder="Completed job codes, service fees, mileage, rush fees, etc."></textarea></label>
-              </div>
-              <div class="button-row" style="margin-top:14px">
-                <button class="btn gold" type="submit">Save Invoice</button>
-                <button class="btn secondary" id="makeInvoiceDraftBtn" type="button">Build From Served Jobs</button>
-              </div>
-            </form>
-          </div>
-          <div class="card">
-            <div class="toolbar"><div><h2>Invoice Tracker</h2><p class="subtle">Draft, send, mark paid, and keep your income visible.</p></div><span class="pill" id="invoicePill">$0 total</span></div>
-            <div class="list" id="invoiceList"></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="view" id="moneyView">
-        <div class="grid4">
-          <div class="metric"><span>Income</span><strong id="incomeMetric">$0</strong><small>Money recorded</small></div>
-          <div class="metric"><span>Expenses</span><strong id="expenseMetric">$0</strong><small>Gas, tolls, supplies</small></div>
-          <div class="metric"><span>Net cash</span><strong id="netMetric">$0</strong><small>Income minus expenses</small></div>
-          <div class="metric"><span>Paid invoices</span><strong id="paidMetric">$0</strong><small>Marked paid</small></div>
-        </div>
-        <div class="grid2" style="margin-top:16px">
-          <div class="card">
-            <h2>Add Money Entry</h2>
-            <form id="moneyForm" class="ui">
-              <div class="form-grid">
-                <label>Type<select id="moneyType"><option value="income">Income</option><option value="expense">Expense</option></select></label>
-                <label>Amount<input id="moneyAmount" required type="number" min="0" step="0.01" placeholder="0.00"></label>
-                <label>Category<input id="moneyCategory" required placeholder="Gas, client payment, filing fee"></label>
-                <label>Date<input id="moneyDate" type="date"></label>
-                <label class="full">Notes<textarea id="moneyNotes" placeholder="Optional details"></textarea></label>
-              </div>
-              <div class="button-row" style="margin-top:14px"><button class="btn olive" type="submit">Save Entry</button></div>
-            </form>
-          </div>
-          <div class="card"><h2>Money History</h2><div class="list" id="moneyList"></div></div>
-        </div>
-      </section>
-
-      <section class="view" id="reviewView">
-        <div class="grid4">
-          <div class="metric"><span>Total jobs</span><strong id="reviewTotal">0</strong><small>Saved records</small></div>
-          <div class="metric"><span>Pending</span><strong id="reviewPending">0</strong><small>Needs work</small></div>
-          <div class="metric"><span>Served</span><strong id="reviewServed">0</strong><small>Completed</small></div>
-          <div class="metric"><span>Follow-up</span><strong id="reviewFollow">0</strong><small>Needs attention</small></div>
-        </div>
-        <div class="card" style="margin-top:16px">
-          <div class="toolbar">
-            <div><h2>End-of-Day Review</h2><p class="subtle">Confirm route outcomes, prepare invoices, and make sure no work goes unpaid.</p></div>
-            <div class="button-row ui no-print">
-              <button class="btn secondary" id="exportBtn" type="button">Export Backup</button>
-              <button class="btn clay" id="clearDataBtn" type="button">Clear All Data</button>
-            </div>
-          </div>
-          <div class="list" id="reviewList"></div>
-        </div>
-      </section>
+      <div class="card">
+        <h2>Synced Jobs</h2>
+        <p class="subtle">If the same job appears on both devices, sync is working.</p>
+        <button id="refreshBtn" class="btn secondary" type="button">Refresh Jobs</button>
+        <div id="jobList" class="job-list"></div>
+      </div>
     </section>
-
-    <section id="printSheet" class="print-sheet"></section>
   </main>
 
-  <dialog id="clientDialog">
-    <form method="dialog" class="dialog-inner ui" id="clientForm">
-      <h2>Client Profile</h2>
-      <p class="subtle">Add a client whenever you need one. Set a default fee and phrases that Smart Intake should automatically ignore.</p>
-      <input id="clientId" type="hidden">
-      <div class="form-grid" style="margin-top:14px">
-        <label>Client Name<input id="clientName" required placeholder="Client or platform name"></label>
-        <label>Default Fee<input id="clientFee" type="number" min="0" step="0.01" placeholder="0.00"></label>
-        <label class="full">Cleanup Phrases<textarea id="clientPhrases" placeholder="One phrase per line. Example: Please see attached"></textarea></label>
-        <label class="full">Client Notes<textarea id="clientNotes" placeholder="Optional reminders for this client"></textarea></label>
-      </div>
-      <div class="dialog-actions">
-        <button class="btn secondary" value="cancel" type="submit">Cancel</button>
-        <button class="btn gold" value="save" type="submit">Save Client</button>
-      </div>
-    </form>
-  </dialog>
-
-  <dialog id="draftDialog">
-    <form method="dialog" class="dialog-inner ui" id="draftForm">
-      <h2>Edit Job Draft</h2>
-      <input id="editingDraftIndex" type="hidden">
-      <div class="form-grid" style="margin-top:14px">
-        <label>Client<select id="editDraftClient"></select></label>
-        <label>County<select id="editDraftCounty"><option value="Osceola">Osceola County</option><option value="Orange">Orange County</option><option value="Other">Other / Review</option></select></label>
-        <label>Person / Entity<input id="editDraftName" placeholder="Name to serve"></label>
-        <label>Job / File Code<input id="editDraftCode" placeholder="Job, file, or assignment code"></label>
-        <label class="full">Address<textarea id="editDraftAddress" required></textarea></label>
-        <label>Service Type<input id="editDraftService" placeholder="Service of Process"></label>
-        <label>Due Date<input id="editDraftDue" type="date"></label>
-        <label>Fee<input id="editDraftFee" type="number" min="0" step="0.01"></label>
-        <label class="full">Instructions / Notes<textarea id="editDraftNotes" placeholder="Only notes for this specific address"></textarea></label>
-      </div>
-      <div class="dialog-actions">
-        <button class="btn secondary" value="cancel" type="submit">Cancel</button>
-        <button class="btn gold" value="save" type="submit">Save Draft</button>
-      </div>
-    </form>
-  </dialog>
-
-  <dialog id="outcomeDialog">
-    <form method="dialog" class="dialog-inner ui" id="outcomeForm">
-      <h2 id="outcomeTitle">Save Outcome</h2>
-      <p id="outcomeInfo" class="subtle"></p>
-      <label>Field Notes<textarea id="outcomeNotes" placeholder="What happened at this stop?"></textarea></label>
-      <div class="dialog-actions">
-        <button class="btn secondary" value="cancel" type="submit">Cancel</button>
-        <button class="btn gold" value="save" type="submit">Save & Continue</button>
-      </div>
-    </form>
-  </dialog>
-
-  <section class="route-mode" id="routeMode" hidden>
-    <div class="route-inner">
-      <div class="route-head">
-        <div>
-          <div class="route-label" id="activeRouteLabel">J Empire Serving · Route</div>
-          <h2 id="activeStopLabel">Stop 1 of 1</h2>
-          <p class="route-progress-text" id="activeProgressText">0 complete · 1 remaining</p>
-        </div>
-        <button class="btn secondary ui" id="endRouteBtn" type="button">End Route</button>
-      </div>
-      <div class="progress"><div id="progressFill"></div></div>
-      <article class="stop-card" id="stopCard"></article>
-      <div id="routeActions"></div>
-    </div>
-  </section>
-
-  <div class="toast ui" id="toast" role="status" aria-live="polite"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script>
-    const KEY = "j-empire-serving-v1";
+    const SUPABASE_URL = "https://ejseathlglvvnmkpchib.supabase.co";
 
-    const state = {
-      workspace: "",
-      fontSize: "normal",
-      clients: [
-        { id:"provest", name:"ProVest", fee:55, phrases:["Please see attached","This message may contain confidential information","If you are not the intended recipient","Thank you"], notes:"" },
-        { id:"abc-legal", name:"ABC Legal", fee:55, phrases:["CONFIDENTIALITY NOTICE","Please do not reply to this email","This email and any attachments"], notes:"" },
-        { id:"direct-legal", name:"Direct Legal", fee:60, phrases:["Automated message","Please review the attached documents","This transmission is intended only"], notes:"" },
-        { id:"other", name:"Other / Custom", fee:0, phrases:[], notes:"" }
-      ],
-      selectedClientId:"provest",
-      intake:{ original:"", lines:[], ignored:[], drafts:[] },
-      jobs:[],
-      invoices:[],
-      money:[],
-      selectedIds:[],
-      routeFilter:"osceola",
-      activeRoute:{active:false,ids:[],index:0,filter:"osceola"},
-      printMode:"detailed"
-    };
+    const SUPABASE_ANON_KEY =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVqc2VhdGhsZ2x2dm5ta3BjaGliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE5ODc4NTUsImV4cCI6MjA5NzU2Mzg1NX0.o4crd1W5-NbVNXSOWNT-WPHS7R6orRe9CRYFZfZ41L8";
 
-    const $ = id => document.getElementById(id);
+    const supabase = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_ANON_KEY
+    );
 
-    const labels = {
-      pending:"Pending",attempted:"Attempted",served:"Served","non-served":"Non-Served",
-      skipped:"Follow-Up",draft:"Draft",sent:"Sent",paid:"Paid",overdue:"Overdue"
-    };
+    const $ = (id) => document.getElementById(id);
 
-    function uid(){return `${Date.now()}-${Math.random().toString(16).slice(2)}`}
-    function money(value){return new Intl.NumberFormat("en-US",{style:"currency",currency:"USD"}).format(Number(value||0))}
-    function today(){return new Date().toISOString().slice(0,10)}
-    function esc(value){
-      return String(value??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+    function showMessage(elementId, message, type) {
+      const element = $(elementId);
+      element.className = `status ${type}`;
+      element.textContent = message;
     }
 
-    function save(){localStorage.setItem(KEY,JSON.stringify(state))}
-    function load(){
-      try{
-        const data=JSON.parse(localStorage.getItem(KEY));
-        if(!data)return;
-        Object.assign(state,data);
-        if(!Array.isArray(state.clients)||!state.clients.length)throw new Error("clients");
-      }catch(error){console.warn("Could not load saved state",error)}
+    function clearMessage(elementId) {
+      const element = $(elementId);
+      element.className = "";
+      element.textContent = "";
     }
 
-    function toast(message){
-      const box=$("toast");box.textContent=message;box.classList.add("show");
-      clearTimeout(toast.timer);toast.timer=setTimeout(()=>box.classList.remove("show"),2800);
+    async function showCorrectScreen() {
+      const { data: { session } } = await supabase.auth.getSession();
+
+      if (session) {
+        $("loginCard").classList.add("hidden");
+        $("appCard").classList.remove("hidden");
+        $("userEmail").textContent = session.user.email || "your account";
+        await loadJobs();
+      } else {
+        $("loginCard").classList.remove("hidden");
+        $("appCard").classList.add("hidden");
+      }
     }
 
-    function getClient(id){return state.clients.find(c=>c.id===id)||state.clients[0]}
-    function getJob(id){return state.jobs.find(j=>j.id===id)}
-    function availableJobs(){return state.jobs.filter(j=>j.status==="pending"||j.status==="skipped")}
-    function jobsForFilter(filter){
-      const jobs=availableJobs();
-      if(filter==="all")return jobs;
-      return jobs.filter(j=>j.county===(filter==="osceola"?"Osceola":"Orange"));
-    }
-    function countCounty(county){return availableJobs().filter(j=>j.county===county).length}
+    async function sendMagicLink() {
+      const email = $("email").value.trim();
 
-    function applyFontSize(){
-      const map={small:.9,normal:1,large:1.12};
-      document.documentElement.style.setProperty("--font-scale",map[state.fontSize]||1);
-      document.querySelectorAll("[data-font]").forEach(btn=>btn.classList.toggle("active",btn.dataset.font===state.fontSize));
-    }
-
-    function setWorkspace(workspace){
-      state.workspace=workspace;
-      $("workspaceChooser").classList.add("hidden");
-      $("mainApp").classList.remove("hidden");
-      const phone=workspace==="phone";
-      $("phoneNav").classList.toggle("hidden",!phone);
-      $("tabletNav").classList.toggle("hidden",phone);
-      $("workspaceLabel").textContent=phone?"J Empire Serving · Field Phone":"J Empire Serving · Office iPad";
-      $("appTitle").textContent=phone?"Smart Intake":"Office Dashboard";
-      setView(phone?"intake":"dashboard",false);
-      save();renderAll();
-    }
-
-    function showChooser(){
-      state.workspace="";
-      $("mainApp").classList.add("hidden");
-      $("workspaceChooser").classList.remove("hidden");
-      save();
-    }
-
-    function setView(name,scroll=true){
-      document.querySelectorAll(".nav button").forEach(btn=>btn.classList.toggle("active",btn.dataset.view===name));
-      document.querySelectorAll(".view").forEach(view=>view.classList.toggle("active",view.id===`${name}View`));
-      renderAll();
-      if(scroll)window.scrollTo({top:0,behavior:"smooth"});
-    }
-
-    function renderClientOptions(){
-      const options=state.clients.map(c=>`<option value="${esc(c.id)}">${esc(c.name)}</option>`).join("");
-      $("editDraftClient").innerHTML=options;
-      $("invoiceClient").innerHTML=`<option value="">Choose client</option>${options}`;
-    }
-
-    function renderClientChips(){
-      $("clientChips").innerHTML=state.clients.map(c=>`
-        <button type="button" class="client-chip ${c.id===state.selectedClientId?"selected":""}" data-client="${esc(c.id)}">${esc(c.name)}</button>
-      `).join("");
-      $("intakeClientPill").textContent=getClient(state.selectedClientId).name;
-    }
-
-    function renderCleanup(){
-      const lines=state.intake.lines;
-      if(!lines.length){
-        $("cleanupLines").innerHTML=`<div class="empty">Paste an assignment and choose <strong>Review & Separate Jobs</strong>.</div>`;
+      if (!email) {
+        showMessage("loginMessage", "Enter your email address first.", "bad");
         return;
       }
-      $("cleanupLines").innerHTML=lines.map((line,index)=>{
-        const ignored=state.intake.ignored.includes(index);
-        return `<label class="cleanup-line ${ignored?"ignored":""}">
-          <input type="checkbox" class="ignore-line" data-index="${index}" ${ignored?"checked":""}>
-          <span>${esc(line)}</span>
-        </label>`;
-      }).join("");
-    }
 
-    function renderDrafts(){
-      const drafts=state.intake.drafts;
-      $("draftCountPill").textContent=`${drafts.length} ${drafts.length===1?"draft":"drafts"}`;
-      if(!drafts.length){
-        $("batchArea").innerHTML=`<div class="empty">Your separate job drafts will appear here after review.</div>`;
+      clearMessage("loginMessage");
+
+      const { error } = await supabase.auth.signInWithOtp({
+        email,
+        options: {
+          emailRedirectTo: "https://jazmarie624.github.io/Money-Assistant-/"
+        }
+      });
+
+      if (error) {
+        showMessage("loginMessage", error.message, "bad");
         return;
       }
-      $("batchArea").innerHTML=`
-        <div class="batch-summary">
-          <h3>${drafts.length} separate address${drafts.length===1?"":"es"} found</h3>
-          <p class="subtle">Each address is its own draft. Other detected addresses are excluded from field notes.</p>
-          <div class="button-row ui" style="margin-top:12px">
-            <button class="btn gold" id="saveDraftsVaultBtn" type="button">Save ${drafts.length} to Job Vault</button>
-            <button class="btn olive" id="saveDraftsTodayBtn" type="button">Save ${drafts.length} + Add to Today</button>
-          </div>
-        </div>
-        <div class="draft-grid">
-          ${drafts.map((d,index)=>`
-            <article class="draft-card">
-              <div class="draft-card-top">
-                <div>
-                  <div class="draft-number">Draft ${index+1}</div>
-                  <div class="draft-address">${esc(d.address)}</div>
-                  <div class="draft-notes">${esc(d.name||"Name not detected")} · ${esc(d.code||"No job code detected")} · ${esc(d.county)} County · ${money(d.fee)}</div>
-                  ${d.notes?`<div class="draft-notes" style="margin-top:6px">${esc(d.notes)}</div>`:""}
-                </div>
-                <div class="button-row ui">
-                  <button class="btn secondary edit-draft" data-index="${index}" type="button">Edit</button>
-                  <button class="btn secondary remove-draft" data-index="${index}" type="button">Remove</button>
-                </div>
-              </div>
-            </article>
-          `).join("")}
-        </div>`;
+
+      showMessage(
+        "loginMessage",
+        "Sign-in link sent. Open your email, tap the link, and you will return here signed in.",
+        "good"
+      );
     }
 
-    function renderDashboard(){
-      const active=state.jobs.filter(j=>["pending","skipped"].includes(j.status)).length;
-      const served=state.jobs.filter(j=>j.status==="served").length;
-      const outstanding=state.invoices.filter(i=>i.status!=="paid").reduce((s,i)=>s+Number(i.amount||0),0);
-      const income=state.money.filter(m=>m.type==="income").reduce((s,m)=>s+Number(m.amount||0),0);
-      const expenses=state.money.filter(m=>m.type==="expense").reduce((s,m)=>s+Number(m.amount||0),0);
-      const net=income-expenses;
-      $("dashActive").textContent=active;$("dashServed").textContent=served;$("dashOutstanding").textContent=money(outstanding);
-      $("dashNet").textContent=money(net);$("dashNet").className=net<0?"negative":"positive";
+    async function saveTestJob() {
+      const clientName = $("clientName").value.trim() || "ProVest";
+      const jobCode = $("jobCode").value.trim();
+      const name = $("jobName").value.trim();
+      const address = $("jobAddress").value.trim();
 
-      const jobs=availableJobs().slice(0,4);
-      $("dashJobsList").innerHTML=jobs.length?jobs.map(j=>jobRow(j,"📍")).join(""):`<div class="empty">No active jobs yet. Start with Smart Intake.</div>`;
-      const invoices=state.invoices.slice(0,4);
-      $("dashInvoicesList").innerHTML=invoices.length?invoices.map(i=>`
-        <div class="row"><span>🧾</span><span><span class="row-title">${esc(i.clientName)} · ${esc(i.number)}</span><span class="row-meta">Due ${esc(i.due||"not set")} · ${money(i.amount)}</span></span><span class="badge ${esc(i.status)}">${esc(labels[i.status])}</span></div>
-      `).join(""):`<div class="empty">No invoices saved yet.</div>`;
+      if (!address) {
+        showMessage("jobMessage", "Enter an address for the test job.", "bad");
+        return;
+      }
+
+      clearMessage("jobMessage");
+
+      const { data: { user } } = await supabase.auth.getUser();
+
+      if (!user) {
+        showMessage("jobMessage", "You are not signed in. Please sign in again.", "bad");
+        return;
+      }
+
+      const { error } = await supabase
+        .from("jobs")
+        .insert({
+          owner_id: user.id,
+          client_name: clientName,
+          job_code: jobCode,
+          name,
+          address,
+          county: "Osceola",
+          service_type: "Service of Process",
+          fee: 0,
+          notes: "Supabase sync test",
+          source_block: "Supabase sync test",
+          status: "pending"
+        });
+
+      if (error) {
+        showMessage("jobMessage", error.message, "bad");
+        return;
+      }
+
+      $("jobCode").value = "";
+      $("jobName").value = "";
+      $("jobAddress").value = "";
+
+      showMessage("jobMessage", "Test job saved to Supabase.", "good");
+      await loadJobs();
     }
 
-    function jobRow(j,icon="📁"){
-      return `<div class="row"><span>${icon}</span><span><span class="row-title">${esc(j.name||"Name to review")}</span><span class="row-meta">${esc(j.clientName)} · Job #${esc(j.code||"—")} · ${esc(j.county)} County</span><span class="row-address">${esc(j.address)}</span></span><span class="badge ${esc(j.status)}">${esc(labels[j.status])}</span></div>`;
-    }
+    async function loadJobs() {
+      const list = $("jobList");
+      list.innerHTML = "<p class='subtle'>Loading synced jobs…</p>";
 
-    function renderToday(){
-      const jobs=state.jobs.filter(j=>j.today);
-      $("todayList").innerHTML=jobs.length?jobs.map(j=>jobRow(j,"📍")).join(""):`<div class="empty">No jobs are marked for Today. Save an intake with “Add to Today” or select jobs in Route.</div>`;
-    }
+      const { data, error } = await supabase
+        .from("jobs")
+        .select("id, client_name, job_code, name, address, status, created_at")
+        .order("created_at", { ascending: false })
+        .limit(25);
 
-    function renderPhoneSearch(){
-      const q=$("phoneSearch").value.trim().toLowerCase();
-      if(!q){$("phoneSearchList").innerHTML=`<div class="empty">Search by name, client, job code, or address.</div>`;return}
-      const results=state.jobs.filter(j=>[j.name,j.address,j.clientName,j.code,j.county].join(" ").toLowerCase().includes(q));
-      $("phoneSearchList").innerHTML=results.length?results.slice(0,12).map(j=>jobRow(j,"⌕")).join(""):`<div class="empty">No jobs found.</div>`;
-    }
+      if (error) {
+        list.innerHTML = `<div class="status bad">${error.message}</div>`;
+        return;
+      }
 
-    function renderVault(){
-      const q=$("vaultSearch").value.trim().toLowerCase(),status=$("vaultStatus").value;
-      const jobs=state.jobs.filter(j=>(!q||[j.name,j.address,j.clientName,j.code,j.county].join(" ").toLowerCase().includes(q))&&(status==="all"||j.status===status));
-      $("vaultList").innerHTML=jobs.length?jobs.map(j=>`
-        <div class="row">
-          <span>📁</span>
-          <span><span class="row-title">${esc(j.name||"Name to review")}</span><span class="row-meta">${esc(j.clientName)} · Job #${esc(j.code||"—")} · Fee ${money(j.fee)}</span><span class="row-address">${esc(j.address)}</span>${j.notes?`<span class="row-address"><em>Notes: ${esc(j.notes)}</em></span>`:""}${j.outcomeNotes?`<span class="row-address"><em>Outcome: ${esc(j.outcomeNotes)}</em></span>`:""}</span>
-          <div class="button-row ui"><span class="badge ${esc(j.status)}">${esc(labels[j.status])}</span><button class="btn secondary original-job" data-id="${esc(j.id)}" type="button">Original</button><button class="btn secondary delete-job" data-id="${esc(j.id)}" type="button">Delete</button></div>
-        </div>
-      `).join(""):`<div class="empty">No jobs match this search.</div>`;
-    }
+      if (!data.length) {
+        list.innerHTML = "<p class='subtle'>No synced jobs yet. Add one test job above.</p>";
+        return;
+      }
 
-    function renderRoute(){
-      $("osceolaCount").textContent=`${countCounty("Osceola")} available jobs`;
-      $("orangeCount").textContent=`${countCounty("Orange")} available jobs`;
-      $("allCount").textContent=`${availableJobs().length} available jobs`;
-      document.querySelectorAll(".choice").forEach(b=>b.classList.toggle("selected",b.dataset.filter===state.routeFilter));
-      const visible=jobsForFilter(state.routeFilter);
-      const selectedVisible=state.selectedIds.filter(id=>visible.some(j=>j.id===id));
-      $("selectedPill").textContent=`${selectedVisible.length} selected`;
-      $("routeList").innerHTML=visible.length?visible.map(j=>{
-        const checked=state.selectedIds.includes(j.id);
-        return `<label class="row ${checked?"selected":""}"><input type="checkbox" class="route-check" data-id="${esc(j.id)}" ${checked?"checked":""}><span><span class="row-title">${esc(j.name||"Name to review")}</span><span class="row-meta">${esc(j.clientName)} · ${esc(j.code||"—")} · ${money(j.fee)}</span><span class="row-address">${esc(j.address)}</span></span><span class="badge ${esc(j.status)}">${esc(labels[j.status])}</span></label>`;
-      }).join(""):`<div class="empty">No available jobs in this group.</div>`;
-      const ordered=state.selectedIds.map(getJob).filter(Boolean);
-      $("routeOrder").innerHTML=ordered.length?ordered.map((j,index)=>`
-        <div class="route-stop"><span class="route-stop-number">${index+1}</span><span><span class="row-title">${esc(j.name||"Name to review")} · ${esc(j.code||"—")}</span><span class="row-address">${esc(j.address)}</span></span><div class="button-row ui no-print"><button class="btn secondary move-route" data-id="${esc(j.id)}" data-dir="up" type="button">Up</button><button class="btn secondary move-route" data-id="${esc(j.id)}" data-dir="down" type="button">Down</button><button class="btn secondary remove-route" data-id="${esc(j.id)}" type="button">Remove</button></div></div>
-      `).join(""):`<div class="empty">Select jobs above to build the route order.</div>`;
-    }
-
-    function renderPricing(){
-      $("pricingList").innerHTML=state.clients.map(c=>`
-        <div class="row"><span>◈</span><span><span class="row-title">${esc(c.name)}</span><span class="row-meta">Default fee: ${money(c.fee)}</span><span class="row-address">${c.phrases.length} cleanup phrase${c.phrases.length===1?"":"s"} saved</span></span><button class="btn secondary edit-client ui" data-id="${esc(c.id)}" type="button">Edit</button></div>
+      list.innerHTML = data.map((job) => `
+        <article class="job">
+          <strong>${escapeHtml(job.name || "Name not entered")}</strong>
+          <span>${escapeHtml(job.client_name)} · Job #${escapeHtml(job.job_code || "—")}</span>
+          <span>${escapeHtml(job.address)}</span>
+          <span>Status: ${escapeHtml(job.status)}</span>
+        </article>
       `).join("");
     }
 
-    function renderInvoices(){
-      const total=state.invoices.reduce((s,i)=>s+Number(i.amount||0),0);$("invoicePill").textContent=`${money(total)} total`;
-      $("invoiceList").innerHTML=state.invoices.length?state.invoices.map(i=>`
-        <div class="row"><span>🧾</span><span><span class="row-title">${esc(i.clientName)} · ${esc(i.number)}</span><span class="row-meta">Due ${esc(i.due||"not set")} · ${money(i.amount)}</span>${i.description?`<span class="row-address">${esc(i.description)}</span>`:""}</span><div class="button-row ui"><span class="badge ${esc(i.status)}">${esc(labels[i.status])}</span>${i.status==="draft"?`<button class="btn secondary invoice-status" data-id="${esc(i.id)}" data-status="sent" type="button">Sent</button>`:""}${i.status!=="paid"?`<button class="btn olive invoice-status" data-id="${esc(i.id)}" data-status="paid" type="button">Paid</button>`:""}<button class="btn secondary delete-invoice" data-id="${esc(i.id)}" type="button">Delete</button></div></div>
-      `).join(""):`<div class="empty">No invoices saved yet.</div>`;
+    function escapeHtml(value) {
+      return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
     }
 
-    function renderMoney(){
-      const income=state.money.filter(m=>m.type==="income").reduce((s,m)=>s+Number(m.amount||0),0);
-      const expense=state.money.filter(m=>m.type==="expense").reduce((s,m)=>s+Number(m.amount||0),0);
-      const net=income-expense,paid=state.invoices.filter(i=>i.status==="paid").reduce((s,i)=>s+Number(i.amount||0),0);
-      $("incomeMetric").textContent=money(income);$("expenseMetric").textContent=money(expense);$("netMetric").textContent=money(net);$("netMetric").className=net<0?"negative":"positive";$("paidMetric").textContent=money(paid);
-      $("moneyList").innerHTML=state.money.length?state.money.map(m=>`
-        <div class="row"><span>${m.type==="income"?"↗":"↘"}</span><span><span class="row-title">${esc(m.category)} · ${money(m.amount)}</span><span class="row-meta">${esc(m.date)} · ${m.type==="income"?"Income":"Expense"}</span>${m.notes?`<span class="row-address">${esc(m.notes)}</span>`:""}</span><button class="btn secondary delete-money ui" data-id="${esc(m.id)}" type="button">Delete</button></div>
-      `).join(""):`<div class="empty">No money entries yet.</div>`;
+    async function signOut() {
+      await supabase.auth.signOut();
+      await showCorrectScreen();
     }
 
-    function renderReview(){
-      const pending=state.jobs.filter(j=>j.status==="pending").length,served=state.jobs.filter(j=>j.status==="served").length,follow=state.jobs.filter(j=>["attempted","non-served","skipped"].includes(j.status)).length;
-      $("reviewTotal").textContent=state.jobs.length;$("reviewPending").textContent=pending;$("reviewServed").textContent=served;$("reviewFollow").textContent=follow;
-      $("reviewList").innerHTML=state.jobs.length?state.jobs.map(j=>jobRow(j,j.status==="served"?"✓":"•")).join(""):`<div class="empty">No jobs saved yet.</div>`;
-    }
+    $("sendLinkBtn").addEventListener("click", sendMagicLink);
+    $("saveJobBtn").addEventListener("click", saveTestJob);
+    $("refreshBtn").addEventListener("click", loadJobs);
+    $("signOutBtn").addEventListener("click", signOut);
 
-    function renderPrint(){
-      const jobs=state.selectedIds.map(getJob).filter(Boolean);
-      const title=state.routeFilter==="all"?"All Selected Jobs":state.routeFilter==="osceola"?"Osceola County":"Orange County";
-      $("printSheet").innerHTML=`
-        <h1>J Empire Serving — Route Sheet</h1>
-        <p><strong>Date:</strong> ${new Date().toLocaleDateString()} &nbsp; | &nbsp; <strong>Group:</strong> ${esc(title)} &nbsp; | &nbsp; <strong>Stops:</strong> ${jobs.length}</p>
-        <hr>
-        ${jobs.map((j,index)=>state.printMode==="compact"?`
-          <div class="print-stop"><h3>${index+1}. □ ${esc(j.name||"Name to review")} — Job #${esc(j.code||"—")}</h3><p><strong>Client:</strong> ${esc(j.clientName)}<br><strong>Address:</strong> ${esc(j.address)}<br>□ Attempted &nbsp; □ Served &nbsp; □ Non-Served &nbsp; □ Follow-Up</p></div>
-        `:`
-          <div class="print-stop"><h3>STOP ${index+1} &nbsp; □ Completed</h3><p><strong>Client:</strong> ${esc(j.clientName)}<br><strong>Job Code:</strong> ${esc(j.code||"—")}<br><strong>Person / Entity:</strong> ${esc(j.name||"—")}<br><br><strong>Address:</strong><br>${esc(j.address)}<br><br><strong>Instructions:</strong> ${esc(j.notes||"—")}<br><br><strong>Outcome:</strong> □ Attempted &nbsp; □ Served &nbsp; □ Non-Served &nbsp; □ Follow-Up</p><div class="print-lines"><strong>Notes:</strong><br><br>____________________________________________________________<br><br>____________________________________________________________</div></div>
-        `).join("")||"<p>No route jobs selected.</p>"}`;
-    }
+    supabase.auth.onAuthStateChange(() => {
+      showCorrectScreen();
+    });
 
-    function renderRouteMode(){
-      const route=state.activeRoute;
-      if(!route.active){$("routeMode").hidden=true;return}
-      const jobs=route.ids.map(getJob).filter(Boolean);
-      if(!jobs.length||route.index>=jobs.length){finishRoute();return}
-      $("routeMode").hidden=false;
-      const j=jobs[route.index],completed=jobs.filter(x=>!["pending","skipped"].includes(x.status)).length;
-      const group=route.filter==="all"?"All Jobs":route.filter==="osceola"?"Osceola County":"Orange County";
-      $("activeRouteLabel").textContent=`J Empire Serving · ${group} Route`;
-      $("activeStopLabel").textContent=`Stop ${route.index+1} of ${jobs.length}`;
-      $("activeProgressText").textContent=`${completed} complete · ${jobs.length-route.index} remaining`;
-      $("progressFill").style.width=`${route.index/jobs.length*100}%`;
-      $("stopCard").innerHTML=`
-        <div class="stop-kicker">Current Stop</div>
-        <div class="stop-company">${esc(j.clientName)} · Job #${esc(j.code||"—")}</div>
-        <h1 class="stop-name">${esc(j.name||"Name to review")}</h1>
-        <p class="stop-address">${esc(j.address)}</p>
-        <button class="btn ink wide navigate ui" id="navigateBtn" type="button">Open in Apple Maps</button>
-        ${j.notes?`<p class="hint"><strong>Instructions:</strong> ${esc(j.notes)}</p>`:""}
-      `;
-      const next=jobs[route.index+1];
-      $("routeActions").innerHTML=`
-        <div class="route-title">What happened?</div>
-        <div class="outcomes">
-          <button class="outcome attempt outcome-btn" data-status="attempted" type="button"><span>Attempted<small>No completed service</small></span><span>›</span></button>
-          <button class="outcome serve outcome-btn" data-status="served" type="button"><span>Served<small>Completed successfully</small></span><span>›</span></button>
-          <button class="outcome nonserve outcome-btn" data-status="non-served" type="button"><span>Non-Served<small>Record reason in notes</small></span><span>›</span></button>
-        </div>
-        <div class="route-actions"><button class="btn secondary ui" id="skipBtn" type="button">Skip / Follow-Up</button><button class="btn secondary ui" id="detailsBtn" type="button">Job Details</button></div>
-        ${next?`<div class="next-card"><small>Next Stop</small><strong>${esc(next.name||"Name to review")}</strong><span>${esc(next.address)}</span></div>`:`<div class="next-card"><small>Final Stop</small><strong>This is the last selected stop.</strong></div>`}
-      `;
-      $("navigateBtn").onclick=()=>window.open(`https://maps.apple.com/?daddr=${encodeURIComponent(j.address)}&dirflg=d`,"_blank","noopener");
-      document.querySelectorAll(".outcome-btn").forEach(b=>b.onclick=()=>openOutcome(j.id,b.dataset.status));
-      $("skipBtn").onclick=()=>saveOutcome(j.id,"skipped","Skipped during route. Follow-up needed.");
-      $("detailsBtn").onclick=()=>alert(`${j.name||"Name to review"}\n\nClient: ${j.clientName}\nJob Code: ${j.code||"—"}\nCounty: ${j.county}\nFee: ${money(j.fee)}\n\n${j.address}\n\nInstructions:\n${j.notes||"None"}`);
-    }
-
-    function renderAll(){
-      $("jobPill").textContent=`${state.jobs.length} ${state.jobs.length===1?"job":"jobs"}`;
-      renderClientOptions();renderClientChips();renderCleanup();renderDrafts();renderDashboard();renderToday();renderPhoneSearch();renderVault();renderRoute();renderPricing();renderInvoices();renderMoney();renderReview();renderPrint();renderRouteMode();applyFontSize();
-    }
-
-    function detectCounty(text){
-      const s=text.toLowerCase();
-      if(/orlando|orange county|winter park|apopka|ocoee|windermere|lake nona/.test(s))return"Orange";
-      if(/kissimmee|kindred|saint cloud|st\.?\s*cloud|osceola|poinciana|celebration|davenport/.test(s))return"Osceola";
-      return"Other";
-    }
-
-    function detectAddresses(text){
-      const regex=/\b\d{1,6}\s+[A-Za-z0-9.'#\-\s]+?\s+(?:Street|St\.?|Avenue|Ave\.?|Road|Rd\.?|Drive|Dr\.?|Court|Ct\.?|Lane|Ln\.?|Boulevard|Blvd\.?|Way|Place|Pl\.?|Trail|Terrace|Ter\.?|Circle|Cir\.?|Highway|Hwy\.?|Parkway|Pkwy\.?)(?:\s*(?:,|\n)?\s*(?:Apt\.?|Apartment|Unit|#)\s*[A-Za-z0-9\-]+)?(?:\s*,\s*[A-Za-z .]+,\s*(?:FL|Florida)\s*,?\s*\d{5}(?:-\d{4})?)?/gi;
-      const matches=[];let m;
-      while((m=regex.exec(text))!==null){
-        let address=m[0].replace(/\s+/g," ").trim();
-        if(address.length>10&&!matches.some(x=>x.toLowerCase()===address.toLowerCase()))matches.push(address);
-      }
-      return matches;
-    }
-
-    function analyzeIntake(){
-      const original=$("intakeText").value.trim();
-      if(!original){toast("Paste the assignment first.");return}
-      const client=getClient(state.selectedClientId);
-      const lines=original.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
-      const ignored=[];
-      lines.forEach((line,index)=>{
-        const lower=line.toLowerCase();
-        if(client.phrases.some(p=>p&&lower.includes(p.toLowerCase())))ignored.push(index);
-      });
-      state.intake.original=original;state.intake.lines=lines;state.intake.ignored=ignored;
-      makeDrafts();
-      save();renderAll();
-      toast(`${state.intake.drafts.length} separate job draft${state.intake.drafts.length===1?"":"s"} created.`);
-    }
-
-    function makeDrafts(){
-      const client=getClient(state.selectedClientId);
-      const working=state.intake.lines.filter((_,i)=>!state.intake.ignored.includes(i)).join("\n");
-      const addresses=detectAddresses(working);
-      state.intake.drafts=addresses.map((address,index)=>{
-        const addressPosition=working.toLowerCase().indexOf(address.toLowerCase());
-        const nextPosition=index<addresses.length-1?working.toLowerCase().indexOf(addresses[index+1].toLowerCase()):working.length;
-        const block=working.slice(Math.max(0,addressPosition-250),nextPosition).trim();
-        const codeMatch=block.match(/(?:job|file|case|assignment|ref(?:erence)?)\s*(?:#|number|no\.?)?\s*[:\-]?\s*([A-Z0-9\-]+)/i);
-        const blockLines=block.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
-        const name=blockLines.find(line=>line.length>3&&!line.includes(address)&&!/\d{1,6}\s/.test(line)&&!/job|file|case|assignment|address|client|county|confidential|email|phone|attached/i.test(line)&&line.length<65)||"";
-        const safeNotes=blockLines.filter(line=>{
-          const lower=line.toLowerCase();
-          return !addresses.some(a=>lower.includes(a.toLowerCase()))&&!/\b\d{1,6}\s+/.test(line);
-        }).join(" ").slice(0,500);
-        return{
-          clientId:client.id,clientName:client.name,name,code:codeMatch?codeMatch[1]:"",
-          address,county:detectCounty(address),serviceType:"Service of Process",dueDate:"",
-          fee:Number(client.fee||0),notes:safeNotes,keep:true
-        };
-      });
-    }
-
-    function openDraft(index){
-      const d=state.intake.drafts[index];if(!d)return;
-      $("editingDraftIndex").value=index;
-      $("editDraftClient").value=d.clientId;
-      $("editDraftCounty").value=d.county;
-      $("editDraftName").value=d.name;
-      $("editDraftCode").value=d.code;
-      $("editDraftAddress").value=d.address;
-      $("editDraftService").value=d.serviceType;
-      $("editDraftDue").value=d.dueDate;
-      $("editDraftFee").value=d.fee;
-      $("editDraftNotes").value=d.notes;
-      $("draftDialog").showModal();
-    }
-
-    function saveDraftEdit(event){
-      event.preventDefault();
-      if(event.submitter.value==="cancel"){$("draftDialog").close();return}
-      const index=Number($("editingDraftIndex").value),client=getClient($("editDraftClient").value),d=state.intake.drafts[index];
-      Object.assign(d,{clientId:client.id,clientName:client.name,county:$("editDraftCounty").value,name:$("editDraftName").value.trim(),code:$("editDraftCode").value.trim(),address:$("editDraftAddress").value.trim(),serviceType:$("editDraftService").value.trim(),dueDate:$("editDraftDue").value,fee:Number($("editDraftFee").value||0),notes:$("editDraftNotes").value.trim()});
-      save();$("draftDialog").close();renderAll();toast("Draft updated.");
-    }
-
-    function saveDraftBatch(addToday){
-      const drafts=state.intake.drafts;
-      if(!drafts.length){toast("There are no drafts to save.");return}
-      const original=state.intake.original,ignored=state.intake.ignored.map(i=>state.intake.lines[i]).filter(Boolean);
-      drafts.forEach(d=>state.jobs.unshift({
-        id:uid(),clientId:d.clientId,clientName:d.clientName,name:d.name,code:d.code,address:d.address,county:d.county,
-        serviceType:d.serviceType,dueDate:d.dueDate,fee:d.fee,notes:d.notes,originalText:original,ignoredLines:ignored,
-        today:addToday,status:"pending",outcomeNotes:"",createdAt:new Date().toISOString()
-      }));
-      resetIntake();save();renderAll();toast(`${drafts.length} job${drafts.length===1?"":"s"} saved${addToday?" and added to Today":""}.`);
-    }
-
-    function resetIntake(){
-      state.intake={original:"",lines:[],ignored:[],drafts:[]};$("intakeText").value="";
-    }
-
-    function openClient(id=""){
-      const c=id?getClient(id):null;
-      $("clientId").value=c?c.id:"";$("clientName").value=c?c.name:"";$("clientFee").value=c?c.fee:"";$("clientPhrases").value=c?c.phrases.join("\n"):"";$("clientNotes").value=c?c.notes:"";
-      $("clientDialog").showModal();
-    }
-
-    function saveClient(event){
-      event.preventDefault();
-      if(event.submitter.value==="cancel"){$("clientDialog").close();return}
-      const id=$("clientId").value||uid(),profile={id,name:$("clientName").value.trim(),fee:Number($("clientFee").value||0),phrases:$("clientPhrases").value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean),notes:$("clientNotes").value.trim()};
-      const pos=state.clients.findIndex(c=>c.id===id);if(pos>=0)state.clients[pos]=profile;else state.clients.push(profile);
-      state.selectedClientId=id;save();$("clientDialog").close();renderAll();toast("Client profile saved.");
-    }
-
-    function startRoute(){
-      const visible=jobsForFilter(state.routeFilter),ids=state.selectedIds.filter(id=>visible.some(j=>j.id===id));
-      if(!ids.length){toast("Select route jobs first.");return}
-      ids.forEach(id=>{const j=getJob(id);if(j)j.today=true});
-      state.activeRoute={active:true,ids:[...state.selectedIds],index:0,filter:state.routeFilter};
-      save();renderAll();window.scrollTo({top:0,behavior:"smooth"});
-    }
-
-    let pendingOutcome=null;
-    function openOutcome(id,status){
-      const j=getJob(id);if(!j)return;
-      pendingOutcome={id,status};$("outcomeTitle").textContent=`Mark as ${labels[status]}`;$("outcomeInfo").textContent=`${j.name||"Name to review"} · ${j.address}`;$("outcomeNotes").value="";$("outcomeDialog").showModal();
-    }
-    function saveOutcome(id,status,notes){
-      const j=getJob(id);if(!j)return;
-      j.status=status;j.outcomeNotes=notes||"";j.updatedAt=new Date().toISOString();
-      if(state.activeRoute.active&&state.activeRoute.ids[state.activeRoute.index]===id)state.activeRoute.index++;
-      save();renderAll();toast(`${labels[status]} saved. Moving to the next stop.`);
-    }
-    function endRoute(){state.activeRoute.active=false;save();renderAll();toast("Route paused.")}
-    function finishRoute(){state.activeRoute.active=false;state.selectedIds=[];save();renderAll();toast("Route complete.")}
-
-    function moveRoute(id,dir){
-      const i=state.selectedIds.indexOf(id),next=dir==="up"?i-1:i+1;
-      if(i<0||next<0||next>=state.selectedIds.length)return;
-      [state.selectedIds[i],state.selectedIds[next]]=[state.selectedIds[next],state.selectedIds[i]];
-      save();renderAll();
-    }
-
-    function invoiceFromServed(){
-      const served=state.jobs.filter(j=>j.status==="served");
-      if(!served.length){toast("No served jobs available for an invoice draft.");return}
-      const total=served.reduce((s,j)=>s+Number(j.fee||0),0),clients=[...new Set(served.map(j=>j.clientId))];
-      $("invoiceClient").value=clients.length===1?clients[0]:"";$("invoiceNumber").value=`INV-${1000+state.invoices.length+1}`;$("invoiceDue").value=today();$("invoiceAmount").value=total.toFixed(2);
-      $("invoiceDescription").value=served.map(j=>`${j.clientName}: Job ${j.code||j.name} — ${money(j.fee)}`).join("\n");
-      toast("Invoice draft filled from served jobs.");
-    }
-
-    function exportData(){
-      const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");
-      a.href=url;a.download=`j-empire-serving-backup-${today()}.json`;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);toast("Backup exported.");
-    }
-
-    function printRoute(mode){
-      if(!state.selectedIds.length){toast("Select route jobs before printing.");return}
-      state.printMode=mode;renderPrint();setTimeout(()=>window.print(),100);
-    }
-
-    document.querySelectorAll("[data-workspace]").forEach(b=>b.onclick=()=>setWorkspace(b.dataset.workspace));
-    $("switchWorkspaceBtn").onclick=showChooser;
-    document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>setView(b.dataset.view));
-    document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>setView(b.dataset.go));
-    document.querySelectorAll("[data-font]").forEach(b=>b.onclick=()=>{state.fontSize=b.dataset.font;save();applyFontSize()});
-
-    $("clientChips").onclick=e=>{const b=e.target.closest("[data-client]");if(b){state.selectedClientId=b.dataset.client;save();renderAll()}};
-    $("addClientBtn").onclick=()=>openClient();$("pricingAddClientBtn").onclick=()=>openClient();
-    $("clientForm").onsubmit=saveClient;
-    $("analyzeBtn").onclick=analyzeIntake;
-    $("clearIntakeBtn").onclick=()=>{resetIntake();renderAll();toast("Smart Intake cleared.")};
-    $("cleanupLines").onchange=e=>{
-      if(!e.target.classList.contains("ignore-line"))return;
-      const i=Number(e.target.dataset.index);
-      if(e.target.checked)state.intake.ignored=[...new Set([...state.intake.ignored,i])];
-      else state.intake.ignored=state.intake.ignored.filter(x=>x!==i);
-      makeDrafts();save();renderAll();
-    };
-    $("batchArea").onclick=e=>{
-      const edit=e.target.closest(".edit-draft"),remove=e.target.closest(".remove-draft");
-      if(edit)openDraft(Number(edit.dataset.index));
-      if(remove){state.intake.drafts.splice(Number(remove.dataset.index),1);save();renderAll()}
-      if(e.target.id==="saveDraftsVaultBtn")saveDraftBatch(false);
-      if(e.target.id==="saveDraftsTodayBtn")saveDraftBatch(true);
-    };
-    $("draftForm").onsubmit=saveDraftEdit;
-
-    $("phoneSearch").oninput=renderPhoneSearch;$("vaultSearch").oninput=renderVault;$("vaultStatus").onchange=renderVault;
-    $("vaultList").onclick=e=>{
-      const o=e.target.closest(".original-job"),d=e.target.closest(".delete-job");
-      if(o){const j=getJob(o.dataset.id);alert(`Original assignment:\n\n${j.originalText||"No original assignment saved."}\n\nIgnored wording:\n${(j.ignoredLines||[]).join("\n")||"None"}`)}
-      if(d){const j=getJob(d.dataset.id);if(j&&confirm(`Delete ${j.name||j.address}?`)){state.jobs=state.jobs.filter(x=>x.id!==j.id);state.selectedIds=state.selectedIds.filter(x=>x!==j.id);save();renderAll();toast("Job deleted.")}}
-    };
-
-    document.querySelectorAll(".choice").forEach(b=>b.onclick=()=>{state.routeFilter=b.dataset.filter;save();renderAll()});
-    $("routeList").onchange=e=>{
-      if(!e.target.classList.contains("route-check"))return;
-      const id=e.target.dataset.id;
-      if(e.target.checked)state.selectedIds=[...new Set([...state.selectedIds,id])];else state.selectedIds=state.selectedIds.filter(x=>x!==id);
-      save();renderAll();
-    };
-    $("selectAllBtn").onclick=()=>{state.selectedIds=[...new Set([...state.selectedIds,...jobsForFilter(state.routeFilter).map(j=>j.id)])];save();renderAll();toast("All visible jobs selected.")};
-    $("clearSelectionBtn").onclick=()=>{const ids=new Set(jobsForFilter(state.routeFilter).map(j=>j.id));state.selectedIds=state.selectedIds.filter(x=>!ids.has(x));save();renderAll();toast("Visible selection cleared.")};
-    $("clearOrderBtn").onclick=()=>{state.selectedIds=[];save();renderAll()};
-    $("routeOrder").onclick=e=>{const m=e.target.closest(".move-route"),r=e.target.closest(".remove-route");if(m)moveRoute(m.dataset.id,m.dataset.dir);if(r){state.selectedIds=state.selectedIds.filter(x=>x!==r.dataset.id);save();renderAll()}};
-    $("startRouteBtn").onclick=startRoute;$("endRouteBtn").onclick=endRoute;$("printDetailedBtn").onclick=()=>printRoute("detailed");$("printCompactBtn").onclick=()=>printRoute("compact");
-
-    $("pricingList").onclick=e=>{const b=e.target.closest(".edit-client");if(b)openClient(b.dataset.id)};
-
-    $("invoiceForm").onsubmit=e=>{
-      e.preventDefault();const c=getClient($("invoiceClient").value);
-      state.invoices.unshift({id:uid(),clientId:c.id,clientName:c.name,number:$("invoiceNumber").value.trim(),due:$("invoiceDue").value,amount:Number($("invoiceAmount").value||0),description:$("invoiceDescription").value.trim(),status:"draft"});
-      e.target.reset();save();renderAll();toast("Invoice saved.");
-    };
-    $("makeInvoiceDraftBtn").onclick=invoiceFromServed;
-    $("invoiceList").onclick=e=>{
-      const s=e.target.closest(".invoice-status"),d=e.target.closest(".delete-invoice");
-      if(s){const i=state.invoices.find(x=>x.id===s.dataset.id);if(i){i.status=s.dataset.status;save();renderAll();toast(`Invoice marked ${labels[i.status]}.`)}}
-      if(d){state.invoices=state.invoices.filter(x=>x.id!==d.dataset.id);save();renderAll();toast("Invoice deleted.")}
-    };
-
-    $("moneyDate").value=today();
-    $("moneyForm").onsubmit=e=>{
-      e.preventDefault();state.money.unshift({id:uid(),type:$("moneyType").value,amount:Number($("moneyAmount").value||0),category:$("moneyCategory").value.trim(),date:$("moneyDate").value||today(),notes:$("moneyNotes").value.trim()});
-      e.target.reset();$("moneyDate").value=today();save();renderAll();toast("Money entry saved.");
-    };
-    $("moneyList").onclick=e=>{const b=e.target.closest(".delete-money");if(b){state.money=state.money.filter(x=>x.id!==b.dataset.id);save();renderAll();toast("Money entry deleted.")}};
-    $("outcomeForm").onsubmit=e=>{e.preventDefault();if(e.submitter.value==="cancel"||!pendingOutcome){$("outcomeDialog").close();pendingOutcome=null;return}saveOutcome(pendingOutcome.id,pendingOutcome.status,$("outcomeNotes").value.trim());$("outcomeDialog").close();pendingOutcome=null};
-    $("phoneExportBtn").onclick=exportData;$("exportBtn").onclick=exportData;$("goOfficeBtn").onclick=()=>setWorkspace("tablet");
-    $("clearDataBtn").onclick=()=>{if(confirm("Permanently clear all saved jobs, clients, invoices, money, and route data from this browser?")){localStorage.removeItem(KEY);location.reload()}};
-
-    load();
-    applyFontSize();
-    if(state.workspace)setWorkspace(state.workspace);else $("workspaceChooser").classList.remove("hidden");
-    renderAll();
+    showCorrectScreen();
   </script>
 </body>
 </html>
