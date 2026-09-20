@@ -4,210 +4,27 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>J Empire Serving — Sync Test</title>
-
   <style>
-    :root {
-      --cream: #f7f0e5;
-      --paper: #fffdf8;
-      --ink: #1d1a18;
-      --espresso: #3d302b;
-      --taupe: #c7b8a8;
-      --gold: #b88a2d;
-      --gold-soft: #f4e6be;
-      --line: #dfd0be;
-      --green: #536b52;
-      --red: #a66150;
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      min-width: 320px;
-      background:
-        radial-gradient(circle at top right, rgba(217,187,115,.18), transparent 30rem),
-        var(--cream);
-      color: var(--ink);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-    }
-
-    .app {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 24px 16px 80px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 22px;
-    }
-
-    .mark {
-      width: 54px;
-      height: 54px;
-      display: grid;
-      place-items: center;
-      position: relative;
-      border: 1px solid var(--gold);
-      border-radius: 50%;
-      background: var(--paper);
-      color: var(--ink);
-      font-family: Georgia, serif;
-      font-size: 2rem;
-      font-style: italic;
-    }
-
-    .mark::before {
-      content: "♕";
-      position: absolute;
-      top: -14px;
-      color: var(--gold);
-      font-size: 1.15rem;
-    }
-
-    .eyebrow {
-      color: var(--gold);
-      font-size: .72rem;
-      font-weight: 800;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-    }
-
-    h1, h2, p { margin-top: 0; }
-
-    h1 {
-      margin-bottom: 0;
-      font-family: Georgia, serif;
-      font-size: 1.75rem;
-      font-weight: 600;
-    }
-
-    h2 {
-      font-family: Georgia, serif;
-      font-weight: 600;
-    }
-
-    .subtle {
-      color: #74675e;
-      line-height: 1.45;
-    }
-
-    .card {
-      margin-top: 16px;
-      padding: 20px;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      background: rgba(255,253,248,.96);
-      box-shadow: 0 12px 30px rgba(66,45,26,.1);
-    }
-
-    label {
-      display: grid;
-      gap: 6px;
-      margin-top: 12px;
-      color: var(--espresso);
-      font-size: .88rem;
-      font-weight: 700;
-    }
-
-    input, textarea {
-      width: 100%;
-      min-height: 46px;
-      padding: 11px;
-      border: 1px solid var(--line);
-      border-radius: 11px;
-      background: #fffefa;
-      color: var(--ink);
-      font: inherit;
-    }
-
-    textarea {
-      min-height: 82px;
-      resize: vertical;
-    }
-
-    .row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .btn {
-      min-height: 45px;
-      margin-top: 14px;
-      padding: 10px 14px;
-      border: 0;
-      border-radius: 12px;
-      background: var(--espresso);
-      color: white;
-      font: inherit;
-      font-weight: 800;
-      cursor: pointer;
-    }
-
-    .btn.gold {
-      background: var(--gold);
-      color: #241b14;
-    }
-
-    .btn.secondary {
-      border: 1px solid var(--line);
-      background: #fbf7f0;
-      color: var(--espresso);
-    }
-
-    .status {
-      margin-top: 14px;
-      padding: 12px;
-      border-radius: 12px;
-      line-height: 1.4;
-    }
-
-    .status.good {
-      background: #e2eadf;
-      color: #345438;
-    }
-
-    .status.bad {
-      background: #f4e1db;
-      color: #834234;
-    }
-
-    .job-list {
-      display: grid;
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    .job {
-      padding: 14px;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: var(--paper);
-    }
-
-    .job strong {
-      display: block;
-      margin-bottom: 3px;
-    }
-
-    .job span {
-      display: block;
-      color: #74675e;
-      font-size: .9rem;
-      line-height: 1.4;
-    }
-
-    .hidden { display: none !important; }
-
-    @media (max-width: 560px) {
-      .row { grid-template-columns: 1fr; }
-    }
+    :root{--cream:#f7f0e5;--paper:#fffdf8;--ink:#1d1a18;--espresso:#3d302b;--gold:#b88a2d;--line:#dfd0be;--green:#536b52;--red:#a66150}
+    *{box-sizing:border-box}
+    body{margin:0;min-width:320px;background:radial-gradient(circle at top right,rgba(217,187,115,.18),transparent 30rem),var(--cream);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+    .app{max-width:760px;margin:auto;padding:24px 16px 80px}
+    .brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+    .mark{width:54px;height:54px;display:grid;place-items:center;position:relative;border:1px solid var(--gold);border-radius:50%;background:var(--paper);color:var(--ink);font-family:Georgia,serif;font-size:2rem;font-style:italic}
+    .mark:before{content:"♕";position:absolute;top:-14px;color:var(--gold);font-size:1.15rem}
+    .eyebrow{color:var(--gold);font-size:.72rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+    h1,h2,p{margin-top:0}h1{margin-bottom:0;font-family:Georgia,serif;font-size:1.75rem;font-weight:600}h2{font-family:Georgia,serif;font-weight:600}.subtle{color:#74675e;line-height:1.45}
+    .card{margin-top:16px;padding:20px;border:1px solid var(--line);border-radius:18px;background:rgba(255,253,248,.96);box-shadow:0 12px 30px rgba(66,45,26,.1)}
+    label{display:grid;gap:6px;margin-top:12px;color:var(--espresso);font-size:.88rem;font-weight:700}
+    input,textarea{width:100%;min-height:46px;padding:11px;border:1px solid var(--line);border-radius:11px;background:#fffefa;color:var(--ink);font:inherit}textarea{min-height:82px;resize:vertical}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .btn{min-height:45px;margin-top:14px;padding:10px 14px;border:0;border-radius:12px;background:var(--espresso);color:#fff;font:inherit;font-weight:800;cursor:pointer}
+    .btn.gold{background:var(--gold);color:#241b14}.btn.secondary{border:1px solid var(--line);background:#fbf7f0;color:var(--espresso)}
+    .status{margin-top:14px;padding:12px;border-radius:12px;line-height:1.4}.status.good{background:#e2eadf;color:#345438}.status.bad{background:#f4e1db;color:#834234}
+    .job-list{display:grid;gap:10px;margin-top:14px}.job{padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--paper)}.job strong{display:block;margin-bottom:3px}.job span{display:block;color:#74675e;font-size:.9rem;line-height:1.4}.hidden{display:none!important}
+    @media(max-width:560px){.row{grid-template-columns:1fr}}
   </style>
 </head>
-
 <body>
   <main class="app">
     <header class="brand">
@@ -220,15 +37,8 @@
 
     <section id="loginCard" class="card">
       <h2>Sign in</h2>
-      <p class="subtle">
-        Enter the same email address on your iPhone and iPad. Supabase will send a sign-in link to that email.
-      </p>
-
-      <label>
-        Email address
-        <input id="email" type="email" autocomplete="email" placeholder="you@example.com">
-      </label>
-
+      <p class="subtle">Use the same email on your iPhone and iPad. Supabase will send you a sign-in link.</p>
+      <label>Email address<input id="email" type="email" autocomplete="email" placeholder="you@example.com"></label>
       <button id="sendLinkBtn" class="btn gold" type="button">Send Sign-In Link</button>
       <div id="loginMessage"></div>
     </section>
@@ -236,223 +46,187 @@
     <section id="appCard" class="hidden">
       <div class="card">
         <h2>Connected</h2>
-        <p class="subtle">
-          Signed in as <strong id="userEmail"></strong>. Add one test job here, then open this same page on your iPad and sign in with the same email.
-        </p>
+        <p class="subtle">Signed in as <strong id="userEmail"></strong>.</p>
         <button id="signOutBtn" class="btn secondary" type="button">Sign Out</button>
       </div>
 
       <div class="card">
         <h2>Add Test Job</h2>
-
         <div class="row">
-          <label>
-            Client
-            <input id="clientName" value="ProVest">
-          </label>
-
-          <label>
-            Job Number
-            <input id="jobCode" placeholder="Example: PV-001">
-          </label>
+          <label>Client<input id="clientName" value="ProVest"></label>
+          <label>Job Number<input id="jobCode" placeholder="PV-001"></label>
         </div>
-
-        <label>
-          Name / Entity
-          <input id="jobName" placeholder="Example: Sample Person">
-        </label>
-
-        <label>
-          Address
-          <textarea id="jobAddress" placeholder="123 Sample Street, Kissimmee, FL 34700"></textarea>
-        </label>
-
+        <label>Name / Entity<input id="jobName" placeholder="Sample Person"></label>
+        <label>Address<textarea id="jobAddress" placeholder="123 Sample Street, Kissimmee, FL 34700"></textarea></label>
         <button id="saveJobBtn" class="btn gold" type="button">Save Test Job</button>
         <div id="jobMessage"></div>
       </div>
 
       <div class="card">
         <h2>Synced Jobs</h2>
-        <p class="subtle">If the same job appears on both devices, sync is working.</p>
+        <p class="subtle">If the same job appears on both devices, sync works.</p>
         <button id="refreshBtn" class="btn secondary" type="button">Refresh Jobs</button>
         <div id="jobList" class="job-list"></div>
       </div>
     </section>
   </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 
   <script>
     const SUPABASE_URL = "https://ejseathlglvvnmkpchib.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVqc2VhdGhsZ2x2dm5ta3BjaGliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE5ODc4NTUsImV4cCI6MjA5NzU2Mzg1NX0.o4crd1W5-NbVNXSOWNT-WPHS7R6orRe9CRYFZfZ41L8";
 
-    const SUPABASE_ANON_KEY =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVqc2VhdGhsZ2x2dm5ta3BjaGliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE5ODc4NTUsImV4cCI6MjA5NzU2Mzg1NX0.o4crd1W5-NbVNXSOWNT-WPHS7R6orRe9CRYFZfZ41L8";
+    const $ = id => document.getElementById(id);
 
-    const supabase = window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_ANON_KEY
-    );
-
-    const $ = (id) => document.getElementById(id);
-
-    function showMessage(elementId, message, type) {
-      const element = $(elementId);
-      element.className = `status ${type}`;
-      element.textContent = message;
+    function message(id,text,type){
+      const el=$(id);
+      el.className=`status ${type}`;
+      el.textContent=text;
     }
 
-    function clearMessage(elementId) {
-      const element = $(elementId);
-      element.className = "";
-      element.textContent = "";
+    function clearMessage(id){
+      const el=$(id);
+      el.className="";
+      el.textContent="";
     }
 
-    async function showCorrectScreen() {
-      const { data: { session } } = await supabase.auth.getSession();
+    if(!window.supabase){
+      message("loginMessage","Supabase library did not load. Refresh this page in a Private Safari tab after GitHub finishes publishing.","bad");
+    }
 
-      if (session) {
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+
+    async function updateScreen(){
+      const {data:{session}}=await supabaseClient.auth.getSession();
+
+      if(session){
         $("loginCard").classList.add("hidden");
         $("appCard").classList.remove("hidden");
-        $("userEmail").textContent = session.user.email || "your account";
-        await loadJobs();
-      } else {
+        $("userEmail").textContent=session.user.email||"your account";
+        loadJobs();
+      }else{
         $("loginCard").classList.remove("hidden");
         $("appCard").classList.add("hidden");
       }
     }
 
-    async function sendMagicLink() {
-      const email = $("email").value.trim();
+    async function sendLink(){
+      const email=$("email").value.trim();
 
-      if (!email) {
-        showMessage("loginMessage", "Enter your email address first.", "bad");
+      if(!email){
+        message("loginMessage","Please enter your email address first.","bad");
         return;
       }
 
       clearMessage("loginMessage");
 
-      const { error } = await supabase.auth.signInWithOtp({
+      const {error}=await supabaseClient.auth.signInWithOtp({
         email,
-        options: {
-          emailRedirectTo: "https://jazmarie624.github.io/Money-Assistant-/"
+        options:{
+          emailRedirectTo:"https://jazmarie624.github.io/Money-Assistant-/"
         }
       });
 
-      if (error) {
-        showMessage("loginMessage", error.message, "bad");
+      if(error){
+        message("loginMessage",error.message,"bad");
         return;
       }
 
-      showMessage(
-        "loginMessage",
-        "Sign-in link sent. Open your email, tap the link, and you will return here signed in.",
-        "good"
-      );
+      message("loginMessage","Check your email and tap the sign-in link. It will bring you back to this app.","good");
     }
 
-    async function saveTestJob() {
-      const clientName = $("clientName").value.trim() || "ProVest";
-      const jobCode = $("jobCode").value.trim();
-      const name = $("jobName").value.trim();
-      const address = $("jobAddress").value.trim();
+    async function saveJob(){
+      const address=$("jobAddress").value.trim();
 
-      if (!address) {
-        showMessage("jobMessage", "Enter an address for the test job.", "bad");
+      if(!address){
+        message("jobMessage","Please enter an address for the test job.","bad");
         return;
       }
 
-      clearMessage("jobMessage");
+      const {data:{user}}=await supabaseClient.auth.getUser();
 
-      const { data: { user } } = await supabase.auth.getUser();
-
-      if (!user) {
-        showMessage("jobMessage", "You are not signed in. Please sign in again.", "bad");
+      if(!user){
+        message("jobMessage","You are not signed in. Sign in again first.","bad");
         return;
       }
 
-      const { error } = await supabase
-        .from("jobs")
-        .insert({
-          owner_id: user.id,
-          client_name: clientName,
-          job_code: jobCode,
-          name,
-          address,
-          county: "Osceola",
-          service_type: "Service of Process",
-          fee: 0,
-          notes: "Supabase sync test",
-          source_block: "Supabase sync test",
-          status: "pending"
-        });
+      const {error}=await supabaseClient.from("jobs").insert({
+        owner_id:user.id,
+        client_name:$("clientName").value.trim()||"ProVest",
+        job_code:$("jobCode").value.trim(),
+        name:$("jobName").value.trim(),
+        address,
+        county:"Osceola",
+        service_type:"Service of Process",
+        fee:0,
+        notes:"Supabase sync test",
+        source_block:"Supabase sync test",
+        status:"pending"
+      });
 
-      if (error) {
-        showMessage("jobMessage", error.message, "bad");
+      if(error){
+        message("jobMessage",error.message,"bad");
         return;
       }
 
-      $("jobCode").value = "";
-      $("jobName").value = "";
-      $("jobAddress").value = "";
-
-      showMessage("jobMessage", "Test job saved to Supabase.", "good");
-      await loadJobs();
+      $("jobCode").value="";
+      $("jobName").value="";
+      $("jobAddress").value="";
+      message("jobMessage","Test job saved to Supabase.","good");
+      loadJobs();
     }
 
-    async function loadJobs() {
-      const list = $("jobList");
-      list.innerHTML = "<p class='subtle'>Loading synced jobs…</p>";
+    async function loadJobs(){
+      $("jobList").innerHTML="<p class='subtle'>Loading jobs…</p>";
 
-      const { data, error } = await supabase
+      const {data,error}=await supabaseClient
         .from("jobs")
-        .select("id, client_name, job_code, name, address, status, created_at")
-        .order("created_at", { ascending: false })
+        .select("id,client_name,job_code,name,address,status,created_at")
+        .order("created_at",{ascending:false})
         .limit(25);
 
-      if (error) {
-        list.innerHTML = `<div class="status bad">${error.message}</div>`;
+      if(error){
+        $("jobList").innerHTML=`<div class="status bad">${escapeHtml(error.message)}</div>`;
         return;
       }
 
-      if (!data.length) {
-        list.innerHTML = "<p class='subtle'>No synced jobs yet. Add one test job above.</p>";
+      if(!data.length){
+        $("jobList").innerHTML="<p class='subtle'>No synced jobs yet. Add one above.</p>";
         return;
       }
 
-      list.innerHTML = data.map((job) => `
+      $("jobList").innerHTML=data.map(job=>`
         <article class="job">
-          <strong>${escapeHtml(job.name || "Name not entered")}</strong>
-          <span>${escapeHtml(job.client_name)} · Job #${escapeHtml(job.job_code || "—")}</span>
+          <strong>${escapeHtml(job.name||"Name not entered")}</strong>
+          <span>${escapeHtml(job.client_name)} · Job #${escapeHtml(job.job_code||"—")}</span>
           <span>${escapeHtml(job.address)}</span>
           <span>Status: ${escapeHtml(job.status)}</span>
         </article>
       `).join("");
     }
 
-    function escapeHtml(value) {
-      return String(value || "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+    function escapeHtml(value){
+      return String(value||"")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
     }
 
-    async function signOut() {
-      await supabase.auth.signOut();
-      await showCorrectScreen();
+    async function signOut(){
+      await supabaseClient.auth.signOut();
+      updateScreen();
     }
 
-    $("sendLinkBtn").addEventListener("click", sendMagicLink);
-    $("saveJobBtn").addEventListener("click", saveTestJob);
-    $("refreshBtn").addEventListener("click", loadJobs);
-    $("signOutBtn").addEventListener("click", signOut);
+    $("sendLinkBtn").addEventListener("click",sendLink);
+    $("saveJobBtn").addEventListener("click",saveJob);
+    $("refreshBtn").addEventListener("click",loadJobs);
+    $("signOutBtn").addEventListener("click",signOut);
 
-    supabase.auth.onAuthStateChange(() => {
-      showCorrectScreen();
-    });
-
-    showCorrectScreen();
+    supabaseClient.auth.onAuthStateChange(()=>updateScreen());
+    updateScreen();
   </script>
 </body>
 </html>
