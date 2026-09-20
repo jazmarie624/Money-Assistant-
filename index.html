@@ -1,24 +1,1525 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Jasz Process Server</title><style>
-:root{--ink:#251b0b;--gold:#b7892f;--brown:#4a3512;--paper:#fffdf8;--line:#e4d1a4;--muted:#756851;--green:#41682e;--yellow:#936508;--red:#a64038;--blue:#506f86}*{box-sizing:border-box}body{margin:0;background:#f8f0df;color:var(--ink);font-family:Georgia,serif}button,input,select,textarea{font:inherit}.app{max-width:1250px;margin:auto;padding:14px;padding-bottom:78px}.top{display:flex;justify-content:space-between;align-items:center;gap:10px;border-bottom:2px solid var(--gold);padding:5px 0 14px}.brand{display:flex;gap:10px;align-items:center}.crest{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 30% 25%,#efd477,#a27318);color:#fff;border:3px double #fff;font:bold 22px Georgia;position:relative}.crest:before{content:'♛';position:absolute;top:-18px;color:var(--gold);font-size:22px;text-shadow:0 1px #fff}.brand h1{margin:0;font-size:22px}.brand p{margin:3px 0 0;font:10px Arial;color:var(--muted);letter-spacing:.08em}.nav{display:flex;gap:7px;overflow:auto;padding:13px 0}.nav button,.btn{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:9px;padding:9px 12px;cursor:pointer;white-space:nowrap}.nav button.active,.btn.primary{background:linear-gradient(135deg,#6d5018,#b7892f);color:#fff;border-color:#936b1c}.btn.danger{background:var(--red);color:#fff;border-color:var(--red)}.btn.small{padding:6px 8px;font-size:12px}.view{display:none}.view.active{display:block}.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px;margin-top:12px;box-shadow:0 6px 18px #593f0e14}.section{display:flex;justify-content:space-between;align-items:end;gap:10px;margin:6px 0 12px}.section h2{margin:0;font-size:18px}.hint,.note{font:12px Arial;color:var(--muted);line-height:1.45}.grid{display:grid;gap:13px}.four{grid-template-columns:repeat(4,1fr)}.two{grid-template-columns:1fr 1fr}.label{font:10px Arial;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}.value{font-size:27px;font-weight:bold;margin-top:5px}.raw{width:100%;min-height:185px;resize:vertical;border:1px solid var(--line);border-radius:10px;padding:12px;background:#fff}.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}.toolbar input,.toolbar select,.field input,.field select,.field textarea{border:1px solid var(--line);border-radius:8px;background:#fff;padding:9px;width:100%}.toolbar input{width:220px}.draft{border:1px solid var(--line);border-radius:12px;background:#fff;padding:12px;margin-top:10px}.drafttop{display:flex;justify-content:space-between;gap:8px}.draft h3{margin:0 0 7px;font-size:15px}.fields{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:9px}.field label{display:block;font:10px Arial;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px}.wide{grid-column:1/-1}.tag{display:inline-block;padding:4px 7px;border-radius:999px;font:bold 10px Arial}.green{background:#e7f2de;color:#3c622a}.yellow{background:#fff0c8;color:#865d05}.redtag{background:#fae0dc;color:#963a33}.blue{background:#e6edf2;color:#4e697e}.gray{background:#edeae2;color:#615a4d}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:10px;background:#fff}table{border-collapse:collapse;width:100%;min-width:900px;font:13px Arial}th,td{padding:10px;border-bottom:1px solid #eee6d6;text-align:left;vertical-align:top}th{background:#faf0da;color:#65532d;font-size:10px;text-transform:uppercase;letter-spacing:.06em}.empty{padding:22px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:10px;font:13px Arial}.routeitem{display:flex;gap:8px;padding:10px 0;border-bottom:1px solid var(--line)}.routeitem:last-child{border:0}.num{width:27px;height:27px;border-radius:50%;background:var(--brown);color:#fff;display:grid;place-items:center;flex:none;font:bold 13px Arial}.routeitem b{font:13px Arial}.routeitem p{font:12px Arial;color:var(--muted);margin:3px 0}.map{min-height:150px;border:1px solid var(--line);border-radius:12px;padding:12px;background:linear-gradient(135deg,#ede3ca,#f9f5ec)}.pins{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px}.pin{width:36px;height:36px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:var(--gold);border:2px solid #fff;display:grid;place-items:center;color:white}.pin span{transform:rotate(45deg);font:bold 13px Arial}.modal{display:none;position:fixed;inset:0;background:#21170788;z-index:20;padding:14px;align-items:center;justify-content:center}.modal.show{display:flex}.modalbox{max-width:630px;width:100%;max-height:92vh;overflow:auto;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:17px}.actions{display:flex;justify-content:flex-end;gap:8px;margin-top:14px;flex-wrap:wrap}.big{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}.big button{border:0;border-radius:12px;padding:14px;color:#fff;font-weight:bold;cursor:pointer}.attempt{background:var(--yellow)}.serve{background:var(--green)}.nonserve{background:var(--red)}.fieldmode{display:none}.fieldmode.active{display:block}.invoice{background:#fff;border:1px solid var(--line);border-radius:12px;padding:22px}.invoicehead{display:flex;justify-content:space-between;gap:10px;border-bottom:2px solid var(--gold);padding-bottom:12px}.bottom{display:none}@media(max-width:760px){.app{padding:10px;padding-bottom:74px}.top{align-items:flex-start;flex-direction:column}.nav{display:none}.bottom{position:fixed;display:grid;grid-template-columns:repeat(5,1fr);bottom:0;left:0;right:0;z-index:15;background:#fffdf8;border-top:1px solid var(--line);padding:7px 4px}.bottom button{border:0;background:transparent;color:var(--muted);font:10px Arial;padding:5px 2px}.bottom button.active{color:var(--brown);font-weight:bold}.four,.two,.fields{grid-template-columns:1fr}.wide{grid-column:auto}.toolbar input{width:100%}.section{align-items:flex-start;flex-direction:column}.section .btn{width:100%}.big{grid-template-columns:1fr}.big button{font-size:17px}.invoicehead{flex-direction:column}}@media print{.top,.nav,.bottom,.no-print,.modal{display:none!important}.view{display:none!important}.view.active{display:block!important}.app{max-width:none;padding:0}.invoice{border:0}}
-</style></head><body><div class="app"><header class="top"><div class="brand"><div class="crest">J</div><div><h1>Jasz Process Server</h1><p>PROCESS SERVICE · ROUTE · PAYMENT</p></div></div></header><nav class="nav no-print"><button class="active" data-v="home">Home</button><button data-v="intake">Add Jobs</button><button data-v="route">Route</button><button data-v="jobs">Jobs</button><button data-v="money">Money</button><button data-v="backup">Backup</button></nav>
-<section id="home" class="view active"><div class="section"><div><h2>Command Center</h2><p>Organize jobs, manually build your route, log outcomes, and invoice.</p></div><button class="btn primary" onclick="view('intake')">+ Add Jobs</button></div><div class="grid four" id="cards"></div><div class="grid two"><div class="card"><h2 style="font-size:16px;margin-top:0">Attention</h2><div id="attention"></div></div><div class="card"><h2 style="font-size:16px;margin-top:0">Today’s Route</h2><div id="hroute"></div></div></div></section>
-<section id="intake" class="view"><div class="section"><div><h2>Smart Intake</h2><p>Choose the source format first. The app uses that format’s rules to clean the pasted text.</p></div></div><div class="card"><div class="fields"><div class="field"><label>Import Mode</label><select id="mode"><option value="auto">Auto Detect</option><option value="ody">ODY</option><option value="order">Order Job</option><option value="userve">Userve</option><option value="provest">ProVest Address List</option><option value="manual">Other / Manual</option></select></div><div class="field"><label>Company Override (optional)</label><select id="override"><option value="">Use mode / detected company</option><option>Jean</option><option>Userve</option><option>ProVest</option><option>Ody</option><option>ABC</option><option>Private</option></select></div></div><textarea id="raw" class="raw" placeholder="Paste copied job information exactly as it appears."></textarea><div class="toolbar"><button class="btn primary" onclick="analyze()">Create Drafts</button><button class="btn" onclick="examples()">Load Platform Examples</button><button class="btn danger" onclick="cancelDrafts()">Cancel / Start Over</button></div><p class="hint"><b>Userve rule:</b> When mode is Userve, the app always saves Company as Userve and ignores the words <b>open</b>, <b>MWA</b>, and the assigned-date line.</p></div><div id="drafts"></div></section>
-<section id="route" class="view"><div class="section"><div><h2>Manual Route</h2><p>Choose your order and open each stop in Apple Maps.</p></div><div class="toolbar"><button class="btn primary" onclick="startRoute()">Start Route</button><button class="btn" onclick="clearRoute()">Clear</button></div></div><div id="fieldmode" class="fieldmode card"></div><div id="planner" class="grid two"><div class="card"><h2 style="font-size:16px;margin-top:0">Choose Stops</h2><div id="picker"></div></div><div class="card"><h2 style="font-size:16px;margin-top:0">Route Order</h2><div id="map" class="map"></div><div id="routeorder"></div></div></div></section>
-<section id="jobs" class="view"><div class="section"><div><h2>Jobs</h2><p>Company / Job Source stays attached to each job.</p></div><button class="btn primary" onclick="jobForm()">+ Add Job</button></div><div class="card"><div class="toolbar"><input id="search" oninput="renderJobs()" placeholder="Search job #, name, address"><select id="companyfilter" onchange="renderJobs()"></select></div><div class="tablewrap"><table><thead><tr><th>Route</th><th>Job #</th><th>Company</th><th>Person / Entity</th><th>Address</th><th>Priority</th><th>Attempts</th><th>Work</th><th>Fee</th><th>Payment</th><th>Action</th></tr></thead><tbody id="jobrows"></tbody></table></div></div></section>
-<section id="money" class="view"><div class="section"><div><h2>Money & Invoices</h2><p>Choose Invoice To here; invoice lines group by Company / Job Source.</p></div></div><div class="card"><div class="toolbar"><select id="invoiceto" onchange="renderMoney()"><option>Jean</option><option>Userve</option><option>ProVest</option><option>Ody</option><option>ABC</option><option>Private</option></select><select id="payfilter" onchange="renderMoney()"><option value="ready">Ready to Bill</option><option value="all">All Jobs</option><option value="awaiting">Awaiting Payment</option><option value="paid">Paid</option></select><button class="btn primary" onclick="invoiceForm()">Create Invoice</button></div><div class="tablewrap" style="margin-top:10px"><table><thead><tr><th>Select</th><th>Source</th><th>Job #</th><th>Person</th><th>Result</th><th>Fee</th><th>Invoice</th><th>Payment</th></tr></thead><tbody id="moneyrows"></tbody></table></div></div><div id="invoices"></div></section>
-<section id="backup" class="view"><div class="card"><h2>Backup</h2><div class="toolbar"><button class="btn primary" onclick="backup()">Export Backup</button><label class="btn">Import Backup<input type="file" hidden accept="application/json" onchange="restore(event)"></label><button class="btn" onclick="csv()">Export Jobs CSV</button><button class="btn danger" onclick="resetAll()">Reset Local Data</button></div><p class="hint">No-API edition: Apple Maps opens only when you choose Navigate. Use one primary device during your route and export backups.</p></div></section></div><div class="bottom"><button class="active" data-v="home">Home</button><button data-v="intake">Add Jobs</button><button data-v="route">Route</button><button data-v="jobs">Jobs</button><button data-v="money">Money</button></div><div id="modal" class="modal"><div id="modalbox" class="modalbox"></div></div>
-<script>
-const C=['Jean','Userve','ProVest','Ody','ABC','Private'],K='jasz_platform_intake_v1';let S=load(),D=[],stop=0;function load(){try{return JSON.parse(localStorage.getItem(K))||{jobs:[],route:[],invoices:[]}}catch(e){return{jobs:[],route:[],invoices:[]}}}function save(){localStorage.setItem(K,JSON.stringify(S));all()}function g(x){return document.getElementById(x)}function uid(){return'j'+Date.now()+Math.random().toString(36).slice(2,7)}function today(){return new Date().toISOString().slice(0,10)}function now(){return new Date().toTimeString().slice(0,5)}function esc(v){return String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}function money(v){return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(+v||0)}function get(id){return S.jobs.find(j=>j.id===id)}function atts(j){return(j.actions||[]).filter(a=>a.type==='Attempted').length}function opts(val,all){let h=all?'<option value="">All companies</option>':'';C.forEach(x=>h+='<option '+(x===val?'selected':'')+'>'+x+'</option>');return h}function ast(a){if(!a||!a.trim())return'Missing';return /\d+/.test(a)&&/\b(?:FL|Florida)\b/i.test(a)&&/\b\d{5}(?:-\d{4})?\b/.test(a)?'Entered — looks complete':'Entered — check details'}function tag(v){let c='gray';if(['Entered — looks complete','Served','Paid'].includes(v))c='green';else if(['Entered — check details','Attempted','Ready to Bill'].includes(v))c='yellow';else if(['Missing','Missing Address','Non-Served'].includes(v))c='redtag';else if(['Active','Awaiting Payment'].includes(v))c='blue';return'<span class="tag '+c+'">'+esc(v||'Not Ready')+'</span>'}function view(v){document.querySelectorAll('.view').forEach(x=>x.classList.toggle('active',x.id===v));document.querySelectorAll('[data-v]').forEach(x=>x.classList.toggle('active',x.dataset.v===v));window.scrollTo(0,0)}document.querySelectorAll('[data-v]').forEach(x=>x.onclick=()=>view(x.dataset.v));
-function all(){selectors();home();renderJobs();renderRoute();renderMoney()}function selectors(){let f=g('companyfilter');if(f){let x=f.value;f.innerHTML=opts(x,true)}}function home(){let active=S.jobs.filter(j=>['Active','Attempted'].includes(j.work)).length,ready=S.jobs.filter(j=>j.payment==='Ready to Bill').reduce((z,j)=>z+(+j.fee||0),0);g('cards').innerHTML='<div class="card"><div class="label">Active Jobs</div><div class="value">'+active+'</div></div><div class="card"><div class="label">Today Stops</div><div class="value">'+S.route.length+'</div></div><div class="card"><div class="label">Ready to Bill</div><div class="value">'+money(ready)+'</div></div><div class="card"><div class="label">Invoices</div><div class="value">'+S.invoices.length+'</div></div>';g('attention').innerHTML=ready?'<div class="hint">Completed work is ready for invoice review.</div>':'<div class="empty">Nothing urgent right now.</div>';let r=S.route.map(get).filter(Boolean);g('hroute').innerHTML=r.length?r.map((j,i)=>'<div class="routeitem"><div class="num">'+(i+1)+'</div><div><b>'+esc(j.jobNumber)+' · '+esc(j.person)+'</b><p>'+esc(j.address||'No address')+'</p></div></div>').join(''):'<div class="empty">No route selected.</div>'}
-function lines(t){return t.split('\n').map(x=>x.trim()).filter(Boolean)}function standard(data){data.address=(data.address||'').replace(/,\s*,/g,', ').replace(/\s+/g,' ').trim();data.addressStatus=ast(data.address);data.work='Active';data.payment='Not Ready';data.actions=[];data.notes='';data.follow='';data.invoice='';data.id=uid();return data}function nameLine(a,skip){return a.find(x=>x&&!skip.test(x))||''}function parseODY(t){let a=lines(t),first=a[0]||'',m=first.match(/ODY\s*[-:#]?\s*([A-Za-z0-9-]+)/i),si=a.findIndex(x=>/^SERVEES$/i.test(x)),pi=a.findIndex(x=>/^PARTY TO BE SERVED$/i.test(x)),person=(si>=0?a[si+1]:'')||(pi>=0?a[pi+1]:'');let start=a.findIndex(x=>/\d+\s+.+\b(st|street|ave|avenue|rd|road|dr|drive|blvd|boulevard|suite|highway|hwy)\b/i.test(x)),address=start>=0?a.slice(start,start+3).join(', '):'';return standard({company:'Ody',jobNumber:m?m[1]:'',person, address,priority:'Standard',fee:0,original:t})}function parseOrder(t){let a=lines(t),all=a.join(' | '),m=all.match(/Order\s+([A-Za-z0-9-]+)/i),di=a.findIndex(x=>/^Deliver To$/i.test(x)),person=di>=0?a[di+1]:'',start=a.findIndex(x=>/\d+\s+.+\b(st|street|ave|avenue|rd|road|dr|drive|blvd|boulevard|loop|lane|ln|court|ct|way|place)\b/i.test(x)),address=start>=0?a.slice(start,start+2).join(', '):'',fee=(all.match(/\$\s*(\d+)\s*(\d{1,2})?/)||[]);let f=fee.length?(+fee[1]+((fee[2]||'')?+('.'+fee[2]):0)):0;return standard({company:'',jobNumber:m?m[1]:'',person,address,priority:'Standard',fee:f,original:t})}function parseUserve(t){let a=lines(t).filter(x=>!/^open$/i.test(x)&&!/^MWA$/i.test(x)&&!/^•?\s*\d{1,2}\/\d{1,2}\/\d{4}$/.test(x)),person=a[0]||'',num=a.find(x=>/^(?:[A-Za-z]{1,5}-)?\d{4,}$/.test(x))||'',start=a.findIndex(x=>/\d+\s+.+\b(st|street|ave|avenue|rd|road|dr|drive|blvd|boulevard|ct|court|apt|suite|loop|lane|ln|way)\b/i.test(x)),address=start>=0?a.slice(start,start+2).join(', '):'';return standard({company:'Userve',jobNumber:num,person,address,priority:'Standard',fee:0,original:t})}function parseProvest(t){let a=lines(t).filter(x=>!/^(Saved|All Work|Corporate|Search|Include Closed Cases)$/i.test(x)),out=[];a.forEach(x=>{if(/\d+\s+.+\b(st|street|ave|avenue|rd|road|dr|drive|blvd|boulevard|highway|hwy|lane|ln|ct|court|way|terr)\b/i.test(x))out.push(standard({company:'ProVest',jobNumber:'',person:'',address:x.replace(/\s+\d{4}$/,''),priority:'Standard',fee:0,original:x}))});return out}function parseAuto(t){if(/\bODY\s*[-:#]/i.test(t))return[parseODY(t)];if(/\bOrder\s+\d+/i.test(t))return[parseOrder(t)];if(/\bMWA\b/i.test(t)||/^open$/im.test(t))return[parseUserve(t)];if(/Include Closed Cases|All Work|Corporate/i.test(t))return parseProvest(t);return[standard({company:'',jobNumber:'',person:'',address:'',priority:'Standard',fee:0,original:t})]}
-function analyze(){let t=g('raw').value.trim(),mode=g('mode').value,ov=g('override').value;if(!t)return alert('Paste job information first.');let r=mode==='ody'?[parseODY(t)]:mode==='order'?[parseOrder(t)]:mode==='userve'?[parseUserve(t)]:mode==='provest'?parseProvest(t):mode==='manual'?[standard({company:'',jobNumber:'',person:'',address:'',priority:'Standard',fee:0,original:t})]:parseAuto(t);D=r.map(x=>{if(ov)x.company=ov;return x});renderDrafts()}function examples(){g('mode').value='auto';g('raw').value='ODY - 2026013757\nPARTY TO BE SERVED\nKISSIMMEE & TOHOPEKALIGA WATER AUTHORITY\nSERVEES\nKISSIMMEE & TOHOPEKALIGA WATER AUTHORITY C/O: CORPORATE REPRESENTATIVE\n101 NORTH CHURCH STREET SUITE 230\nKISSIMMEE, FL 34741';analyze()}function cancelDrafts(){D=[];g('raw').value='';renderDrafts()}
-function renderDrafts(){let o=g('drafts');if(!D.length){o.innerHTML='';return}let h='<div class="section"><div><h2>'+D.length+' Draft Job'+(D.length===1?'':'s')+'</h2><p>Review before saving.</p></div><div class="toolbar"><button class="btn" onclick="cancelDrafts()">Cancel Batch</button><button class="btn primary" onclick="saveDrafts()">Save Approved Drafts</button></div></div>';D.forEach((d,i)=>{h+='<div class="draft"><div class="drafttop"><div><h3>Draft '+(i+1)+' · '+tag(d.addressStatus)+'</h3><div class="hint">Mode: '+esc(g('mode').value)+'</div></div><div><button class="btn small" onclick="original('+i+')">Original</button> <button class="btn danger small" onclick="removeDraft('+i+')">Remove</button></div></div><div class="fields"><div class="field"><label>Company / Job Source</label><select onchange="editDraft('+i+',\'company\',this.value)"><option value="">Choose company</option>'+opts(d.company,false)+'</select></div><div class="field"><label>Client Job Number</label><input value="'+esc(d.jobNumber)+'" oninput="editDraft('+i+',\'jobNumber\',this.value)"></div><div class="field"><label>Priority</label><select onchange="editDraft('+i+',\'priority\',this.value)">'+['Standard','Rush','Same Day','Scheduled','Hold'].map(x=>'<option '+(x===d.priority?'selected':'')+'>'+x+'</option>').join('')+'</select></div><div class="field wide"><label>Person / Entity</label><input value="'+esc(d.person)+'" oninput="editDraft('+i+',\'person\',this.value)"></div><div class="field"><label>Expected Fee</label><input type="number" step=".01" value="'+esc(d.fee)+'" oninput="editDraft('+i+',\'fee\',this.value)"></div><div class="field wide"><label>Full Service Address</label><textarea oninput="editDraft('+i+',\'address\',this.value)">'+esc(d.address)+'</textarea></div><div id="orig'+i+'" class="field wide" style="display:none"><label>Original Pasted Text</label><textarea readonly>'+esc(d.original)+'</textarea></div></div></div>'});o.innerHTML=h}function original(i){let x=g('orig'+i);x.style.display=x.style.display==='none'?'block':'none'}function editDraft(i,k,v){D[i][k]=v;if(k==='address')D[i].addressStatus=ast(v)}function removeDraft(i){D.splice(i,1);renderDrafts()}function saveDrafts(){let bad=D.map((d,i)=>!d.company||!d.jobNumber?i+1:null).filter(Boolean);if(bad.length)return alert('Choose Company and Job Number for draft(s): '+bad.join(', '));D.forEach(d=>{d.fee=+d.fee||0;d.addressStatus=ast(d.address);if(!d.address)d.work='Missing Address';S.jobs.push(d)});D=[];g('raw').value='';save();view('jobs')}
-function renderJobs(){let q=(g('search').value||'').toLowerCase(),c=g('companyfilter').value||'',list=S.jobs.filter(j=>(!q||[j.jobNumber,j.person,j.address,j.company].join(' ').toLowerCase().includes(q))&&(!c||j.company===c));g('jobrows').innerHTML=list.length?list.map(j=>'<tr><td><input type="checkbox" '+(S.route.includes(j.id)?'checked':'')+' onchange="routeToggle(\''+j.id+'\',this.checked)"></td><td><b>'+esc(j.jobNumber)+'</b></td><td>'+esc(j.company)+'</td><td>'+esc(j.person)+'</td><td>'+tag(j.addressStatus)+'<br>'+esc(j.address||'No address')+'</td><td>'+esc(j.priority)+'</td><td>'+atts(j)+'</td><td>'+tag(j.work)+'</td><td>'+money(j.fee)+'</td><td>'+tag(j.payment)+'</td><td><button class="btn small" onclick="jobForm(\''+j.id+'\')">Edit</button> <button class="btn primary small" onclick="resultForm(\''+j.id+'\')">Action</button></td></tr>').join(''):'<tr><td colspan="11"><div class="empty">No jobs found.</div></td></tr>'}function routeToggle(id,on){if(on&&!S.route.includes(id))S.route.push(id);if(!on)S.route=S.route.filter(x=>x!==id);save()}
-function renderRoute(){let l=S.jobs.filter(j=>['Active','Attempted','Missing Address'].includes(j.work));g('picker').innerHTML=l.length?l.map(j=>'<div class="routeitem"><input type="checkbox" '+(S.route.includes(j.id)?'checked':'')+' onchange="routeToggle(\''+j.id+'\',this.checked)"><div><b>'+esc(j.jobNumber)+' · '+esc(j.person)+'</b><p>'+tag(j.addressStatus)+' '+esc(j.address||'No address')+'</p></div></div>').join(''):'<div class="empty">No jobs available.</div>';let r=S.route.map(get).filter(Boolean);g('map').innerHTML='<b>Manual Visual Route</b><div class="pins">'+(r.length?r.map((j,i)=>'<div class="pin"><span>'+(i+1)+'</span></div>').join(''):'<span class="hint">Select route stops.</span>')+'</div><p class="hint">No API: use Move Up/Down and Apple Maps for actual driving navigation.</p>';g('routeorder').innerHTML=r.length?r.map((j,i)=>'<div class="routeitem"><div class="num">'+(i+1)+'</div><div style="flex:1"><b>'+esc(j.jobNumber)+' · '+esc(j.person)+'</b><p>'+esc(j.address||'No address')+'</p><div class="toolbar"><button class="btn small" '+(i===0?'disabled':'')+' onclick="move('+i+',-1)">↑ Up</button><button class="btn small" '+(i===r.length-1?'disabled':'')+' onclick="move('+i+',1)">↓ Down</button><button class="btn small" onclick="apple(\''+j.id+'\')">Apple Maps</button></div></div></div>').join(''):'<div class="empty">No stops selected.</div>'}function move(i,d){let n=i+d;if(n<0||n>=S.route.length)return;let z=S.route[i];S.route[i]=S.route[n];S.route[n]=z;save()}function clearRoute(){S.route=[];save()}function apple(id){let j=get(id);if(!j.address)return alert('Add an address first.');location.href='https://maps.apple.com/?daddr='+encodeURIComponent(j.address)+'&dirflg=d'}
-function startRoute(){if(!S.route.length)return alert('Select route jobs first.');stop=0;g('planner').style.display='none';fieldRender()}function endRoute(){g('fieldmode').classList.remove('active');g('planner').style.display='grid'}function fieldRender(){let r=S.route.map(get).filter(Boolean);if(!r.length){g('fieldmode').classList.add('active');g('fieldmode').innerHTML='<h2>Route Complete</h2><button class="btn primary" onclick="endRoute()">Back to Route</button>';return}if(stop>=r.length)stop=r.length-1;let j=r[stop];g('fieldmode').classList.add('active');g('fieldmode').innerHTML='<div class="hint">Stop '+(stop+1)+' of '+r.length+'</div><h2>'+esc(j.jobNumber)+'</h2><p><b>'+esc(j.person)+'</b><br>'+esc(j.address||'No address')+'</p><div class="toolbar"><button class="btn primary" onclick="apple(\''+j.id+'\')">Navigate in Apple Maps</button><button class="btn" onclick="followForm(\''+j.id+'\')">Skip / Follow Up</button><button class="btn" onclick="endRoute()">Exit</button></div><h3>Was this job completed?</h3><div class="big"><button class="attempt" onclick="resultForm(\''+j.id+'\',\'Attempted\',true)">Attempted</button><button class="serve" onclick="resultForm(\''+j.id+'\',\'Served\',true)">Served</button><button class="nonserve" onclick="resultForm(\''+j.id+'\',\'Non-Served\',true)">Non-Served</button></div>'}
-function modal(h){g('modalbox').innerHTML=h;g('modal').classList.add('show')}function closeModal(){g('modal').classList.remove('show')}g('modal').onclick=e=>{if(e.target===g('modal'))closeModal()};function resultForm(id,ch,cont){let j=get(id),c=ch||'Attempted';modal('<h2>'+c+'</h2><p class="note">'+esc(j.jobNumber)+' · '+esc(j.person)+'</p><div class="fields"><div class="field"><label>Action</label><select id="atype">'+['Attempted','Served','Non-Served'].map(x=>'<option '+(x===c?'selected':'')+'>'+x+'</option>').join('')+'</select></div><div class="field"><label>Date</label><input id="adate" type="date" value="'+today()+'"></div><div class="field"><label>Time</label><input id="atime" type="time" value="'+now()+'"></div><div class="field wide"><label>Notes</label><textarea id="anote"></textarea></div></div><div class="actions"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn primary" onclick="saveResult(\''+id+'\','+(cont?'true':'false')+')">Save '+(cont?'& Continue':'Action')+'</button></div>')}function saveResult(id,cont){let j=get(id),type=g('atype').value;j.actions.push({type,date:g('adate').value,time:g('atime').value,note:g('anote').value});j.work=type;if(type==='Served'||type==='Non-Served'){j.payment=j.fee?'Ready to Bill':'Not Ready';S.route=S.route.filter(x=>x!==id)}closeModal();save();if(cont){if(stop>=S.route.length)stop=Math.max(0,S.route.length-1);fieldRender()}}
-function followForm(id){let j=get(id);modal('<h2>Follow Up</h2><div class="field"><label>Date</label><input id="fdate" type="date" value="'+today()+'"></div><div class="field"><label>Note</label><input id="fnote" placeholder="Return after 5 p.m."></div><div class="actions"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn primary" onclick="saveFollow(\''+id+'\')">Save & Continue</button></div>')}function saveFollow(id){let j=get(id);j.follow=g('fdate').value;j.followNote=g('fnote').value;S.route=S.route.filter(x=>x!==id);closeModal();save();if(stop>=S.route.length)stop=Math.max(0,S.route.length-1);fieldRender()}
-function jobForm(id){let j=id?get(id):standard({company:'',jobNumber:'',person:'',address:'',priority:'Standard',fee:0,original:''});modal('<h2>'+(id?'Edit Job':'Add Job')+'</h2><div class="fields"><div class="field"><label>Company</label><select id="jc"><option value="">Choose</option>'+opts(j.company,false)+'</select></div><div class="field"><label>Job Number</label><input id="jn" value="'+esc(j.jobNumber)+'"></div><div class="field"><label>Priority</label><select id="jp">'+['Standard','Rush','Same Day','Scheduled','Hold'].map(x=>'<option '+(x===j.priority?'selected':'')+'>'+x+'</option>').join('')+'</select></div><div class="field wide"><label>Person / Entity</label><input id="jperson" value="'+esc(j.person)+'"></div><div class="field"><label>Fee</label><input id="jfee" type="number" value="'+esc(j.fee)+'"></div><div class="field wide"><label>Address</label><textarea id="jaddr">'+esc(j.address)+'</textarea></div></div><div class="actions"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn primary" onclick="saveJob(\''+j.id+'\','+(id?'true':'false')+')">Save</button></div>')}function saveJob(id,edit){let j=edit?get(id):standard({});j.company=g('jc').value;j.jobNumber=g('jn').value.trim();j.person=g('jperson').value.trim();j.address=g('jaddr').value.trim();j.addressStatus=ast(j.address);j.priority=g('jp').value;j.fee=+g('jfee').value||0;if(!j.company||!j.jobNumber)return alert('Company and Job Number are required.');if(!j.address)j.work='Missing Address';if(!edit)S.jobs.push(j);closeModal();save()}
-function renderMoney(){let f=g('payfilter').value||'ready',list=S.jobs.filter(j=>f==='all'||f==='ready'&&j.payment==='Ready to Bill'||f==='awaiting'&&j.payment==='Awaiting Payment'||f==='paid'&&j.payment==='Paid');g('moneyrows').innerHTML=list.length?list.map(j=>'<tr><td><input class="inv" type="checkbox" data-id="'+j.id+'" '+(j.payment==='Ready to Bill'?'':'disabled')+'></td><td>'+esc(j.company)+'</td><td>'+esc(j.jobNumber)+'</td><td>'+esc(j.person)+'</td><td>'+tag(j.work)+'</td><td>'+money(j.fee)+'</td><td>'+esc(j.invoice||'—')+'</td><td>'+tag(j.payment)+'</td></tr>').join(''):'<tr><td colspan="8"><div class="empty">No jobs in this view.</div></td></tr>';renderInvoices()}function invoiceForm(){let ids=[...document.querySelectorAll('.inv:checked')].map(x=>x.dataset.id);if(!ids.length)return alert('Select Ready-to-Bill jobs first.');let js=ids.map(get),total=js.reduce((z,j)=>z+(+j.fee||0),0);modal('<h2>Create Invoice</h2><p class="note">Invoice To: '+esc(g('invoiceto').value)+' · '+money(total)+'</p><div class="fields"><div class="field"><label>Invoice Number</label><input id="ino" value="INV-'+new Date().getFullYear()+'-'+String(S.invoices.length+1).padStart(4,'0')+'"></div><div class="field"><label>Date</label><input id="idate" type="date" value="'+today()+'"></div><div class="field"><label>Period</label><input id="iperiod"></div></div><div class="actions"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn primary" onclick="saveInvoice('+JSON.stringify(ids).replace(/"/g,'&quot;')+')">Save Invoice</button></div>')}function saveInvoice(ids){let js=ids.map(get),inv={id:uid(),number:g('ino').value||'INV',to:g('invoiceto').value,date:g('idate').value,period:g('iperiod').value,jobIds:ids,total:js.reduce((z,j)=>z+(+j.fee||0),0),status:'Awaiting Payment',paidDate:''};S.invoices.push(inv);js.forEach(j=>{j.invoice=inv.number;j.payment='Awaiting Payment'});closeModal();save()}function renderInvoices(){let t=g('invoices');if(!S.invoices.length){t.innerHTML='';return}t.innerHTML='<div class="card"><h2>Invoice History</h2>'+S.invoices.slice().reverse().map(i=>'<p><b>'+esc(i.number)+'</b> · '+esc(i.to)+' · '+tag(i.status)+' '+money(i.total)+' <button class="btn small" onclick="invoiceView(\''+i.id+'\')">Open</button> '+(i.status!=='Paid'?'<button class="btn small primary" onclick="paid(\''+i.id+'\')">Mark Paid</button>':'')+'</p>').join('')+'</div>'}function invoiceView(id){let inv=S.invoices.find(i=>i.id===id),groups={};inv.jobIds.map(get).filter(Boolean).forEach(j=>(groups[j.company]=groups[j.company]||[]).push(j));g('invoices').innerHTML='<div class="invoice"><div class="toolbar no-print"><button class="btn" onclick="renderMoney()">← Back</button><button class="btn primary" onclick="window.print()">Print / Save PDF</button></div><div class="invoicehead"><div><h2>INVOICE</h2><p><b>Jazmin Aguayo Process Serving Services</b></p></div><div><b>'+esc(inv.number)+'</b><br>Date: '+esc(inv.date)+'<br>Invoice To: '+esc(inv.to)+'<br>Status: '+esc(inv.status)+'</div></div>'+Object.entries(groups).map(([c,js])=>'<div class="card"><h3>'+esc(c)+' Jobs</h3><table><tr><th>Job #</th><th>Person</th><th>Result</th><th>Amount</th></tr>'+js.map(j=>'<tr><td>'+esc(j.jobNumber)+'</td><td>'+esc(j.person)+'</td><td>'+esc(j.work)+'</td><td>'+money(j.fee)+'</td></tr>').join('')+'</table><p style="text-align:right"><b>'+esc(c)+' subtotal: '+money(js.reduce((z,j)=>z+(+j.fee||0),0))+'</b></p></div>').join('')+'<h2 style="text-align:right">Total Due: '+money(inv.total)+'</h2></div>'}function paid(id){let inv=S.invoices.find(i=>i.id===id);inv.status='Paid';inv.paidDate=today();inv.jobIds.forEach(x=>get(x).payment='Paid');save()}
-function backup(){download('jasz-process-server-backup.json',JSON.stringify(S,null,2),'application/json')}function restore(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let x=JSON.parse(r.result);if(!Array.isArray(x.jobs))throw 0;S=x;save()}catch(z){alert('Invalid backup')}};r.readAsText(f)}function csv(){let h=['Company','Job Number','Person','Address','Priority','Attempts','Work','Fee','Invoice','Payment'],r=S.jobs.map(j=>[j.company,j.jobNumber,j.person,j.address,j.priority,atts(j),j.work,j.fee,j.invoice,j.payment]);download('jasz-jobs.csv',[h,...r].map(x=>x.map(v=>{let s=String(v??'');return/[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s}).join(',')).join('\n'),'text/csv')}function download(n,d,t){let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([d],{type:t}));a.download=n;a.click()}function resetAll(){if(confirm('Delete all local data?')){S={jobs:[],route:[],invoices:[]};save()}}all();
-</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#2f241c" />
+  <title>Jasz Field Route</title>
+
+  <style>
+    :root {
+      --cream: #fbf7ef;
+      --paper: #fffdf8;
+      --ink: #2f241c;
+      --muted: #72685e;
+      --line: #e7dccb;
+      --gold: #b8841f;
+      --gold-soft: #f6e5bb;
+      --brown: #543a2a;
+      --green: #2e7d4d;
+      --green-soft: #dcf2e4;
+      --orange: #b85d18;
+      --orange-soft: #ffead8;
+      --red: #ae3c35;
+      --red-soft: #f9dedb;
+      --blue: #205f90;
+      --blue-soft: #dceefb;
+      --shadow: 0 12px 30px rgba(66, 45, 23, 0.1);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      background: var(--cream);
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      background:
+        radial-gradient(circle at top right, rgba(230, 195, 119, 0.2), transparent 34rem),
+        var(--cream);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible {
+      outline: 3px solid rgba(184, 132, 31, 0.45);
+      outline-offset: 2px;
+    }
+
+    .app-shell {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 20px 20px calc(110px + env(safe-area-inset-bottom));
+    }
+
+    .app-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 10px 0 22px;
+    }
+
+    .brand-kicker {
+      color: var(--gold);
+      font-size: 0.73rem;
+      font-weight: 800;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      margin: 4px 0 0;
+      font-size: clamp(1.55rem, 4vw, 2.2rem);
+      line-height: 1.1;
+    }
+
+    h2 {
+      margin-bottom: 8px;
+      font-size: 1.35rem;
+    }
+
+    h3 {
+      margin-bottom: 6px;
+      font-size: 1.03rem;
+    }
+
+    .subtle,
+    .muted {
+      color: var(--muted);
+    }
+
+    .subtle {
+      margin-bottom: 0;
+      line-height: 1.45;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pill,
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      padding: 7px 10px;
+      white-space: nowrap;
+    }
+
+    .pill {
+      background: var(--gold-soft);
+      color: #6d4705;
+    }
+
+    .status-pill.pending {
+      background: #eee8df;
+      color: #655d55;
+    }
+
+    .status-pill.attempted {
+      background: var(--orange-soft);
+      color: #833902;
+    }
+
+    .status-pill.served {
+      background: var(--green-soft);
+      color: #1f653b;
+    }
+
+    .status-pill.non-served {
+      background: var(--red-soft);
+      color: #8b2823;
+    }
+
+    .status-pill.skipped {
+      background: var(--blue-soft);
+      color: #17557e;
+    }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 20px;
+      padding: 7px;
+      background: rgba(255, 253, 248, 0.7);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .tab {
+      min-height: 48px;
+      border: 0;
+      border-radius: 11px;
+      background: transparent;
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .tab.active {
+      color: white;
+      background: var(--brown);
+    }
+
+    .view {
+      display: none;
+    }
+
+    .view.active {
+      display: block;
+    }
+
+    .card {
+      background: rgba(255, 253, 248, 0.94);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px;
+    }
+
+    .card + .card {
+      margin-top: 16px;
+    }
+
+    .two-column {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .route-choices {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .route-choice {
+      min-height: 145px;
+      padding: 18px;
+      border: 2px solid var(--line);
+      border-radius: 16px;
+      background: var(--paper);
+      color: var(--ink);
+      text-align: left;
+    }
+
+    .route-choice:hover,
+    .route-choice.selected {
+      border-color: var(--gold);
+      background: #fff8e6;
+    }
+
+    .route-choice strong {
+      display: block;
+      font-size: 1.08rem;
+      margin-bottom: 7px;
+    }
+
+    .route-choice span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.35;
+    }
+
+    .selection-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0 4px;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn {
+      min-height: 46px;
+      border: 0;
+      border-radius: 12px;
+      padding: 11px 15px;
+      font-weight: 800;
+      color: white;
+      background: var(--brown);
+    }
+
+    .btn:hover {
+      filter: brightness(1.06);
+    }
+
+    .btn.secondary {
+      color: var(--brown);
+      background: #f5eee2;
+      border: 1px solid var(--line);
+    }
+
+    .btn.gold {
+      background: var(--gold);
+    }
+
+    .btn.green {
+      background: var(--green);
+    }
+
+    .btn.orange {
+      background: var(--orange);
+    }
+
+    .btn.red {
+      background: var(--red);
+    }
+
+    .btn.blue {
+      background: var(--blue);
+    }
+
+    .btn.wide {
+      width: 100%;
+    }
+
+    .job-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .job-row {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--paper);
+    }
+
+    .job-row.selected {
+      border-color: var(--gold);
+      background: #fff9eb;
+    }
+
+    .job-row input[type="checkbox"] {
+      width: 23px;
+      height: 23px;
+      accent-color: var(--gold);
+    }
+
+    .job-name {
+      margin: 0 0 2px;
+      font-weight: 850;
+    }
+
+    .job-meta,
+    .job-address {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.35;
+    }
+
+    .job-address {
+      margin-top: 3px;
+    }
+
+    .empty {
+      padding: 28px 18px;
+      text-align: center;
+      color: var(--muted);
+      border: 1px dashed #cfbfaa;
+      border-radius: 14px;
+      background: rgba(255, 253, 248, 0.55);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 13px;
+    }
+
+    .form-grid .full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+      color: var(--brown);
+      font-size: 0.86rem;
+      font-weight: 800;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      min-height: 46px;
+      padding: 11px 12px;
+      color: var(--ink);
+      background: #fffdfa;
+      border: 1px solid #d7c9b7;
+      border-radius: 11px;
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .hint {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 0.87rem;
+      line-height: 1.4;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .summary-card {
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--paper);
+    }
+
+    .summary-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .summary-card strong {
+      display: block;
+      margin-top: 6px;
+      font-size: 1.7rem;
+    }
+
+    dialog {
+      width: min(580px, calc(100vw - 28px));
+      max-height: 90vh;
+      border: 0;
+      border-radius: 20px;
+      padding: 0;
+      color: var(--ink);
+      background: var(--paper);
+      box-shadow: 0 22px 70px rgba(31, 20, 10, 0.38);
+    }
+
+    dialog::backdrop {
+      background: rgba(32, 24, 16, 0.5);
+    }
+
+    .dialog-body {
+      padding: 22px;
+      overflow-y: auto;
+      max-height: 90vh;
+    }
+
+    .dialog-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .route-mode {
+      position: fixed;
+      z-index: 30;
+      inset: 0;
+      overflow-y: auto;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top right, rgba(230, 195, 119, 0.22), transparent 28rem),
+        var(--cream);
+    }
+
+    .route-mode[hidden] {
+      display: none;
+    }
+
+    .route-mode-inner {
+      max-width: 620px;
+      min-height: 100%;
+      margin: 0 auto;
+      padding:
+        max(18px, env(safe-area-inset-top))
+        18px
+        calc(22px + env(safe-area-inset-bottom));
+    }
+
+    .route-topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .route-label {
+      color: var(--gold);
+      font-size: 0.73rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .route-progress-text {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 0.94rem;
+      font-weight: 700;
+    }
+
+    .progress-track {
+      height: 10px;
+      margin: 17px 0 18px;
+      overflow: hidden;
+      border-radius: 99px;
+      background: #e7dccb;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #b8841f, #e5bd66);
+      transition: width 0.25s ease;
+    }
+
+    .stop-card {
+      margin-top: 10px;
+      padding: 24px;
+      border: 2px solid #ddc995;
+      border-radius: 22px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .stop-number {
+      margin-bottom: 12px;
+      color: var(--gold);
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .stop-company {
+      margin-bottom: 3px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    .stop-person {
+      margin-bottom: 17px;
+      font-size: clamp(1.35rem, 6vw, 1.85rem);
+      line-height: 1.13;
+    }
+
+    .stop-address {
+      margin: 0 0 20px;
+      font-size: clamp(1.17rem, 5.1vw, 1.55rem);
+      font-weight: 850;
+      line-height: 1.25;
+    }
+
+    .navigate-btn {
+      min-height: 66px;
+      border-radius: 16px;
+      font-size: 1.13rem;
+    }
+
+    .route-section-title {
+      margin: 22px 0 10px;
+      font-size: 0.96rem;
+      font-weight: 900;
+    }
+
+    .outcome-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 11px;
+    }
+
+    .outcome-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 64px;
+      padding: 14px 17px;
+      border: 0;
+      border-radius: 16px;
+      color: white;
+      font-size: 1.04rem;
+      font-weight: 900;
+      text-align: left;
+    }
+
+    .outcome-btn span {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      opacity: 0.86;
+    }
+
+    .outcome-attempted {
+      background: var(--orange);
+    }
+
+    .outcome-served {
+      background: var(--green);
+    }
+
+    .outcome-nonserved {
+      background: var(--red);
+    }
+
+    .route-footer-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 11px;
+      margin-top: 18px;
+    }
+
+    .next-stop {
+      margin-top: 16px;
+      padding: 15px;
+      border: 1px solid #d7e6ef;
+      border-radius: 15px;
+      background: #f0f8fc;
+    }
+
+    .next-stop small {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--blue);
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .next-stop strong {
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .toast {
+      position: fixed;
+      z-index: 60;
+      right: 16px;
+      bottom: calc(18px + env(safe-area-inset-bottom));
+      max-width: min(390px, calc(100vw - 32px));
+      padding: 13px 15px;
+      border-radius: 13px;
+      color: white;
+      background: #2f241c;
+      box-shadow: var(--shadow);
+      font-weight: 800;
+      opacity: 0;
+      transform: translateY(15px);
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 760px) {
+      .app-shell {
+        padding: 15px 14px calc(100px + env(safe-area-inset-bottom));
+      }
+
+      .app-header {
+        padding-bottom: 16px;
+      }
+
+      .two-column,
+      .route-choices,
+      .summary-grid,
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-grid .full {
+        grid-column: auto;
+      }
+
+      .route-choice {
+        min-height: auto;
+      }
+
+      .card {
+        padding: 16px;
+      }
+
+      .job-row {
+        grid-template-columns: auto 1fr;
+      }
+
+      .job-row .status-pill {
+        grid-column: 2;
+        justify-self: start;
+      }
+
+      .summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="app-shell">
+    <header class="app-header">
+      <div>
+        <div class="brand-kicker">Jasz Field System</div>
+        <h1>Route Command Center</h1>
+      </div>
+      <div class="header-actions">
+        <span class="pill" id="headerJobCount">0 jobs</span>
+      </div>
+    </header>
+
+    <nav class="tabs" aria-label="Main navigation">
+      <button class="tab active" type="button" data-tab="route">Route</button>
+      <button class="tab" type="button" data-tab="jobs">Jobs</button>
+      <button class="tab" type="button" data-tab="review">Review</button>
+    </nav>
+
+    <section class="view active" id="routeView">
+      <div class="card">
+        <h2>Build Today’s Route</h2>
+        <p class="subtle">
+          Choose the work area first. This keeps Osceola and Orange routes separate unless you intentionally choose all jobs.
+        </p>
+
+        <div class="route-choices" id="routeChoices">
+          <button class="route-choice selected" type="button" data-route-filter="osceola">
+            <strong>Osceola County</strong>
+            <span id="osceolaCount">0 available jobs</span>
+          </button>
+
+          <button class="route-choice" type="button" data-route-filter="orange">
+            <strong>Orange County</strong>
+            <span id="orangeCount">0 available jobs</span>
+          </button>
+
+          <button class="route-choice" type="button" data-route-filter="all">
+            <strong>All Jobs</strong>
+            <span id="allCount">0 available jobs</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="selection-toolbar">
+          <div>
+            <h2 id="selectionHeading">Osceola County Jobs</h2>
+            <p class="subtle" id="selectionSubheading">Select the jobs you want to complete today.</p>
+          </div>
+          <span class="pill" id="selectedCount">0 selected</span>
+        </div>
+
+        <div class="button-row">
+          <button class="btn secondary" type="button" id="selectAllBtn">Select All Visible</button>
+          <button class="btn secondary" type="button" id="clearSelectionBtn">Clear Selection</button>
+          <button class="btn gold" type="button" id="startRouteBtn">Start Route</button>
+        </div>
+
+        <div class="job-list" id="routeJobList"></div>
+      </div>
+    </section>
+
+    <section class="view" id="jobsView">
+      <div class="two-column">
+        <div class="card">
+          <h2>Add a Job</h2>
+          <form id="jobForm">
+            <div class="form-grid">
+              <label>
+                Person / Entity
+                <input id="jobName" required placeholder="Example: Franklin Sanchez" />
+              </label>
+
+              <label>
+                Company / Source
+                <input id="jobCompany" placeholder="Example: ProVest" />
+              </label>
+
+              <label>
+                Job Number
+                <input id="jobNumber" placeholder="Example: 311005" />
+              </label>
+
+              <label>
+                County
+                <select id="jobCounty">
+                  <option value="Osceola">Osceola County</option>
+                  <option value="Orange">Orange County</option>
+                  <option value="Other">Other / Review</option>
+                </select>
+              </label>
+
+              <label class="full">
+                Full Address
+                <textarea id="jobAddress" required placeholder="Street, city, state ZIP"></textarea>
+              </label>
+
+              <label class="full">
+                Notes
+                <textarea id="jobNotes" placeholder="Gate code, best contact details, special instructions, etc."></textarea>
+              </label>
+            </div>
+
+            <div class="button-row" style="margin-top: 15px;">
+              <button class="btn gold" type="submit">Save Job</button>
+              <button class="btn secondary" type="button" id="loadSamplesBtn">Load Sample Jobs</button>
+            </div>
+          </form>
+
+          <p class="hint">
+            The county field is a planning group. Use it to keep your route organized even when an address crosses city lines.
+          </p>
+        </div>
+
+        <div class="card">
+          <h2>Your Jobs</h2>
+          <p class="subtle">Edit or remove jobs here before building a route.</p>
+          <div class="job-list" id="allJobsList"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" id="reviewView">
+      <div class="summary-grid">
+        <div class="summary-card">
+          <span>Total jobs</span>
+          <strong id="reviewTotal">0</strong>
+        </div>
+        <div class="summary-card">
+          <span>Pending</span>
+          <strong id="reviewPending">0</strong>
+        </div>
+        <div class="summary-card">
+          <span>Served</span>
+          <strong id="reviewServed">0</strong>
+        </div>
+        <div class="summary-card">
+          <span>Follow-up</span>
+          <strong id="reviewFollowUp">0</strong>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="selection-toolbar">
+          <div>
+            <h2>Job Review</h2>
+            <p class="subtle">Use this larger screen for end-of-day review and corrections.</p>
+          </div>
+          <div class="button-row">
+            <button class="btn secondary" type="button" id="exportBtn">Export Backup</button>
+            <button class="btn red" type="button" id="clearAllDataBtn">Clear All Data</button>
+          </div>
+        </div>
+
+        <div class="job-list" id="reviewJobList"></div>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="outcomeDialog" aria-labelledby="outcomeTitle">
+    <form method="dialog" class="dialog-body" id="outcomeForm">
+      <h2 id="outcomeTitle">Save Job Outcome</h2>
+      <p class="subtle" id="outcomeJobInfo"></p>
+
+      <label>
+        Notes for this attempt
+        <textarea id="outcomeNotes" placeholder="Example: No answer at door. Vehicle in driveway. Try again after 6 PM."></textarea>
+      </label>
+
+      <div class="dialog-actions">
+        <button class="btn secondary" value="cancel" type="submit">Cancel</button>
+        <button class="btn gold" value="save" type="submit">Save &amp; Continue</button>
+      </div>
+    </form>
+  </dialog>
+
+  <section class="route-mode" id="routeMode" hidden aria-label="Active route mode">
+    <div class="route-mode-inner">
+      <div class="route-topline">
+        <div>
+          <div class="route-label" id="activeRouteLabel">Osceola Route</div>
+          <h2 id="routeProgressHeadline" style="margin: 4px 0 0;">Stop 1 of 1</h2>
+          <p class="route-progress-text" id="routeProgressText">0 complete · 1 remaining</p>
+        </div>
+        <button class="btn secondary" type="button" id="exitRouteBtn">Exit Route</button>
+      </div>
+
+      <div class="progress-track" aria-label="Route progress">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+
+      <article class="stop-card" id="currentStopCard"></article>
+
+      <div id="routeActionArea"></div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const STORAGE_KEY = "jasz-field-route-v1";
+
+    const state = {
+      jobs: [],
+      selectedIds: [],
+      routeFilter: "osceola",
+      activeRoute: {
+        active: false,
+        jobIds: [],
+        currentIndex: 0,
+        filter: "osceola"
+      }
+    };
+
+    const countyKey = {
+      osceola: "Osceola",
+      orange: "Orange",
+      all: "All"
+    };
+
+    const statusLabels = {
+      pending: "Pending",
+      attempted: "Attempted",
+      served: "Served",
+      "non-served": "Non-Served",
+      skipped: "Follow-Up"
+    };
+
+    const $ = (id) => document.getElementById(id);
+
+    function makeId() {
+      return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+    }
+
+    function safeText(value) {
+      return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function loadState() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        if (!saved) return;
+
+        state.jobs = Array.isArray(saved.jobs) ? saved.jobs : [];
+        state.selectedIds = Array.isArray(saved.selectedIds) ? saved.selectedIds : [];
+        state.routeFilter = saved.routeFilter || "osceola";
+        state.activeRoute = saved.activeRoute || state.activeRoute;
+      } catch (error) {
+        console.warn("Could not load saved route data.", error);
+      }
+    }
+
+    function getAvailableJobs() {
+      return state.jobs.filter((job) => job.status === "pending" || job.status === "skipped");
+    }
+
+    function jobsForFilter(filter) {
+      const jobs = getAvailableJobs();
+
+      if (filter === "all") return jobs;
+      return jobs.filter((job) => job.county.toLowerCase() === countyKey[filter].toLowerCase());
+    }
+
+    function selectedVisibleJobs() {
+      const visibleIds = new Set(jobsForFilter(state.routeFilter).map((job) => job.id));
+      return state.selectedIds.filter((id) => visibleIds.has(id));
+    }
+
+    function countByCounty(county) {
+      return getAvailableJobs().filter((job) => job.county.toLowerCase() === county.toLowerCase()).length;
+    }
+
+    function showToast(message) {
+      const toast = $("toast");
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => toast.classList.remove("show"), 2600);
+    }
+
+    function setTab(tabName) {
+      document.querySelectorAll(".tab").forEach((button) => {
+        button.classList.toggle("active", button.dataset.tab === tabName);
+      });
+
+      document.querySelectorAll(".view").forEach((view) => {
+        view.classList.toggle("active", view.id === `${tabName}View`);
+      });
+
+      renderAll();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function renderHeader() {
+      $("headerJobCount").textContent = `${state.jobs.length} ${state.jobs.length === 1 ? "job" : "jobs"}`;
+    }
+
+    function renderRouteChoices() {
+      $("osceolaCount").textContent = `${countByCounty("Osceola")} available ${countByCounty("Osceola") === 1 ? "job" : "jobs"}`;
+      $("orangeCount").textContent = `${countByCounty("Orange")} available ${countByCounty("Orange") === 1 ? "job" : "jobs"}`;
+      $("allCount").textContent = `${getAvailableJobs().length} available ${getAvailableJobs().length === 1 ? "job" : "jobs"}`;
+
+      document.querySelectorAll(".route-choice").forEach((choice) => {
+        choice.classList.toggle("selected", choice.dataset.routeFilter === state.routeFilter);
+      });
+
+      const label = state.routeFilter === "all"
+        ? "All Available Jobs"
+        : `${countyKey[state.routeFilter]} County Jobs`;
+
+      $("selectionHeading").textContent = label;
+      $("selectionSubheading").textContent =
+        state.routeFilter === "all"
+          ? "Choose every stop you truly want to combine today."
+          : `Select the ${countyKey[state.routeFilter]} jobs you want to complete today.`;
+
+      $("selectedCount").textContent = `${selectedVisibleJobs().length} selected`;
+    }
+
+    function renderRouteJobList() {
+      const list = $("routeJobList");
+      const jobs = jobsForFilter(state.routeFilter);
+
+      if (!jobs.length) {
+        list.innerHTML = `
+          <div class="empty">
+            No route-eligible jobs are in this group yet.<br />
+            Add jobs in the <strong>Jobs</strong> tab, then return here.
+          </div>
+        `;
+        return;
+      }
+
+      list.innerHTML = jobs.map((job) => {
+        const checked = state.selectedIds.includes(job.id);
+        return `
+          <label class="job-row ${checked ? "selected" : ""}">
+            <input class="route-checkbox" type="checkbox" data-job-id="${safeText(job.id)}" ${checked ? "checked" : ""} />
+            <span>
+              <span class="job-name">${safeText(job.name)}</span>
+              <span class="job-meta">${safeText(job.company || "No company")} · Job #${safeText(job.jobNumber || "—")}</span>
+              <span class="job-address">${safeText(job.address)}</span>
+            </span>
+            <span class="status-pill ${safeText(job.status)}">${safeText(statusLabels[job.status] || job.status)}</span>
+          </label>
+        `;
+      }).join("");
+    }
+
+    function renderAllJobsList() {
+      const list = $("allJobsList");
+
+      if (!state.jobs.length) {
+        list.innerHTML = `<div class="empty">No jobs saved yet. Add one on the left or load sample jobs.</div>`;
+        return;
+      }
+
+      list.innerHTML = state.jobs.map((job) => `
+        <div class="job-row">
+          <span style="font-size: 1.2rem;">📍</span>
+          <span>
+            <span class="job-name">${safeText(job.name)}</span>
+            <span class="job-meta">${safeText(job.company || "No company")} · Job #${safeText(job.jobNumber || "—")} · ${safeText(job.county)} County</span>
+            <span class="job-address">${safeText(job.address)}</span>
+          </span>
+          <button class="btn secondary delete-job-btn" type="button" data-job-id="${safeText(job.id)}">Delete</button>
+        </div>
+      `).join("");
+    }
+
+    function renderReview() {
+      const jobs = state.jobs;
+      const pending = jobs.filter((job) => job.status === "pending").length;
+      const served = jobs.filter((job) => job.status === "served").length;
+      const followUp = jobs.filter((job) => ["attempted", "non-served", "skipped"].includes(job.status)).length;
+
+      $("reviewTotal").textContent = jobs.length;
+      $("reviewPending").textContent = pending;
+      $("reviewServed").textContent = served;
+      $("reviewFollowUp").textContent = followUp;
+
+      const list = $("reviewJobList");
+
+      if (!jobs.length) {
+        list.innerHTML = `<div class="empty">Your completed and pending field work will appear here.</div>`;
+        return;
+      }
+
+      list.innerHTML = jobs.map((job) => `
+        <div class="job-row">
+          <span style="font-size: 1.2rem;">${job.status === "served" ? "✓" : "•"}</span>
+          <span>
+            <span class="job-name">${safeText(job.name)}</span>
+            <span class="job-meta">${safeText(job.company || "No company")} · Job #${safeText(job.jobNumber || "—")} · ${safeText(job.county)} County</span>
+            <span class="job-address">${safeText(job.address)}</span>
+            ${job.outcomeNotes ? `<span class="job-address"><em>Notes: ${safeText(job.outcomeNotes)}</em></span>` : ""}
+          </span>
+          <span class="status-pill ${safeText(job.status)}">${safeText(statusLabels[job.status] || job.status)}</span>
+        </div>
+      `).join("");
+    }
+
+    function renderRouteMode() {
+      const active = state.activeRoute;
+
+      if (!active.active) {
+        $("routeMode").hidden = true;
+        return;
+      }
+
+      const routeJobs = active.jobIds
+        .map((id) => state.jobs.find((job) => job.id === id))
+        .filter(Boolean);
+
+      if (!routeJobs.length || active.currentIndex >= routeJobs.length) {
+        completeRoute();
+        return;
+      }
+
+      $("routeMode").hidden = false;
+
+      const currentJob = routeJobs[active.currentIndex];
+      const completed = routeJobs.filter((job) => job.status !== "pending" && job.status !== "skipped").length;
+      const routeLength = routeJobs.length;
+      const stopNumber = active.currentIndex + 1;
+      const remaining = routeLength - active.currentIndex;
+
+      $("activeRouteLabel").textContent =
+        active.filter === "all" ? "All Jobs Route" : `${countyKey[active.filter]} County Route`;
+      $("routeProgressHeadline").textContent = `Stop ${stopNumber} of ${routeLength}`;
+      $("routeProgressText").textContent = `${completed} complete · ${remaining} remaining`;
+      $("progressFill").style.width = `${Math.max(0, ((stopNumber - 1) / routeLength) * 100)}%`;
+
+      $("currentStopCard").innerHTML = `
+        <div class="stop-number">Current stop</div>
+        <div class="stop-company">${safeText(currentJob.company || "Field Job")} · Job #${safeText(currentJob.jobNumber || "—")}</div>
+        <h1 class="stop-person">${safeText(currentJob.name)}</h1>
+        <p class="stop-address">${safeText(currentJob.address)}</p>
+        <button class="btn blue wide navigate-btn" type="button" id="navigateBtn">Open in Apple Maps</button>
+        ${currentJob.notes ? `<p class="hint"><strong>Job notes:</strong> ${safeText(currentJob.notes)}</p>` : ""}
+      `;
+
+      const nextJob = routeJobs[active.currentIndex + 1];
+      $("routeActionArea").innerHTML = `
+        <div class="route-section-title">What happened?</div>
+        <div class="outcome-grid">
+          <button class="outcome-btn outcome-attempted" type="button" data-outcome="attempted">
+            <span>Attempted<br /><small>No completed service</small></span>
+            <span>›</span>
+          </button>
+          <button class="outcome-btn outcome-served" type="button" data-outcome="served">
+            <span>Served<br /><small>Completed successfully</small></span>
+            <span>›</span>
+          </button>
+          <button class="outcome-btn outcome-nonserved" type="button" data-outcome="non-served">
+            <span>Non-Served<br /><small>Record the reason in notes</small></span>
+            <span>›</span>
+          </button>
+        </div>
+
+        <div class="route-footer-actions">
+          <button class="btn blue" type="button" id="skipBtn">Skip / Follow-Up</button>
+          <button class="btn secondary" type="button" id="routeJobDetailsBtn">Job Details</button>
+        </div>
+
+        ${nextJob ? `
+          <div class="next-stop">
+            <small>Next stop</small>
+            <strong>${safeText(nextJob.name)}</strong>
+            <span>${safeText(nextJob.address)}</span>
+          </div>
+        ` : `
+          <div class="next-stop">
+            <small>Final stop</small>
+            <strong>This is the last selected job in this route.</strong>
+          </div>
+        `}
+      `;
+
+      $("navigateBtn").addEventListener("click", () => openAppleMaps(currentJob.address));
+      document.querySelectorAll("[data-outcome]").forEach((button) => {
+        button.addEventListener("click", () => openOutcomeDialog(currentJob.id, button.dataset.outcome));
+      });
+
+      $("skipBtn").addEventListener("click", () => {
+        saveOutcome(currentJob.id, "skipped", "Skipped during route. Follow-up needed.");
+      });
+
+      $("routeJobDetailsBtn").addEventListener("click", () => {
+        const notes = currentJob.notes || "No extra job notes saved.";
+        alert(
+          `${currentJob.name}\n\n` +
+          `Company: ${currentJob.company || "—"}\n` +
+          `Job #: ${currentJob.jobNumber || "—"}\n` +
+          `County: ${currentJob.county}\n\n` +
+          `Notes:\n${notes}`
+        );
+      });
+    }
+
+    function renderAll() {
+      renderHeader();
+      renderRouteChoices();
+      renderRouteJobList();
+      renderAllJobsList();
+      renderReview();
+      renderRouteMode();
+    }
+
+    function openAppleMaps(address) {
+      const encodedAddress = encodeURIComponent(address);
+      window.open(`https://maps.apple.com/?daddr=${encodedAddress}&dirflg=d`, "_blank", "noopener");
+    }
+
+    let pendingOutcome = null;
+
+    function openOutcomeDialog(jobId, outcome) {
+      const job = state.jobs.find((item) => item.id === jobId);
+      if (!job) return;
+
+      pendingOutcome = { jobId, outcome };
+      $("outcomeTitle").textContent = `Mark as ${statusLabels[outcome]}`;
+      $("outcomeJobInfo").textContent = `${job.name} · ${job.address}`;
+      $("outcomeNotes").value = "";
+      $("outcomeDialog").showModal();
+    }
+
+    function saveOutcome(jobId, outcome, notes) {
+      const job = state.jobs.find((item) => item.id === jobId);
+      if (!job) return;
+
+      job.status = outcome;
+      job.outcomeNotes = notes || "";
+      job.updatedAt = new Date().toISOString();
+
+      const active = state.activeRoute;
+      if (active.active) {
+        const currentRouteJobId = active.jobIds[active.currentIndex];
+        if (currentRouteJobId === jobId) {
+          active.currentIndex += 1;
+        }
+      }
+
+      saveState();
+      renderAll();
+
+      if (state.activeRoute.active) {
+        showToast(`${statusLabels[outcome]} saved. Moving to the next stop.`);
+      } else {
+        showToast(`${statusLabels[outcome]} saved.`);
+      }
+    }
+
+    function startRoute() {
+      const selected = selectedVisibleJobs();
+
+      if (!selected.length) {
+        showToast("Select route jobs first, or use Select All Visible.");
+        return;
+      }
+
+      state.activeRoute = {
+        active: true,
+        jobIds: selected,
+        currentIndex: 0,
+        filter: state.routeFilter
+      };
+
+      saveState();
+      renderAll();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function exitRoute() {
+      state.activeRoute.active = false;
+      saveState();
+      renderAll();
+      showToast("Route paused. Your job updates are saved.");
+    }
+
+    function completeRoute() {
+      state.activeRoute.active = false;
+      state.selectedIds = [];
+      saveState();
+      renderAll();
+      showToast("Route complete. Review your job outcomes when you are ready.");
+    }
+
+    function addJob(event) {
+      event.preventDefault();
+
+      const job = {
+        id: makeId(),
+        name: $("jobName").value.trim(),
+        company: $("jobCompany").value.trim(),
+        jobNumber: $("jobNumber").value.trim(),
+        county: $("jobCounty").value,
+        address: $("jobAddress").value.trim(),
+        notes: $("jobNotes").value.trim(),
+        status: "pending",
+        outcomeNotes: "",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+
+      state.jobs.unshift(job);
+      saveState();
+      event.target.reset();
+      renderAll();
+      showToast("Job saved and ready for routing.");
+    }
+
+    function loadSamples() {
+      const samples = [
+        {
+          id: makeId(),
+          name: "Franklin Sanchez",
+          company: "ProVest",
+          jobNumber: "311005",
+          county: "Osceola",
+          address: "2201 Key West Ct, Apt 337, Kissimmee, FL 34741",
+          notes: "Verify apartment number before attempting.",
+          status: "pending",
+          outcomeNotes: ""
+        },
+        {
+          id: makeId(),
+          name: "Danielle Morgan",
+          company: "ABC Legal",
+          jobNumber: "311006",
+          county: "Osceola",
+          address: "2947 Pioneer Street, Saint Cloud, FL 34772",
+          notes: "",
+          status: "pending",
+          outcomeNotes: ""
+        },
+        {
+          id: makeId(),
+          name: "Christopher Reed",
+          company: "ProVest",
+          jobNumber: "311007",
+          county: "Orange",
+          address: "1800 Sand Lake Road, Orlando, FL 32809",
+          notes: "Business address. Check office hours.",
+          status: "pending",
+          outcomeNotes: ""
+        },
+        {
+          id: makeId(),
+          name: "Maria Rodriguez",
+          company: "Direct Legal",
+          jobNumber: "311008",
+          county: "Orange",
+          address: "7250 S Orange Blossom Trail, Orlando, FL 32809",
+          notes: "",
+          status: "pending",
+          outcomeNotes: ""
+        }
+      ];
+
+      const hasJobs = state.jobs.length > 0;
+      if (hasJobs && !confirm("Add the sample jobs to the jobs already saved?")) return;
+
+      state.jobs.unshift(...samples);
+      saveState();
+      renderAll();
+      showToast("Sample jobs added. Open Route to build a county route.");
+    }
+
+    function deleteJob(jobId) {
+      const job = state.jobs.find((item) => item.id === jobId);
+      if (!job) return;
+
+      if (!confirm(`Delete ${job.name}?`)) return;
+
+      state.jobs = state.jobs.filter((item) => item.id !== jobId);
+      state.selectedIds = state.selectedIds.filter((id) => id !== jobId);
+      state.activeRoute.jobIds = state.activeRoute.jobIds.filter((id) => id !== jobId);
+
+      if (state.activeRoute.currentIndex >= state.activeRoute.jobIds.length) {
+        state.activeRoute.active = false;
+      }
+
+      saveState();
+      renderAll();
+      showToast("Job deleted.");
+    }
+
+    function exportBackup() {
+      const data = JSON.stringify(state, null, 2);
+      const blob = new Blob([data], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `jasz-field-route-backup-${new Date().toISOString().slice(0, 10)}.json`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      showToast("Backup exported.");
+    }
+
+    function clearAllData() {
+      if (!confirm("This will permanently remove all saved jobs, route selections, and outcomes from this browser. Continue?")) {
+        return;
+      }
+
+      state.jobs = [];
+      state.selectedIds = [];
+      state.routeFilter = "osceola";
+      state.activeRoute = {
+        active: false,
+        jobIds: [],
+        currentIndex: 0,
+        filter: "osceola"
+      };
+
+      saveState();
+      renderAll();
+      showToast("All local route data was cleared.");
+    }
+
+    document.querySelectorAll(".tab").forEach((button) => {
+      button.addEventListener("click", () => setTab(button.dataset.tab));
+    });
+
+    document.querySelectorAll(".route-choice").forEach((button) => {
+      button.addEventListener("click", () => {
+        state.routeFilter = button.dataset.routeFilter;
+        saveState();
+        renderAll();
+      });
+    });
+
+    $("selectAllBtn").addEventListener("click", () => {
+      const visibleIds = jobsForFilter(state.routeFilter).map((job) => job.id);
+      state.selectedIds = [...new Set([...state.selectedIds, ...visibleIds])];
+      saveState();
+      renderAll();
+      showToast("All visible route jobs selected.");
+    });
+
+    $("clearSelectionBtn").addEventListener("click", () => {
+      const visibleIds = new Set(jobsForFilter(state.routeFilter).map((job) => job.id));
+      state.selectedIds = state.selectedIds.filter((id) => !visibleIds.has(id));
+      saveState();
+      renderAll();
+      showToast("Visible route selection cleared.");
+    });
+
+    $("startRouteBtn").addEventListener("click", startRoute);
+    $("exitRouteBtn").addEventListener("click", exitRoute);
+    $("jobForm").addEventListener("submit", addJob);
+    $("loadSamplesBtn").addEventListener("click", loadSamples);
+    $("exportBtn").addEventListener("click", exportBackup);
+    $("clearAllDataBtn").addEventListener("click", clearAllData);
+
+    $("routeJobList").addEventListener("change", (event) => {
+      if (!event.target.classList.contains("route-checkbox")) return;
+
+      const jobId = event.target.dataset.jobId;
+
+      if (event.target.checked) {
+        state.selectedIds = [...new Set([...state.selectedIds, jobId])];
+      } else {
+        state.selectedIds = state.selectedIds.filter((id) => id !== jobId);
+      }
+
+      saveState();
+      renderAll();
+    });
+
+    $("allJobsList").addEventListener("click", (event) => {
+      const button = event.target.closest(".delete-job-btn");
+      if (button) deleteJob(button.dataset.jobId);
+    });
+
+    $("outcomeForm").addEventListener("submit", (event) => {
+      event.preventDefault();
+      const submitter = event.submitter;
+
+      if (!pendingOutcome || submitter.value === "cancel") {
+        $("outcomeDialog").close();
+        pendingOutcome = null;
+        return;
+      }
+
+      saveOutcome(pendingOutcome.jobId, pendingOutcome.outcome, $("outcomeNotes").value.trim());
+      $("outcomeDialog").close();
+      pendingOutcome = null;
+    });
+
+    loadState();
+    renderAll();
+  </script>
+</body>
+</html>
