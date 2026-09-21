@@ -2,388 +2,423 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <title>J Empire Serving</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>J Empire Serving — Job Board Test</title>
+
   <style>
     :root{
-      --cream:#f7f0e5;--paper:#fffdf8;--ink:#211c18;--espresso:#3c302b;
-      --gold:#b88a2d;--sage:#61735e;--sage-soft:#e5ede1;--peach:#f3ded3;
-      --line:#ded0bd;--muted:#786c63;--red:#994e40;--red-soft:#f4e0db;
-      --blue:#48677f;--blue-soft:#dce9f0;--shadow:0 12px 30px rgba(67,45,27,.10)
+      --cream:#f7f0e5;
+      --paper:#fffdf8;
+      --ink:#1d1a18;
+      --espresso:#3d302b;
+      --gold:#b88a2d;
+      --line:#dfd0be;
+      --good-bg:#e2eadf;
+      --good-text:#345438;
+      --bad-bg:#f4e1db;
+      --bad-text:#834234;
+      --muted:#74675e;
     }
+
     *{box-sizing:border-box}
-    body{margin:0;min-width:320px;background:radial-gradient(circle at 100% 0,rgba(223,191,116,.20),transparent 35rem),var(--cream);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
-    button,input,select,textarea{font:inherit}
-    button{cursor:pointer}
-    .app{max-width:1280px;margin:auto;padding:16px 14px 90px}
-    .topbar{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:14px}
-    .brand{display:flex;align-items:center;gap:10px}
-    .mark{width:48px;height:48px;display:grid;place-items:center;border:1px solid var(--gold);border-radius:50%;background:var(--paper);font:italic 1.8rem Georgia,serif;position:relative}
-    .mark:before{content:"♕";position:absolute;top:-15px;color:var(--gold);font-size:1rem}
-    .eyebrow{font-size:.67rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:800}
-    h1{font:600 1.45rem Georgia,serif;margin:2px 0 0}
-    h2{font:600 1.25rem Georgia,serif;margin:0 0 6px}
-    h3{font:600 1.05rem Georgia,serif;margin:0 0 6px}
-    .subtle{color:var(--muted);line-height:1.4;margin:0}
-    .card{background:rgba(255,253,248,.96);border:1px solid var(--line);border-radius:17px;padding:16px;box-shadow:var(--shadow)}
-    .hidden{display:none!important}
-    .nav{display:flex;gap:8px;overflow:auto;padding:3px 1px 10px;margin-bottom:10px;-webkit-overflow-scrolling:touch}
-    .nav button,.chip,.tag{white-space:nowrap;border:1px solid var(--line);border-radius:999px;padding:9px 12px;background:var(--paper);color:var(--espresso);font-size:.84rem;font-weight:800}
-    .nav button.active{background:var(--espresso);color:white;border-color:var(--espresso)}
-    .grid{display:grid;gap:12px}
-    .grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
-    .grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
-    .grid.four{grid-template-columns:repeat(4,minmax(0,1fr))}
-    .metric{padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--paper)}
-    .metric small{display:block;color:var(--muted);font-weight:800;font-size:.73rem;text-transform:uppercase;letter-spacing:.07em}
-    .metric strong{display:block;margin-top:5px;font:600 1.5rem Georgia,serif}
-    label{display:grid;gap:5px;color:var(--espresso);font-weight:800;font-size:.82rem}
-    input,select,textarea{width:100%;border:1px solid var(--line);border-radius:10px;background:#fffefa;padding:10px;color:var(--ink)}
-    textarea{min-height:78px;resize:vertical}
-    .form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-    .full{grid-column:1/-1}
-    .btn{border:0;border-radius:11px;padding:10px 13px;background:var(--espresso);color:white;font-weight:800}
-    .btn.gold{background:var(--gold);color:#291f14}
-    .btn.sage{background:var(--sage);color:white}
-    .btn.light{background:#fbf7f0;color:var(--espresso);border:1px solid var(--line)}
-    .btn.danger{background:var(--red);color:white}
-    .btn.small{padding:7px 9px;font-size:.78rem}
-    .btn:disabled{opacity:.6;cursor:wait}
-    .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-    .notice{margin-top:10px;padding:11px;border-radius:11px;line-height:1.35;font-size:.9rem}
-    .notice.good{background:var(--sage-soft);color:#375334}
-    .notice.bad{background:var(--red-soft);color:#7d3d34}
-    .notice.info{background:var(--blue-soft);color:#31576f}
-    .job-list{display:grid;gap:10px;margin-top:12px}
-    .job{border:1px solid var(--line);background:var(--paper);border-radius:14px;padding:13px}
-    .job-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
-    .job-title{font-weight:900}
-    .job-meta{color:var(--muted);font-size:.88rem;line-height:1.45;margin-top:3px}
-    .job-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:11px}
-    .badge{display:inline-block;border-radius:999px;padding:4px 8px;font-size:.72rem;font-weight:900;text-transform:capitalize;background:var(--blue-soft);color:#31576f}
-    .badge.pending,.badge.new{background:#f7e8c5;color:#765618}.badge.ready{background:var(--sage-soft);color:#385433}
-    .badge.out{background:#e9ddf2;color:#62427b}.badge.attempted,.badge.need-info{background:var(--peach);color:#845243}
-    .badge.served{background:#dcebdc;color:#315e37}.badge.returned{background:var(--red-soft);color:#803b32}
-    .toolbar{display:flex;gap:8px;align-items:end;flex-wrap:wrap;margin-bottom:8px}
-    .toolbar label{flex:1;min-width:140px}
-    .empty{border:1px dashed var(--line);border-radius:13px;padding:18px;color:var(--muted);text-align:center;margin-top:12px}
-    .modal-back{position:fixed;z-index:50;inset:0;background:rgba(31,24,19,.45);display:grid;place-items:end center;padding:0}
-    .modal{width:min(780px,100%);max-height:93vh;overflow:auto;background:var(--cream);border-radius:20px 20px 0 0;padding:18px;box-shadow:0 -8px 28px rgba(0,0,0,.2)}
-    .modal-header{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:12px}
-    .close{border:1px solid var(--line);background:var(--paper);border-radius:50%;width:38px;height:38px;font-size:1.25rem}
-    .source{white-space:pre-wrap;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.8rem;background:#f4eee5;border:1px solid var(--line);padding:10px;border-radius:10px;color:#50463f;max-height:240px;overflow:auto}
-    .route-no{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--gold);color:#251b12;font-weight:900;flex:0 0 auto}
-    .route-job{display:flex;gap:9px}
-    .footer-note{margin-top:15px;color:var(--muted);font-size:.78rem;text-align:center}
-    @media(min-width:800px){.modal-back{place-items:center;padding:18px}.modal{border-radius:20px;max-height:90vh}.app{padding:24px 22px 90px}}
-    @media(max-width:600px){.grid.four,.grid.three{grid-template-columns:repeat(2,minmax(0,1fr))}.form-grid,.grid.two{grid-template-columns:1fr}.topbar{align-items:flex-start}.topbar .btn{padding:8px 10px;font-size:.78rem}}
-    @media print{body{background:white}.no-print,.nav,.topbar button,.job-actions,.toolbar,.footer-note{display:none!important}.app{max-width:none;padding:0}.card{box-shadow:none;border:0;padding:0}.job{break-inside:avoid;border:1px solid #999;margin:7px 0}.print-compact .job{display:inline-block;width:48%;vertical-align:top;margin:1%;font-size:10px}}
+
+    body{
+      margin:0;
+      min-width:320px;
+      background:radial-gradient(circle at top right,rgba(217,187,115,.18),transparent 30rem),var(--cream);
+      color:var(--ink);
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+    }
+
+    .app{
+      max-width:760px;
+      margin:auto;
+      padding:24px 16px 80px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-bottom:22px;
+    }
+
+    .mark{
+      width:54px;
+      height:54px;
+      display:grid;
+      place-items:center;
+      position:relative;
+      border:1px solid var(--gold);
+      border-radius:50%;
+      background:var(--paper);
+      color:var(--ink);
+      font-family:Georgia,serif;
+      font-size:2rem;
+      font-style:italic;
+    }
+
+    .mark::before{
+      content:"♕";
+      position:absolute;
+      top:-14px;
+      color:var(--gold);
+      font-size:1.15rem;
+    }
+
+    .eyebrow{
+      color:var(--gold);
+      font-size:.72rem;
+      font-weight:800;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+    }
+
+    h1,h2,p{margin-top:0}
+
+    h1{
+      margin-bottom:0;
+      font-family:Georgia,serif;
+      font-size:1.75rem;
+      font-weight:600;
+    }
+
+    h2{
+      font-family:Georgia,serif;
+      font-weight:600;
+    }
+
+    .subtle{
+      color:var(--muted);
+      line-height:1.45;
+    }
+
+    .card{
+      margin-top:16px;
+      padding:20px;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:rgba(255,253,248,.96);
+      box-shadow:0 12px 30px rgba(66,45,26,.1);
+    }
+
+    label{
+      display:grid;
+      gap:6px;
+      margin-top:12px;
+      color:var(--espresso);
+      font-size:.88rem;
+      font-weight:700;
+    }
+
+    input,textarea{
+      width:100%;
+      min-height:46px;
+      padding:11px;
+      border:1px solid var(--line);
+      border-radius:11px;
+      background:#fffefa;
+      color:var(--ink);
+      font:inherit;
+    }
+
+    textarea{
+      min-height:82px;
+      resize:vertical;
+    }
+
+    .row{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+
+    .btn{
+      width:100%;
+      min-height:46px;
+      margin-top:14px;
+      padding:10px 14px;
+      border:0;
+      border-radius:12px;
+      background:var(--espresso);
+      color:#fff;
+      font:inherit;
+      font-weight:800;
+      cursor:pointer;
+      touch-action:manipulation;
+    }
+
+    .btn:disabled{
+      opacity:.6;
+      cursor:wait;
+    }
+
+    .btn.gold{
+      background:var(--gold);
+      color:#241b14;
+    }
+
+    .btn.secondary{
+      border:1px solid var(--line);
+      background:#fbf7f0;
+      color:var(--espresso);
+    }
+
+    .status{
+      margin-top:14px;
+      padding:12px;
+      border-radius:12px;
+      line-height:1.4;
+    }
+
+    .status.good{
+      background:var(--good-bg);
+      color:var(--good-text);
+    }
+
+    .status.bad{
+      background:var(--bad-bg);
+      color:var(--bad-text);
+    }
+
+    .job-list{
+      display:grid;
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .job{
+      padding:14px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:var(--paper);
+    }
+
+    .job strong{
+      display:block;
+      margin-bottom:3px;
+    }
+
+    .job span{
+      display:block;
+      color:var(--muted);
+      font-size:.9rem;
+      line-height:1.4;
+    }
+
+    .hidden{
+      display:none !important;
+    }
+
+    @media(max-width:560px){
+      .row{grid-template-columns:1fr}
+    }
   </style>
 </head>
+
 <body>
   <main class="app">
-    <header class="topbar no-print">
-      <div class="brand">
-        <div class="mark">J</div>
-        <div><div class="eyebrow">J Empire Serving</div><h1>Field + Office Command Center</h1></div>
+    <header class="brand">
+      <div class="mark">J</div>
+      <div>
+        <div class="eyebrow">J Empire Serving</div>
+        <h1>Job Board Test</h1>
       </div>
-      <button id="signOutBtn" class="btn light small hidden" type="button">Sign Out</button>
     </header>
 
-    <section id="loginView" class="card">
+    <section id="loginCard" class="card">
       <h2>Sign in</h2>
-      <p class="subtle">Use the same email that owns your Supabase jobs. This keeps your iPhone, iPad, and office board connected.</p>
-      <label style="margin-top:12px">Email address<input id="emailInput" type="email" autocomplete="email" placeholder="you@example.com"></label>
-      <div class="actions"><button id="sendLinkBtn" class="btn gold" type="button">Send Sign-In Link</button></div>
-      <div id="loginNotice"></div>
+      <p class="subtle">
+        Use the same email that appears in Supabase Authentication → Users.
+      </p>
+
+      <label>
+        Email address
+        <input id="email" type="email" autocomplete="email" placeholder="you@example.com">
+      </label>
+
+      <button id="sendLinkBtn" class="btn gold" type="button">
+        Send Sign-In Link
+      </button>
+
+      <div id="loginMessage" aria-live="polite"></div>
     </section>
 
-    <section id="appView" class="hidden">
-      <nav class="nav no-print" id="nav">
-        <button data-view="home" class="active">Today</button>
-        <button data-view="intake">Smart Intake</button>
-        <button data-view="vault">Job Vault</button>
-        <button data-view="route">Route</button>
-        <button data-view="lookup">Lookup</button>
-        <button data-view="office">Office</button>
-        <button data-view="money">Money</button>
-        <button data-view="review">Review</button>
-      </nav>
+    <section id="appCard" class="hidden">
+      <div class="card">
+        <h2>Connected</h2>
+        <p class="subtle">
+          Signed in as <strong id="userEmail"></strong>.
+        </p>
+        <button id="signOutBtn" class="btn secondary" type="button">
+          Sign Out
+        </button>
+      </div>
 
-      <section id="homeView" class="view">
-        <div class="card">
-          <h2>Today’s Jobs</h2>
-          <p class="subtle">Field control: update status, edit details, route a job, or remove it from Today.</p>
-          <div id="todayMetrics" class="grid four" style="margin-top:12px"></div>
-          <div class="actions no-print"><button id="refreshBtn" class="btn light" type="button">Refresh Jobs</button><button id="goIntakeBtn" class="btn gold" type="button">+ Add Job</button></div>
-        </div>
-        <div id="todayList" class="job-list"></div>
-      </section>
-
-      <section id="intakeView" class="view hidden">
-        <div class="card">
-          <h2>Smart Intake</h2>
-          <p class="subtle">Add one job at a time. Required details are flagged before the job is saved. You can still edit every job afterward.</p>
-          <form id="jobForm" class="form-grid" style="margin-top:12px">
-            <input id="editJobId" type="hidden">
-            <label>Client<select id="clientInput"></select></label>
-            <label>Job number<input id="jobCodeInput" placeholder="PV-1042"></label>
-            <label>Name / Entity<input id="nameInput" placeholder="Person or business to serve"></label>
-            <label>County<input id="countyInput" placeholder="Osceola"></label>
-            <label class="full">Address<textarea id="addressInput" placeholder="Street, city, state ZIP"></textarea></label>
-            <label>Service type<select id="serviceInput"><option>Service of Process</option><option>Subpoena</option><option>Skip Trace / Locate</option><option>Posting</option><option>Other</option></select></label>
-            <label>Fee<input id="feeInput" type="number" min="0" step="0.01" placeholder="0.00"></label>
-            <label>Due date<input id="dueInput" type="date"></label>
-            <label>Status<select id="statusInput"><option value="pending">Pending</option><option value="ready">Ready</option><option value="need-info">Need Info</option></select></label>
-            <label class="full">Notes<textarea id="notesInput" placeholder="Gate codes, instructions, attempts, contact notes"></textarea></label>
-            <label class="full">Original source for this job only<textarea id="sourceInput" placeholder="Paste only this job’s original assignment text. Do not paste an entire batch into every job."></textarea></label>
-            <label><input id="todayInput" type="checkbox" style="width:auto;min-height:auto;margin-right:6px">Add this job to Today</label>
-            <div class="actions full"><button id="saveJobBtn" class="btn gold" type="submit">Save Job</button><button id="clearJobBtn" class="btn light" type="button">Clear Form</button></div>
-          </form>
-          <div id="intakeNotice"></div>
-        </div>
-      </section>
-
-      <section id="vaultView" class="view hidden">
-        <div class="card">
-          <h2>Job Vault</h2>
-          <p class="subtle">Every job stays editable. Search by client, job number, name, address, or status.</p>
-          <div class="toolbar" style="margin-top:12px">
-            <label>Search<input id="vaultSearch" placeholder="Job #, name, address..."></label>
-            <label>Status<select id="vaultStatus"><option value="">All statuses</option></select></label>
-            <label>Client<select id="vaultClient"><option value="">All clients</option></select></label>
-          </div>
-          <div id="vaultList" class="job-list"></div>
-        </div>
-      </section>
-
-      <section id="routeView" class="view hidden">
-        <div class="card">
-          <h2>Route</h2>
-          <p class="subtle">Your manually selected Today jobs. Use the map link to open directions, or return a job to Today.</p>
-          <div class="actions no-print"><button id="printDetailBtn" class="btn light" type="button">Print Detailed</button><button id="printCompactBtn" class="btn light" type="button">Print Compact</button><button id="clearRouteBtn" class="btn danger" type="button">Clear Route</button></div>
-        </div>
-        <div id="routeList" class="job-list"></div>
-      </section>
-
-      <section id="lookupView" class="view hidden">
-        <div class="card">
-          <h2>Quick Lookup</h2>
-          <p class="subtle">Fast field search. Every result includes a direct Edit button.</p>
-          <label style="margin-top:12px">Search jobs<input id="lookupSearch" placeholder="Client, job #, name, address, status"></label>
-          <div id="lookupList" class="job-list"></div>
-        </div>
-      </section>
-
-      <section id="officeView" class="view hidden">
-        <div class="card">
-          <h2>Office Dashboard</h2>
-          <p class="subtle">Use status view for workflow or client view for client-by-client management.</p>
-          <div id="officeMetrics" class="grid four" style="margin-top:12px"></div>
-        </div>
-        <div class="grid two" style="margin-top:12px">
-          <div class="card"><h3>Workflow Status</h3><div id="statusSummary"></div></div>
-          <div class="card"><h3>Client Snapshot</h3><div id="clientSummary"></div></div>
-        </div>
-      </section>
-
-      <section id="moneyView" class="view hidden">
-        <div class="card">
-          <h2>Money Snapshot</h2>
-          <p class="subtle">Clear job-fee totals. “Outstanding” means fees on jobs that are not marked served yet.</p>
-          <div id="moneyMetrics" class="grid three" style="margin-top:12px"></div>
-        </div>
-        <div class="card" style="margin-top:12px">
-          <h3>Invoice-ready jobs</h3>
-          <p class="subtle">These are served jobs with job numbers. The next build adds selecting them into invoices, sent dates, paid dates, and invoice history.</p>
-          <div id="invoiceReadyList" class="job-list"></div>
-        </div>
-      </section>
-
-      <section id="reviewView" class="view hidden">
-        <div class="card">
-          <h2>End-of-Day Review</h2>
-          <p class="subtle">This flags jobs that need attention before you close out the day.</p>
-          <div id="reviewList" class="job-list"></div>
-        </div>
-      </section>
-
-      <p class="footer-note">J Empire Serving foundation · Jobs are stored in Supabase and remain editable across devices.</p>
+      <div class="card">
+        <h2>Synced Jobs</h2>
+        <p class="subtle">
+          Your imported test job should appear below.
+        </p>
+        <button id="refreshBtn" class="btn secondary" type="button">
+          Refresh Jobs
+        </button>
+        <div id="jobList" class="job-list"></div>
+      </div>
     </section>
   </main>
 
-  <div id="modalBack" class="modal-back hidden">
-    <div class="modal">
-      <div class="modal-header"><h2 id="modalTitle">Job</h2><button id="modalClose" class="close" type="button" aria-label="Close">×</button></div>
-      <div id="modalBody"></div>
-    </div>
-  </div>
-
   <script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+
   <script>
-    const SUPABASE_URL="https://ejseathlglvvnmkpchib.supabase.co";
-    const SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdWJhYmFzZSIsInJlZiI6ImVqc2VhdGhsZ2x2dm5ta3BjaGliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE5ODc4NTUsImV4cCI6MjA5NzU2Mzg1NX0.o4crd1W5-NbVNXSOWNT-WPHS7R6orRe9CRYFZfZ41L8";
-    const APP_URL="https://jazmarie624.github.io/Money-Assistant-/";
-    const DEFAULT_CLIENTS=["ProVest","Ody","ABC Legal","UServe","Private"];
-    const STATUSES=["pending","ready","out","attempted","served","returned","need-info"];
-    const $=id=>document.getElementById(id);
-    const sb=window.supabase?.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
-    let jobs=[],session=null,routeIds=new Set(JSON.parse(localStorage.getItem("je_route_ids")||"[]"));
-    let customClients=JSON.parse(localStorage.getItem("je_clients")||"[]");
-    let activeView="home";
+    const SUPABASE_URL = "https://ejseathlglvvnmkpchib.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVqc2VhdGhsZ2x2dm5ta3BjaGliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE5ODc4NTUsImV4cCI6MjA5NzU2Mzg1NX0.o4crd1W5-NbVNXSOWNT-WPHS7R6orRe9CRYFZfZ41L8";
 
-    function esc(v){return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
-    function money(v){return new Intl.NumberFormat("en-US",{style:"currency",currency:"USD"}).format(Number(v||0))}
-    function notice(id,msg,type="info"){const e=$(id);e.className="notice "+type;e.textContent=msg}
-    function clearNotice(id){const e=$(id);e.className="";e.textContent=""}
-    function clients(){return [...new Set([...DEFAULT_CLIENTS,...customClients,...jobs.map(j=>j.client_name).filter(Boolean)])].sort()}
-    function saveRoute(){localStorage.setItem("je_route_ids",JSON.stringify([...routeIds]))}
-    function needsInfo(j){return !j.job_code?.trim()||!j.name?.trim()||!j.address?.trim()}
-    function statusLabel(s){return (s||"pending").replace("-"," ")}
-    function jobTitle(j){return j.name?.trim()||"Name missing"}
-    function jobCard(j,{route=false}={}){
-      const inToday=j.is_today===true||routeIds.has(j.id);
-      const map="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(j.address||"");
-      return `<article class="job">
-        <div class="${route?"route-job":""}">${route?`<div class="route-no">${[...routeIds].indexOf(j.id)+1}</div>`:""}
-          <div style="flex:1"><div class="job-head"><div><div class="job-title">${esc(jobTitle(j))}</div><div class="job-meta">${esc(j.client_name||"Client missing")} · Job #${esc(j.job_code||"Missing")}<br>${esc(j.address||"Address missing")}</div></div><span class="badge ${esc(j.status||"pending")}">${esc(statusLabel(j.status))}</span></div>
-          ${needsInfo(j)?`<div class="notice bad">Needs attention: ${!j.job_code?"job number ":""}${!j.name?"name ":""}${!j.address?"address":""}</div>`:""}
-          <div class="job-actions no-print">
-            <button class="btn small light" onclick="openEdit('${j.id}')">Edit</button>
-            <button class="btn small light" onclick="duplicateJob('${j.id}')">Duplicate</button>
-            <button class="btn small light" onclick="viewOriginal('${j.id}')">View Original</button>
-            ${!inToday?`<button class="btn small sage" onclick="toggleToday('${j.id}',true)">Add to Today</button>`:`<button class="btn small light" onclick="toggleToday('${j.id}',false)">Remove Today</button>`}
-            ${!routeIds.has(j.id)?`<button class="btn small gold" onclick="toggleRoute('${j.id}',true)">Add to Route</button>`:`<button class="btn small light" onclick="toggleRoute('${j.id}',false)">Remove Route</button>`}
-            ${j.address?`<a class="btn small light" href="${map}" target="_blank" rel="noopener">Map</a>`:""}
-            <select onchange="changeStatus('${j.id}',this.value)" class="btn small light" style="width:auto;padding:6px"><option value="">Set status</option>${STATUSES.map(s=>`<option value="${s}">${statusLabel(s)}</option>`).join("")}</select>
-            <button class="btn small danger" onclick="deleteJob('${j.id}')">Delete</button>
-          </div></div></div></article>`
-    }
-    function fillClientOptions(){
-      const opts=clients().map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join("");
-      $("clientInput").innerHTML=opts+`<option value="__add__">+ Add Client</option>`;
-      $("vaultClient").innerHTML=`<option value="">All clients</option>`+opts;
-      $("vaultStatus").innerHTML=`<option value="">All statuses</option>`+STATUSES.map(s=>`<option value="${s}">${statusLabel(s)}</option>`).join("");
-    }
-    async function loadJobs(){
-      const {data,error}=await sb.from("jobs").select("*").order("created_at",{ascending:false}).limit(500);
-      if(error){alert("Could not load jobs: "+error.message);return}
-      jobs=data||[]; fillClientOptions(); renderAll();
-    }
-    function renderAll(){renderToday();renderVault();renderRoute();renderLookup();renderOffice();renderMoney();renderReview()}
-    function renderToday(){
-      const today=jobs.filter(j=>j.is_today===true||routeIds.has(j.id));
-      const served=today.filter(j=>j.status==="served").length, open=today.filter(j=>j.status!=="served"&&j.status!=="returned").length;
-      $("todayMetrics").innerHTML=[
-        ["Today",today.length],["Open",open],["Served",served],["Need Info",today.filter(needsInfo).length]
-      ].map(x=>`<div class="metric"><small>${x[0]}</small><strong>${x[1]}</strong></div>`).join("");
-      $("todayList").innerHTML=today.length?today.map(j=>jobCard(j)).join(""):`<div class="empty">No jobs in Today yet. Add a job in Smart Intake or from Job Vault.</div>`;
-    }
-    function filteredVault(){
-      const q=$("vaultSearch").value.toLowerCase().trim(), s=$("vaultStatus").value,c=$("vaultClient").value;
-      return jobs.filter(j=>(!s||j.status===s)&&(!c||j.client_name===c)&&(!q||[j.client_name,j.job_code,j.name,j.address,j.status].join(" ").toLowerCase().includes(q)))
-    }
-    function renderVault(){$("vaultList").innerHTML=filteredVault().length?filteredVault().map(j=>jobCard(j)).join(""):`<div class="empty">No jobs match these filters.</div>`}
-    function renderRoute(){
-      const route=[...routeIds].map(id=>jobs.find(j=>j.id===id)).filter(Boolean);
-      $("routeList").classList.remove("print-compact");
-      $("routeList").innerHTML=route.length?route.map(j=>jobCard(j,{route:true})).join(""):`<div class="empty">Your route is empty. Add a Today job to your route.</div>`;
-    }
-    function renderLookup(){
-      const q=$("lookupSearch").value.toLowerCase().trim();
-      const found=q?jobs.filter(j=>[j.client_name,j.job_code,j.name,j.address,j.status].join(" ").toLowerCase().includes(q)):jobs.slice(0,12);
-      $("lookupList").innerHTML=found.length?found.map(j=>jobCard(j)).join(""):`<div class="empty">No matching jobs.</div>`;
-    }
-    function renderOffice(){
-      const total=jobs.length,active=jobs.filter(j=>!["served","returned"].includes(j.status)).length,served=jobs.filter(j=>j.status==="served").length,need=jobs.filter(needsInfo).length;
-      $("officeMetrics").innerHTML=[["All jobs",total],["Active",active],["Served",served],["Need info",need]].map(x=>`<div class="metric"><small>${x[0]}</small><strong>${x[1]}</strong></div>`).join("");
-      const countBy=a=>a.reduce((o,x)=>(o[x]=(o[x]||0)+1,o),{});
-      const st=countBy(jobs.map(j=>j.status||"pending"));
-      $("statusSummary").innerHTML=STATUSES.map(s=>`<p class="job-meta"><span class="badge ${s}">${statusLabel(s)}</span> <strong>${st[s]||0}</strong> jobs</p>`).join("");
-      const cl=countBy(jobs.map(j=>j.client_name||"Client missing"));
-      $("clientSummary").innerHTML=Object.entries(cl).sort((a,b)=>b[1]-a[1]).map(([c,n])=>`<p class="job-meta"><strong>${esc(c)}</strong> · ${n} jobs</p>`).join("")||"<p class='subtle'>No client data yet.</p>";
-    }
-    function renderMoney(){
-      const total=jobs.reduce((n,j)=>n+Number(j.fee||0),0);
-      const served=jobs.filter(j=>j.status==="served").reduce((n,j)=>n+Number(j.fee||0),0);
-      const outstanding=jobs.filter(j=>j.status!=="served").reduce((n,j)=>n+Number(j.fee||0),0);
-      $("moneyMetrics").innerHTML=[["All job fees",money(total)],["Served / invoice-ready",money(served)],["Outstanding job fees",money(outstanding)]].map(x=>`<div class="metric"><small>${x[0]}</small><strong>${x[1]}</strong></div>`).join("");
-      const ready=jobs.filter(j=>j.status==="served"&&j.job_code);
-      $("invoiceReadyList").innerHTML=ready.length?ready.map(j=>jobCard(j)).join(""):`<div class="empty">No invoice-ready jobs yet. Mark a job Served after completing service.</div>`;
-    }
-    function renderReview(){
-      const flags=[];
-      jobs.filter(needsInfo).forEach(j=>flags.push({j,t:"Missing job information"}));
-      jobs.filter(j=>(j.is_today||routeIds.has(j.id))&&!["served","returned"].includes(j.status)).forEach(j=>flags.push({j,t:"Still open from Today"}));
-      jobs.filter(j=>j.status==="attempted").forEach(j=>flags.push({j,t:"Attempted — review next step"}));
-      $("reviewList").innerHTML=flags.length?flags.map(x=>`<article class="job"><strong>${esc(x.t)}</strong><div class="job-meta">${esc(jobTitle(x.j))} · ${esc(x.j.client_name||"Client")} · Job #${esc(x.j.job_code||"Missing")}</div><div class="job-actions no-print"><button class="btn small light" onclick="openEdit('${x.j.id}')">Edit / Review</button></div></article>`).join(""):`<div class="empty">All clear. No missing details or unfinished Today jobs are flagged.</div>`;
-    }
-    function showView(view){activeView=view;document.querySelectorAll(".view").forEach(v=>v.classList.add("hidden"));$(view+"View").classList.remove("hidden");document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("active",b.dataset.view===view));window.scrollTo({top:0,behavior:"smooth"})}
-    function resetForm(){["editJobId","jobCodeInput","nameInput","countyInput","addressInput","feeInput","dueInput","notesInput","sourceInput"].forEach(id=>$(id).value="");$("statusInput").value="pending";$("serviceInput").value="Service of Process";$("todayInput").checked=false;$("saveJobBtn").textContent="Save Job";clearNotice("intakeNotice")}
-    function openModal(title,html){$("modalTitle").textContent=title;$("modalBody").innerHTML=html;$("modalBack").classList.remove("hidden")}
-    function closeModal(){$("modalBack").classList.add("hidden")}
-    window.openEdit=id=>{
-      const j=jobs.find(x=>x.id===id);if(!j)return;
-      $("editJobId").value=j.id;$("clientInput").value=clients().includes(j.client_name)?j.client_name:"";
-      $("jobCodeInput").value=j.job_code||"";$("nameInput").value=j.name||"";$("countyInput").value=j.county||"";$("addressInput").value=j.address||"";
-      $("serviceInput").value=j.service_type||"Service of Process";$("feeInput").value=j.fee??"";$("dueInput").value=j.due_date||"";
-      $("statusInput").value=j.status||"pending";$("notesInput").value=j.notes||"";$("sourceInput").value=j.source_block||"";
-      $("todayInput").checked=j.is_today===true||routeIds.has(j.id);$("saveJobBtn").textContent="Save Changes";showView("intake");
-    }
-    window.viewOriginal=id=>{const j=jobs.find(x=>x.id===id);openModal("Original Source — "+(j?.job_code||"Job"),`<p class="subtle">This shows only the original text stored for this individual job.</p><div class="source">${esc(j?.source_block||"No original source saved for this job.")}</div>`)}
-    window.toggleToday=async(id,on)=>{const {error}=await sb.from("jobs").update({is_today:on}).eq("id",id);if(error){alert(error.message);return}await loadJobs()}
-    window.toggleRoute=(id,on)=>{on?routeIds.add(id):routeIds.delete(id);saveRoute();renderAll()}
-    window.changeStatus=async(id,status)=>{if(!status)return;const {error}=await sb.from("jobs").update({status}).eq("id",id);if(error){alert(error.message);return}await loadJobs()}
-    window.duplicateJob=async id=>{const j=jobs.find(x=>x.id===id);if(!j)return;const {id:_,created_at,...copy}=j;copy.job_code=(copy.job_code||"")+"-COPY";copy.status="pending";copy.is_today=false;const {error}=await sb.from("jobs").insert(copy);if(error){alert("Duplicate failed: "+error.message);return}await loadJobs()}
-    window.deleteJob=async id=>{const j=jobs.find(x=>x.id===id);if(!confirm(`Delete ${j?.job_code||"this job"}? This cannot be undone.`))return;const {error}=await sb.from("jobs").delete().eq("id",id);if(error){alert("Delete failed: "+error.message);return}routeIds.delete(id);saveRoute();await loadJobs()}
+    const APP_URL = "https://jazmarie624.github.io/Money-Assistant-/";
 
-    $("nav").addEventListener("click",e=>{const b=e.target.closest("button[data-view]");if(b)showView(b.dataset.view)});
-    $("goIntakeBtn").onclick=()=>{resetForm();showView("intake")};
-    $("refreshBtn").onclick=loadJobs;
-    $("vaultSearch").oninput=renderVault;$("vaultStatus").onchange=renderVault;$("vaultClient").onchange=renderVault;$("lookupSearch").oninput=renderLookup;
-    $("modalClose").onclick=closeModal;$("modalBack").addEventListener("click",e=>{if(e.target===$("modalBack"))closeModal()});
-    $("clearJobBtn").onclick=resetForm;
-    $("clientInput").onchange=()=>{if($("clientInput").value==="__add__"){const n=prompt("New client name:");if(n?.trim()){customClients=[...new Set([...customClients,n.trim()])];localStorage.setItem("je_clients",JSON.stringify(customClients));fillClientOptions();$("clientInput").value=n.trim()}else $("clientInput").value=DEFAULT_CLIENTS[0]}};
-    $("jobForm").onsubmit=async e=>{
-      e.preventDefault();clearNotice("intakeNotice");
-      const editId=$("editJobId").value;
-      const payload={
-        client_name:$("clientInput").value,job_code:$("jobCodeInput").value.trim(),name:$("nameInput").value.trim(),
-        county:$("countyInput").value.trim(),address:$("addressInput").value.trim(),service_type:$("serviceInput").value,
-        fee:Number($("feeInput").value||0),due_date:$("dueInput").value||null,status:$("statusInput").value,
-        notes:$("notesInput").value.trim(),source_block:$("sourceInput").value.trim(),is_today:$("todayInput").checked
-      };
-      const missing=[];if(!payload.job_code)missing.push("job number");if(!payload.name)missing.push("name");if(!payload.address)missing.push("address");
-      if(missing.length&&!confirm("Missing: "+missing.join(", ")+". Save anyway so you can correct it later?"))return;
-      $("saveJobBtn").disabled=true;
-      let result;
-      if(editId) result=await sb.from("jobs").update(payload).eq("id",editId);
-      else {const {data:{user}}=await sb.auth.getUser();if(!user){notice("intakeNotice","Your sign-in session expired. Please sign in again.","bad");$("saveJobBtn").disabled=false;return}result=await sb.from("jobs").insert({...payload,owner_id:user.id})}
-      $("saveJobBtn").disabled=false;
-      if(result.error){notice("intakeNotice",result.error.message,"bad");return}
-      notice("intakeNotice",editId?"Job updated.":"Job saved to Supabase.","good");resetForm();await loadJobs();showView("vault");
-    };
-    $("clearRouteBtn").onclick=()=>{if(confirm("Clear this route only? Jobs will stay in Today and Job Vault.")){routeIds.clear();saveRoute();renderAll()}};
-    $("printDetailBtn").onclick=()=>{showView("route");setTimeout(()=>window.print(),150)};
-    $("printCompactBtn").onclick=()=>{showView("route");$("routeList").classList.add("print-compact");setTimeout(()=>{window.print();$("routeList").classList.remove("print-compact")},150)};
+    const $ = (id) => document.getElementById(id);
 
-    async function sendLink(){
-      const email=$("emailInput").value.trim();if(!email){notice("loginNotice","Enter your email address first.","bad");return}
-      $("sendLinkBtn").disabled=true;$("sendLinkBtn").textContent="Sending…";
-      const {error}=await sb.auth.signInWithOtp({email,options:{emailRedirectTo:APP_URL}});
-      $("sendLinkBtn").disabled=false;$("sendLinkBtn").textContent="Send Sign-In Link";
-      if(error){notice("loginNotice",error.message,"bad");return}
-      notice("loginNotice","Check your email and open the sign-in link. Return here afterward.","good");
+    function setMessage(id, text, type) {
+      const el = $(id);
+      el.className = "status " + type;
+      el.textContent = text;
     }
-    async function updateAuth(){
-      const {data:{session:s},error}=await sb.auth.getSession();if(error){notice("loginNotice",error.message,"bad");return}session=s;
-      $("loginView").classList.toggle("hidden",!!session);$("appView").classList.toggle("hidden",!session);$("signOutBtn").classList.toggle("hidden",!session);
-      if(session)await loadJobs();
+
+    function clearMessage(id) {
+      const el = $(id);
+      el.className = "";
+      el.textContent = "";
     }
-    $("sendLinkBtn").onclick=sendLink;
-    $("signOutBtn").onclick=async()=>{await sb.auth.signOut();await updateAuth()};
-    if(!sb){notice("loginNotice","Supabase library did not load. Refresh after GitHub finishes publishing.","bad")}
-    else{sb.auth.onAuthStateChange(()=>setTimeout(updateAuth,0));updateAuth()}
+
+    function escapeHtml(value) {
+      return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    if (!window.supabase || !window.supabase.createClient) {
+      setMessage(
+        "loginMessage",
+        "The Supabase connection library did not load. Refresh once after GitHub finishes publishing.",
+        "bad"
+      );
+      throw new Error("Supabase browser library did not load.");
+    }
+
+    const supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_ANON_KEY
+    );
+
+    async function updateScreen() {
+      const { data, error } = await supabaseClient.auth.getSession();
+      const session = data && data.session;
+
+      if (error) {
+        setMessage("loginMessage", error.message, "bad");
+        return;
+      }
+
+      if (session && session.user) {
+        $("loginCard").classList.add("hidden");
+        $("appCard").classList.remove("hidden");
+        $("userEmail").textContent = session.user.email || "your account";
+        await loadJobs();
+      } else {
+        $("loginCard").classList.remove("hidden");
+        $("appCard").classList.add("hidden");
+      }
+    }
+
+    async function sendLink() {
+      const email = $("email").value.trim();
+      const button = $("sendLinkBtn");
+
+      if (!email) {
+        setMessage("loginMessage", "Please enter your email address first.", "bad");
+        return;
+      }
+
+      clearMessage("loginMessage");
+      button.disabled = true;
+      button.textContent = "Sending…";
+
+      const { error } = await supabaseClient.auth.signInWithOtp({
+        email: email,
+        options: {
+          emailRedirectTo: APP_URL
+        }
+      });
+
+      button.disabled = false;
+      button.textContent = "Send Sign-In Link";
+
+      if (error) {
+        setMessage("loginMessage", error.message, "bad");
+        return;
+      }
+
+      setMessage(
+        "loginMessage",
+        "Success. Check your email, open the Supabase sign-in link, then return here.",
+        "good"
+      );
+    }
+
+    async function loadJobs() {
+      $("jobList").innerHTML = "<p class='subtle'>Loading jobs…</p>";
+
+      const { data, error } = await supabaseClient
+        .from("jobs")
+        .select("id, client_name, job_code, name, address, status, created_at")
+        .order("created_at", { ascending: false })
+        .limit(50);
+
+      if (error) {
+        $("jobList").innerHTML =
+          "<div class='status bad'>" + escapeHtml(error.message) + "</div>";
+        return;
+      }
+
+      if (!data || data.length === 0) {
+        $("jobList").innerHTML =
+          "<p class='subtle'>No jobs found yet. Your imported TEST-001 job should appear after you refresh.</p>";
+        return;
+      }
+
+      $("jobList").innerHTML = data.map((job) => `
+        <article class="job">
+          <strong>${escapeHtml(job.name || "Name not entered")}</strong>
+          <span>${escapeHtml(job.client_name || "Client not entered")} · Job #${escapeHtml(job.job_code || "—")}</span>
+          <span>${escapeHtml(job.address || "Address not entered")}</span>
+          <span>Status: ${escapeHtml(job.status || "pending")}</span>
+        </article>
+      `).join("");
+    }
+
+    async function signOut() {
+      const { error } = await supabaseClient.auth.signOut();
+
+      if (error) {
+        alert(error.message);
+        return;
+      }
+
+      await updateScreen();
+    }
+
+    $("sendLinkBtn").addEventListener("click", sendLink);
+    $("refreshBtn").addEventListener("click", loadJobs);
+    $("signOutBtn").addEventListener("click", signOut);
+
+    supabaseClient.auth.onAuthStateChange(() => {
+      updateScreen();
+    });
+
+    updateScreen();
   </script>
 </body>
 </html>
